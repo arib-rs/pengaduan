@@ -17,6 +17,10 @@ Route::get('/', function () {
     return view('layout/landing');
 });
 
+Route::get('/form_pengaduan', function () {
+    return view('pengaduan.form_pengaduan');
+});
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

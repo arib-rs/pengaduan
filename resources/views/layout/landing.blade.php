@@ -1,51 +1,92 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>P3M - Login</title>
+<!--===============================================================================================-->  
     <link rel="shortcut icon" href="{{asset('template')}}/dist/img/p3mlogosquare.svg" />
-	<title>P3M - Landing</title>
-	    <!-- Tell the browser to be responsive to screen width -->
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <!-- Bootstrap 3.3.7 -->
-    <link rel="stylesheet" href="{{asset('template')}}/bower_components/bootstrap/dist/css/bootstrap.min.css">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="{{asset('template')}}/bower_components/font-awesome/css/font-awesome.min.css">
-    <!-- Ionicons -->
-    <link rel="stylesheet" href="{{asset('template')}}/bower_components/Ionicons/css/ionicons.min.css">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="{{asset('template')}}/dist/css/AdminLTE.min.css">
-    <!-- AdminLTE Skins. Choose a skin from the css/skins
-       folder instead of downloading all of them to reduce the load. -->
-    <link rel="stylesheet" href="{{asset('template')}}/dist/css/skins/_all-skins.min.css">
-    <!-- Morris chart -->
-    <link rel="stylesheet" href="{{asset('template')}}/bower_components/morris.js/morris.css">
-    <!-- jvectormap -->
-    <link rel="stylesheet" href="{{asset('template')}}/bower_components/jvectormap/jquery-jvectormap.css">
-    <!-- Date Picker -->
-    <link rel="stylesheet" href="{{asset('template')}}/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
-    <!-- Daterange picker -->
-    <link rel="stylesheet" href="{{asset('template')}}/bower_components/bootstrap-daterangepicker/daterangepicker.css">
-    <!-- bootstrap wysihtml5 - text editor -->
-    <link rel="stylesheet" href="{{asset('template')}}/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
-    <link rel="stylesheet" href="{{asset('css')}}/tweaks.css">
-    <!-- Google Font -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+<!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{{asset('lgn')}}/vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{{asset('lgn')}}/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{{asset('lgn')}}/vendor/animate/animate.css">
+<!--===============================================================================================-->  
+    <link rel="stylesheet" type="text/css" href="{{asset('lgn')}}/vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{{asset('lgn')}}/vendor/select2/select2.min.css">
+<!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{{asset('css')}}/tweaks.css">
+    <link rel="stylesheet" type="text/css" href="{{asset('lgn')}}/css/util.css">
+    <link rel="stylesheet" type="text/css" href="{{asset('lgn')}}/css/main.css">
+<!--===============================================================================================-->
 </head>
-<body class="hold-transition fixed yellow">
+<body>
+    
+    <div class="limiter">
+        <div class="container-login100">
+            <div class="wrap-login100" style="padding: 4rem">
+                <div class="right-button">
+                    <img src="{{asset('template')}}/dist/img/p3mlogo.svg" alt="P3M Logo" class="landing-logo">
+                    <a href="{{ '/login' }}" style="float: right">Sign In</a>
+                </div>
+                <div>
+                    <h4>Latar Belakang</h4>
+                    <ol class="list">
+                        <li>Misi Kabupaten Sidoarjo : memberikan pelayanan kepada masyarakat secara professional</li>
+                        <li>Tujuan Pemerintah Kabupaten Sidoarjo : meningkatkan kualitas layanan masyarakat.</li>
+                        <li>Adanya perintisan manajemen pelayanan berstandar ISO 9001 - 2000 di Dinas Perijinan dan Penanaman Modal Kabupaten Sidoarjo.</li>
+                        <li>Standar Internasional ( ISO 9001 - 9004 ) tentang pelayanan yang baik menyatakan bahwa untuk mengukur keberhasilan pelayanan Pemerintah kepada masyarakat adalah senantiasa mendengar keluhan-keluhan / pengaduan dari masyrakat (feedback from the customer)</li>
+                        <li>Kebutuhan terhadap wadah komunikasi dua arah antara Pemerintah Kabupaten Sidoarjo dengan masyarakat guna menghindari terjadinya kebuntuan informasi dan komunikasi</li>
+                        <li>Masyarakat membutuhkan wadah yang tepat sebagai tempat mengadukan berbagai permasalahan yang timbul sekaligus memperoleh jawaban yang dibutuhkan </li>
+                    </ol>
+                    
+                    <h4>Media Pengaduan</h4>
+                    <ol class="list">
+                        <li>Formulir Pengaduan, disediakan di Kantor Sekretariat P3M</li>
+                        <li>Surat</li>
+                        <li>Email</li>
+                        <li>Telepon / Fax</li>
+                        <li>Media Cetak (surat kabar, majalah, tabloid, dll)</li>
+                        <li>Media Elektronik ( Radio dan Televisi )</li>
+                        <li>Form pengaduan pada aplikasi pengaduan masyarakat pada situs p3m.sidoarjokab.go.id</li>
+                        <li>Masyarakat membutuhkan wadah yang tepat sebagai tempat mengadukan berbagai permasalahan yang timbul sekaligus memperoleh jawaban yang dibutuhkan </li>
+                    </ol>
 
-    <div class="wrapper">
-        <header class="main-header">
-            <img src="{{asset('template')}}/dist/img/p3mlogo.svg" alt="P3M Logo" class="logo">
-        </header>
+                    <h4>Media Respon</h4>
+                    <ol class="list">
+                        <li>Papan pengumuman yang tersedia di Kantor Sekretariat P3M dan Kantor instansi Pemerintah Kabupaten Sidoarjo, dan tempat lainnya</li>
+                        <li>Media Cetak (surat kabar, majalah, tabloid)</li>
+                        <li>Radio</li>
+                        <li>Aplikasi pengaduan masyarakat di situs p3m.sidoarjokab.go.id</li>
+                        <li>Masyarakat membutuhkan wadah yang tepat sebagai tempat mengadukan berbagai permasalahan yang timbul sekaligus memperoleh jawaban yang dibutuhkan </li>
+                    </ol>    
+                </div>
+            </div>
+        </div>
     </div>
-	
-	<!-- jQuery 3 -->
-    <script src="{{asset('template')}}/bower_components/jquery/dist/jquery.min.js"></script>
-    <!-- Bootstrap 3.3.7 -->
-    <script src="{{asset('template')}}/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-    <!-- iCheck -->
-    <script src="{{asset('template')}}/plugins/iCheck/icheck.min.js"></script>
-</body>
+    
+    
 
+    
+<!--===============================================================================================-->  
+    <script src="{{asset('lgn')}}/vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+    <script src="{{asset('lgn')}}/vendor/bootstrap/js/popper.js"></script>
+    <script src="{{asset('lgn')}}/vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+    <script src="{{asset('lgn')}}/vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+    <script src="{{asset('lgn')}}/vendor/tilt/tilt.jquery.min.js"></script>
+    <script >
+        $('.js-tilt').tilt({
+            scale: 1.1
+        })
+    </script>
+<!--===============================================================================================-->
+    <script src="{{asset('lgn')}}/js/main.js"></script>
+
+</body>
 </html>
+
