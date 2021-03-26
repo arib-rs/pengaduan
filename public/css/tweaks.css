@@ -12,6 +12,11 @@ html {
   src:  url('fonts/poppins-regular.ttf') format('truetype');
 }
 
+@font-face {
+  font-family: 'Poppins-Bold';
+  src:  url('fonts/poppins-bold.ttf') format('truetype');
+}
+
 body {
 	font-family: 'Poppins-Regular';
 }
@@ -42,7 +47,7 @@ h1 {
 }
 
 h2 {
-	font-family: 'Poppins-Regular';
+	font-family: 'Poppins-Bold';
 	color: #34495e !important;
 	font-size: 20px !important;
 }
@@ -61,7 +66,7 @@ body {
 
 .rounded-button {
 	font-family: Montserrat-Bold;
-    font-size: 15px;
+    font-size: 12px;
     color: #fff;
     background: #ffa502;
     border-radius: 25px;
@@ -70,12 +75,35 @@ body {
     line-height: 1.5;
     align-items: center;
     padding: 0 25px;
-    transition: all 0.4s;
+    transition: all 0.2s;
     display: flex;
     justify-content: center;
 }
 
 .rounded-button:hover {
+	color: #fff !important;
+	background: #ffc312 !important;
+}
+
+.right-bottom-button {
+	font-family: Montserrat-Bold;
+    font-size: 12px;
+    color: #fff;
+    background: #ffa502;
+    border-radius: 25px;
+    text-transform: uppercase;
+    height: 40px;
+    line-height: 1.5;
+    align-items: center;
+    padding: 0 25px;
+    transition: all 0.2s;
+    display: flex;
+    justify-content: center;
+    width: fit-content;
+    float: right;
+}
+
+.right-bottom-button:hover {
 	color: #fff !important;
 	background: #ffc312 !important;
 }
@@ -170,7 +198,7 @@ aside {
     line-height: 1.5;
     align-items: center;
     padding: 0 25px;
-    transition: all 0.4s;
+    transition: all 0.2s;
     display: flex;
     justify-content: center;
 }
@@ -202,12 +230,19 @@ aside {
     padding: 2rem 4rem;
 }
 
-.fit-content {
+.header-title {
 	width: fit-content;
+	margin: 1rem auto;
 }
 
 .form-control {
-	border-radius: 10px;
+	border-radius: 25px;
+	height: 40px;
+}
+
+.control-label {
+	height: 40px;
+	padding-top: 10px !important;
 }
 
 .radio-styled {
@@ -224,4 +259,30 @@ aside {
 
 .content-header {
 	padding: 25px 25px 0 25px;
+}
+
+.main-footer {
+	border-top: 0;
+}
+
+.edit-icon {
+	background: #0984e3;
+    padding: 5px;
+    border-radius: 5px;
+    color: white;
+}
+
+.delete-icon {
+	background: #d63031;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+th {
+	text-align: center;
+}
+
+.overflow-y {
+	overflow-y: auto;
 }

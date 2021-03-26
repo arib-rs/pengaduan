@@ -59,7 +59,7 @@
                 <div class="navbar-custom-menu">
                     <ul class="nav navbar-nav">
                         <li>
-                            <a href="" class="rounded-button">Sign Out</a>
+                            <a href="" class="rounded-button"><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Sign Out</a>
                         </li>
                     </ul>
                 </div>
@@ -94,8 +94,8 @@
                         </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="index.html"><i class="fa fa-circle-o"></i> Form Pengaduan</a></li>
-                            <li class=""><a href="index2.html"><i class="fa fa-circle-o"></i> Daftar Pengaduan</a></li> <!-- active -->
+                            <li><a href="{{ '/form_pengaduan' }}"><i class="fa fa-circle-o"></i> Form Pengaduan</a></li>
+                            <li class=""><a href="{{ '/daftar_pengaduan' }}"><i class="fa fa-circle-o"></i> Daftar Pengaduan</a></li> <!-- active -->
                         </ul>
                     </li>
                     <li class=""><!-- active -->
@@ -167,13 +167,13 @@
     <!-- AdminLTE for demo purposes -->
     <script src="{{asset('template')}}/dist/js/demo.js"></script>
     <!-- Select2 -->
-    <script src="../../bower_components/select2/dist/js/select2.full.min.js"></script>
+    <!-- <script src="../../bower_components/select2/dist/js/select2.full.min.js"></script>
     <script>
         $(function () {
             //Initialize Select2 Elements
             $('.select2').select2()
         });
-    </script>
+    </script> -->
 </body>
 
 @yield('scripts')
