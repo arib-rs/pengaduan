@@ -31,5 +31,8 @@ Route::middleware(['auth'])->group(function () {
 });
 
 
+Route::get('/daftar_pengaduan', function () {
+    return view('pengaduan.daftar_pengaduan');
+});
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

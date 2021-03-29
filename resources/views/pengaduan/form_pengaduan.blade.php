@@ -13,7 +13,7 @@
 			<div class="row">
 				<div class="col-md-12">
 					<div class="white-box">
-						<div class="fit-content">
+						<div class="header-title">
 							<h2><i class="fa fa-edit"></i> Form Data Pelapor</h2>
 							<hr>
 						</div>
@@ -70,7 +70,7 @@
 				                <div class="form-group">
 				                  	<label class="col-sm-2 control-label">Pekerjaan</label>
 				                  	<div class="col-sm-10">
-					                  	<select class="form-control">
+					                  	<select class="form-control" id="pekerjaan" name="pekerjaan">
 						                    <option>option 1</option>
 						                    <option>option 2</option>
 						                    <option>option 3</option>
@@ -99,7 +99,7 @@
 				                </div>
 			              	</div>
 						</div>
-						<div class="fit-content">
+						<div class="header-title">
 							<h2><i class="fa fa-edit"></i> Form Data Pengaduan</h2>
 							<hr>
 						</div>
@@ -140,7 +140,7 @@
 			              	<!-- /.box-body -->
 			              	<div class="box-footer">
 				                <!-- <button type="submit" class="btn btn-default">Cancel</button> -->
-				                <button type="submit" class="btn rounded-button pull-right"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Simpan</button>
+				                <a href="" class="right-bottom-button"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Simpan</a>
 			              	</div>
 						</div>
 					</div>
