@@ -31,7 +31,7 @@
 					<img src="{{asset('template')}}/dist/img/p3mlogo.svg" alt="IMG">
 				</div>
 
-				<form method="POST" action="{{ route('login') }}">
+				<form action="{{ route('login') }}" method="POST" >
                     @csrf
 					<span class="login100-form-title">
 						Silahkan Login
@@ -52,7 +52,7 @@
                     @enderror
 
 					<div class="wrap-input100 validate-input" data-validate = "Password is required">
-						<input class="input100 @error('password') is-invalid @enderror" type="password" name="pass" placeholder="Password" required autocomplete="current-password">
+						<input class="input100 @error('password') is-invalid @enderror" type="password" name="password" placeholder="Password" required autocomplete="current-password">
 						<span class="focus-input100"></span>
 						<span class="symbol-input100">
 							<i class="fa fa-lock" aria-hidden="true"></i>
@@ -66,9 +66,10 @@
                     @enderror
 					
 					<div class="container-login100-form-btn">
-						<a href="{{ '/form_pengaduan' }}" class="login100-form-btn" type="submit">
+						{{-- <a href="{{ '/form_pengaduan' }}" class="login100-form-btn" type="submit">
 							Login
-						</a>
+						</a> --}}
+						<button class="login100-form-btn" type="submit">Login</button>
 					</div>
 
 					<div class="text-center p-t-12">

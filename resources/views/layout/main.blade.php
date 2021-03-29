@@ -59,7 +59,10 @@
                 <div class="navbar-custom-menu">
                     <ul class="nav navbar-nav">
                         <li>
-                            <a href="" class="rounded-button">Sign Out</a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                @csrf
+                                <button type="submit" class="rounded-button">Sign Out</button>
+                            </form>
                         </li>
                     </ul>
                 </div>
@@ -75,7 +78,9 @@
                         <img src="{{asset('template')}}/dist/img/avatar.png" class="img-circle" alt="User Image">
                     </div> -->
                     <div class="panel-name"><!-- pull-left info -->
-                        <p class="h1">Alexander Pierce</p>
+                        <p class="h1">{{ Auth::user()->name }}</p>
+                        {{-- <p class="h1">Alexander</p>
+                        {{ var_dump(Auth::user()) }} --}}
                         <!-- <a href="#"><i class="fa fa-circle text-success"></i> Online</a> -->
                     </div>
                 </div>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>P3M - Login</title>
+    <title>P3M - Kab.Sidoarjo</title>
 <!--===============================================================================================-->  
     <link rel="shortcut icon" href="{{asset('template')}}/dist/img/p3mlogosquare.svg" />
 <!--===============================================================================================-->
