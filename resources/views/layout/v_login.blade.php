@@ -28,7 +28,7 @@
 		<div class="container-login100">
 			<div class="wrap-login100">
 				<div class="login100-pic js-tilt" data-tilt>
-					<img src="{{asset('template')}}/dist/img/p3mlogo.svg" alt="IMG">
+					<img src="{{asset('template')}}/dist/img/p3mlogo-ori-hd-remake.png" alt="IMG">
 				</div>
 
 				<form action="{{ route('login') }}" method="POST" >

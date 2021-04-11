@@ -50,18 +50,18 @@
         <header class="main-header header-gradient">
             <a href="#" class="logo">
                 <span class="logo-mini"><img src="{{asset('template')}}/dist/img/p3mlogosquare.svg" alt="P3M Logo" class="logo"></span>
-                <span class="logo-lg"><img src="{{asset('template')}}/dist/img/p3mlogo.svg" alt="P3M Logo" class="logo"></span>
+                <span class="logo-lg"><img src="{{asset('template')}}/dist/img/p3mlogo-ori-hd-remake.png" alt="P3M Logo" class="logo"></span>
             </a>
             <nav class="navbar navbar-static-top" style="margin-right: 5rem;">
-                <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+                {{-- <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
                     <span class="sr-only">Toggle navigation</span>
-                </a>
+                </a> --}}
                 <div class="navbar-custom-menu">
                     <ul class="nav navbar-nav">
                         <li>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                 @csrf
-                                <button type="submit" class="rounded-button">Sign Out</button>
+                                <button type="submit" class="btn rounded-button">Sign Out</button>
                             </form>
                         </li>
                     </ul>

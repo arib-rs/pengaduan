@@ -28,7 +28,7 @@
 		<div class="container-login100">
 			<div class="wrap-login100">
 				<div class="login100-pic js-tilt" data-tilt>
-					<img src="{{asset('template')}}/dist/img/p3mlogo.svg" alt="IMG">
+					<img src="{{asset('template')}}/dist/img/p3mlogo-ori-hd-remake.png" alt="IMG">
 				</div>
 
 				<form method="POST" action="{{ route('register') }}">
@@ -36,23 +36,24 @@
 					<span class="login100-form-title">
 						Silahkan Mendaftarkan Diri Anda
 					</span>
-
-					<div class="wrap-input100 validate-input" data-validate = "NIK is required">
-						<input class="input100 @error('nik') is-invalid @enderror" type="text" name="nik" placeholder="NIK" required >
-						<span class="focus-input100"></span>
-						<span class="symbol-input100">
-							<i class="fa fa-id-card-o" aria-hidden="true"></i>
+					<div class="form-group" >
+						<div class="wrap-input100 validate-input" data-validate = "NIK is required">
+							<input class="input100 @error('nik') is-invalid @enderror" type="text" name="nik"  value="{{ old('nik') }}" placeholder="NIK" required >
+							<span class="focus-input100"></span>
+							<span class="symbol-input100">
+								<i class="fa fa-id-card-o" aria-hidden="true"></i>
+							</span>
+						</div>
+						
+						@error('nik')
+						<span class="invalid-feedback d-block" role="alert">
+							{{ $message }}
 						</span>
+						@enderror
 					</div>
-
-					@error('nik')
-						<span class="invalid-feedback" role="alert">
-							<strong>{{ $message }}</strong>
-						</span>
-					@enderror
-
+<div class="form-group" >
 					<div class="wrap-input100 validate-input" data-validate = "">
-						<input class="input100 @error('name') is-invalid @enderror" type="text"  name="name" placeholder="Full Name" required autocomplete="name" placeholder="Nama Lengkap">
+						<input class="input100 @error('name') is-invalid @enderror" type="text"  name="name"  value="{{ old('name') }}" placeholder="Full Name" required autocomplete="name" placeholder="Nama Lengkap">
 						<span class="focus-input100"></span>
 						<span class="symbol-input100">
 							<i class="fa fa-user" aria-hidden="true"></i>
@@ -60,27 +61,29 @@
 					</div>
 
 					@error('name')
-						<span class="invalid-feedback" role="alert">
-							<strong>{{ $message }}</strong>
+						<span class="invalid-feedback d-block" role="alert">
+							{{ $message }}
 						</span>
 					@enderror
-
+</div>
+<div class="form-group" >
 					<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
-						<input class="input100 @error('email') is-invalid @enderror" type="text"  name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="Email">
+						<input class="input100 @error('email') is-invalid @enderror" type="text"  name="email"  value="{{ old('email') }}" required autocomplete="email" placeholder="Email">
 						<span class="focus-input100"></span>
 						<span class="symbol-input100">
 							<i class="fa fa-envelope" aria-hidden="true"></i>
 						</span>
 					</div>
-
-                    @error('email')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-
+					
+					@error('email')
+					<span class="invalid-feedback d-block" role="alert">
+						{{ $message }}
+					</span>
+					@enderror
+</div>
+<div class="form-group" >
 					<div class="wrap-input100 validate-input" data-validate = "Password is required">
-						<input class="input100 @error('password') is-invalid @enderror" type="password" name="password" placeholder="Password" required autocomplete="current-password">
+						<input class="input100 @error('password') is-invalid @enderror" type="password" name="password"  placeholder="Password" required autocomplete="new-password">
 						<span class="focus-input100"></span>
 						<span class="symbol-input100">
 							<i class="fa fa-lock" aria-hidden="true"></i>
@@ -88,11 +91,20 @@
 					</div>
 
                     @error('password')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
+                        <span class="invalid-feedback d-block" role="alert">
+                            {{ $message }}
                         </span>
                     @enderror
-					
+</div>					
+<div class="form-group" >
+					<div class="wrap-input100 validate-input" data-validate = "Password is required">
+						<input class="input100" type="password" name="password_confirmation"  placeholder="Confirm Password" required autocomplete="new-password">
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-lock" aria-hidden="true"></i>
+						</span>
+					</div>
+</div>
 					<div class="container-login100-form-btn">
 						<button class="login100-form-btn" type="submit">
 							{{ __('Register') }}

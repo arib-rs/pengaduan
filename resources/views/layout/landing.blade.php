@@ -28,12 +28,12 @@
         <div class="container-login100">
             <div class="wrap-login100" style="padding: 4rem">
                 <div class="right-button">
-                    <img src="{{asset('template')}}/dist/img/p3mlogo.svg" alt="P3M Logo" class="landing-logo">
+                    <img src="{{asset('template')}}/dist/img/p3mlogo-ori-hd-remake.png" alt="P3M Logo" class="landing-logo">
                     <a href="{{ '/login' }}" style="float: right">Sign In</a>
                 </div>
                 <div>
-                    <h4>Latar Belakang</h4>
-                    <ol class="list">
+                    <h5>Latar Belakang</h5>
+                    <ol class="list" style="padding:0;margin-top:20px;margin-bottom:40px;line-height: 1.6;">
                         <li>Misi Kabupaten Sidoarjo : memberikan pelayanan kepada masyarakat secara professional</li>
                         <li>Tujuan Pemerintah Kabupaten Sidoarjo : meningkatkan kualitas layanan masyarakat.</li>
                         <li>Adanya perintisan manajemen pelayanan berstandar ISO 9001 - 2000 di Dinas Perijinan dan Penanaman Modal Kabupaten Sidoarjo.</li>
@@ -42,8 +42,8 @@
                         <li>Masyarakat membutuhkan wadah yang tepat sebagai tempat mengadukan berbagai permasalahan yang timbul sekaligus memperoleh jawaban yang dibutuhkan </li>
                     </ol>
                     
-                    <h4>Media Pengaduan</h4>
-                    <ol class="list">
+                    <h5>Media Pengaduan</h5>
+                    <ol class="list" style="padding:0;margin-top:20px;margin-bottom:40px;line-height: 1.6;">
                         <li>Formulir Pengaduan, disediakan di Kantor Sekretariat P3M</li>
                         <li>Surat</li>
                         <li>Email</li>
@@ -54,8 +54,8 @@
                         <li>Masyarakat membutuhkan wadah yang tepat sebagai tempat mengadukan berbagai permasalahan yang timbul sekaligus memperoleh jawaban yang dibutuhkan </li>
                     </ol>
 
-                    <h4>Media Respon</h4>
-                    <ol class="list">
+                    <h5>Media Respon</h5>
+                    <ol class="list" style="padding:0;margin-top:20px;margin-bottom:40px;line-height: 1.6;">
                         <li>Papan pengumuman yang tersedia di Kantor Sekretariat P3M dan Kantor instansi Pemerintah Kabupaten Sidoarjo, dan tempat lainnya</li>
                         <li>Media Cetak (surat kabar, majalah, tabloid)</li>
                         <li>Radio</li>
