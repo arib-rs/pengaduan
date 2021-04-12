@@ -4,16 +4,16 @@
 
 @section('container')
 <div class="content-wrapper">
-	<section class="content-header">
+	{{-- <section class="content-header">
 		<h1>Pengaduan</h1>
-	</section>
+	</section> --}}
 
 	<section class="content">
 		<div class="row">
 			<div class="col-md-12">
 				<div class="white-box">
 					<div class="header-title">
-						<h2><i class="fa fa-list"></i> Daftar Pengaduan</h2>
+						<h2>Daftar Pengaduan</h2>
 						<hr>
 					</div>
 					<div>

@@ -4,9 +4,9 @@
 
 @section('container')
 <div class="content-wrapper">
-	<section class="content-header">
+	{{-- <section class="content-header">
 		<h1>Pengaduan</h1>
-	</section>
+	</section> --}}
 
 	<section class="content">
 		<form class="form-horizontal">
@@ -14,7 +14,11 @@
 				<div class="col-md-12">
 					<div class="white-box">
 						<div class="header-title">
-							<h2><i class="fa fa-edit"></i> Form Data Pelapor</h2>
+							<h2>Form Pengaduan</h2>
+						
+						</div>
+						<div class="header-title">
+							<h2 style="font-size:16px !important">Data Pelapor</h2>
 							<hr>
 						</div>
 						<div>
@@ -71,11 +75,16 @@
 				                  	<label class="col-sm-2 control-label">Pekerjaan</label>
 				                  	<div class="col-sm-10">
 					                  	<select class="form-control" id="pekerjaan" name="pekerjaan">
-						                    <option>option 1</option>
-						                    <option>option 2</option>
-						                    <option>option 3</option>
-						                    <option>option 4</option>
-						                    <option>option 5</option>
+						                    <option>Pegawai Negeri Sipil</option>
+						                    <option>TNI</option>
+						                    <option>POLRI</option>
+						                    <option>Pensiunan</option>
+						                    <option>Karyawan Swasta</option>
+						                    <option>Wiraswasta</option>
+						                    <option>Petani/Layanan</option>
+						                    <option>Penyedia Jasa</option>
+						                    <option>Pelajar/Mahasiswa</option>
+						                    <option>Lain-lain</option>
 					                  	</select>
 				                  	</div>
 				                </div>
@@ -85,12 +94,12 @@
 				                    	<input type="text" class="form-control" id="telepon" name="telepon" placeholder="Telepon">
 				                  	</div>
 				                </div>
-				                <div class="form-group">
+				                {{-- <div class="form-group">
 				                  	<label for="faksimili" class="col-sm-2 control-label">Faksimili</label>
 				                  	<div class="col-sm-10">
 				                    	<input type="text" class="form-control" id="faksimili" name="faksimili" placeholder="Faksimili">
 				                  	</div>
-				                </div>
+				                </div> --}}
 				                <div class="form-group">
 				                  	<label for="email" class="col-sm-2 control-label">E-mail</label>
 				                  	<div class="col-sm-10">
@@ -100,7 +109,7 @@
 			              	</div>
 						</div>
 						<div class="header-title">
-							<h2><i class="fa fa-edit"></i> Form Data Pengaduan</h2>
+							<h2 style="font-size:16px !important">Data Pengaduan</h2>
 							<hr>
 						</div>
 						<div>

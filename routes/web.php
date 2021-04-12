@@ -27,12 +27,24 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/pengaduan',[PengaduanController::class, 'index']);
+    Route::get('/pengaduan', [PengaduanController::class, 'index']);
 });
 
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/daftar_pengaduan', function () {
     return view('pengaduan.daftar_pengaduan');
 });
+Route::get('/form_pengaduan', function () {
+    return view('pengaduan.form_pengaduan');
+});
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/user', function () {
+    return view('master.user');
+});
+Route::get('/opd', function () {
+    return view('master.opd');
+});
+Route::get('/bidang', function () {
+    return view('master.bidang');
+});
