@@ -29,10 +29,10 @@
 
     <div class="limiter">
         <div class="container-login100">
-            <div class="wrap-login100">
-                <div class="login100-pic js-tilt" data-tilt>
+            <div class="wrap-login100" style="padding:50px; width:500px;justify-content: center;">
+                {{-- <div class="login100-pic js-tilt" data-tilt>
                     <img src="{{ asset('template') }}/dist/img/p3mlogo-ori-hd-remake.png" alt="IMG">
-                </div>
+                </div> --}}
 
                 <form method="POST" action="{{ route('register') }}">
                     @csrf
@@ -73,9 +73,80 @@
                         @enderror
                     </div>
                     <div class="form-group">
+                        <div class="wrap-input100 validate-input" data-validate="">
+                            <input class="input100 @error('alamat') is-invalid @enderror" type="text" name="alamat"
+                                value="{{ old('alamat') }}" placeholder="Alamat" required autocomplete="alamat"
+                                placeholder="Alamat">
+                            <span class="focus-input100"></span>
+                            <span class="symbol-input100">
+                                <i class="fa fa-map-marker" aria-hidden="true"></i>
+                            </span>
+                        </div>
+
+                        @error('alamat')
+                            <span class="invalid-feedback d-block" role="alert">
+                                {{ $message }}
+                            </span>
+                        @enderror
+                    </div>
+
+                    <div class="form-group">
+                        <div class="wrap-input100 validate-input" data-validate="">
+                            <input class="input100 @error('kota') is-invalid @enderror" type="text" name="kota"
+                                value="{{ old('kota') }}" placeholder="Kota" required autocomplete="kota"
+                                placeholder="kota">
+                            <span class="focus-input100"></span>
+                            <span class="symbol-input100">
+                                <i class="fa fa-building" aria-hidden="true"></i>
+                            </span>
+                        </div>
+
+                        @error('kota')
+                            <span class="invalid-feedback d-block" role="alert">
+                                {{ $message }}
+                            </span>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <div class="wrap-input100 validate-input" data-validate="">
+                            <input class="input100 @error('Kecamatan') is-invalid @enderror" type="text"
+                                name="kecamatan" value="{{ old('kecamatan') }}" placeholder="Kecamatan" required
+                                autocomplete="kecamatan">
+                            <span class="focus-input100"></span>
+                            <span class="symbol-input100">
+                                <i class="fa fa-map-pin" aria-hidden="true"></i>
+                            </span>
+                        </div>
+
+                        @error('kecamatan')
+                            <span class="invalid-feedback d-block" role="alert">
+                                {{ $message }}
+                            </span>
+                        @enderror
+                    </div>
+
+
+                    <div class="form-group">
+                        <div class="wrap-input100 validate-input" data-validate="">
+                            <input class="input100 @error('desa') is-invalid @enderror" type="text" name="desa"
+                                value="{{ old('desa') }}" placeholder="Desa" required autocomplete="desa"
+                                placeholder="desa">
+                            <span class="focus-input100"></span>
+                            <span class="symbol-input100">
+                                <i class="fa fa-map" aria-hidden="true"></i>
+                            </span>
+                        </div>
+
+                        @error('desa')
+                            <span class="invalid-feedback d-block" role="alert">
+                                {{ $message }}
+                            </span>
+                        @enderror
+                    </div>
+                    <div class="form-group">
                         <div class="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
                             <input class="input100 @error('email') is-invalid @enderror" type="text" name="email"
-                                value="{{ old('email') }}" required autocomplete="email" placeholder="Email">
+                                value="{{ old('email') }}" required autocomplete="Email" placeholder="Email">
                             <span class="focus-input100"></span>
                             <span class="symbol-input100">
                                 <i class="fa fa-envelope" aria-hidden="true"></i>
@@ -83,6 +154,55 @@
                         </div>
 
                         @error('email')
+                            <span class="invalid-feedback d-block" role="alert">
+                                {{ $message }}
+                            </span>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <div class="wrap-input100 validate-input" data-validate="">
+                            <input class="input100 @error('jk') is-invalid @enderror" type="text" name="jk"
+                                value="{{ old('jk') }}" placeholder="Jenis Kelamin" required autocomplete="jk">
+                            <span class="focus-input100"></span>
+                            <span class="symbol-input100">
+                                <i class="fa fa-venus-mars" aria-hidden="true"></i>
+                            </span>
+                        </div>
+
+                        @error('jk')
+                            <span class="invalid-feedback d-block" role="alert">
+                                {{ $message }}
+                            </span>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <div class="wrap-input100 validate-input" data-validate="">
+                            <input class="input100 @error('telepon') is-invalid @enderror" type="text" name="telepon"
+                                value="{{ old('telepon') }}" placeholder="Telepon" required autocomplete="telepon">
+                            <span class="focus-input100"></span>
+                            <span class="symbol-input100">
+                                <i class="fa fa-phone-square" aria-hidden="true"></i>
+                            </span>
+                        </div>
+
+                        @error('telepon')
+                            <span class="invalid-feedback d-block" role="alert">
+                                {{ $message }}
+                            </span>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <div class="wrap-input100 validate-input" data-validate="">
+                            <input class="input100 @error('pekerjaan') is-invalid @enderror" type="text"
+                                name="pekerjaan" value="{{ old('pekerjaan') }}" placeholder="Pekerjaan" required
+                                autocomplete="pekerjaan">
+                            <span class="focus-input100"></span>
+                            <span class="symbol-input100">
+                                <i class="fa fa-briefcase" aria-hidden="true"></i>
+                            </span>
+                        </div>
+
+                        @error('pekerjaan')
                             <span class="invalid-feedback d-block" role="alert">
                                 {{ $message }}
                             </span>
@@ -120,7 +240,7 @@
                         </button>
                     </div>
 
-                    <div class="text-center p-t-136">
+                    <div class="text-center mt-5">
                         <a class="txt2" href="{{ '/login' }}">
                             Sudah Punya Akun
                             <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
