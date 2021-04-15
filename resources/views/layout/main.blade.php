@@ -79,13 +79,13 @@
         <aside class="main-sidebar">
             <section class="sidebar">
 
-                <div class="user-panel">
+                <div class="user-panel" style="white-space: normal">
                     <!-- <div class="pull-left image">
                         <img src="{{ asset('template') }}/dist/img/avatar.png" class="img-circle" alt="User Image">
                     </div> -->
                     <div class="panel-name">
                         <!-- pull-left info -->
-                        <p>{{ Auth::user()->name }}</p>
+                        <p style="font-weight: normal">{{ Auth::user()->name }}</p>
                         {{-- <p class="h1">Alexander</p>
                         {{ var_dump(Auth::user()) }} --}}
                         <!-- <a href="#"><i class="fa fa-circle text-success"></i> Online</a> -->
@@ -95,7 +95,7 @@
                 <ul class="sidebar-menu" data-widget="tree">
                     <li class="">
                         <!-- active -->
-                        <a href="">
+                        <a href="{{ '/home' }}">
                             <i class="fa fa-home"></i> <span>Home</span>
                         </a>
                     </li>

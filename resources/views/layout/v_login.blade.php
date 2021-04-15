@@ -34,7 +34,7 @@
                     <img src="{{ asset('template') }}/dist/img/p3mlogo-ori-hd-remake.png" alt="IMG">
                 </div>
 
-                <form action="{{ route('login') }}" method="POST">
+                <form class="validate-form" action="{{ route('login') }}" method="POST">
                     @csrf
                     <span class="login100-form-title">
                         Silahkan Login
@@ -42,7 +42,7 @@
                     <div class="form-group">
                         <div class="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
                             <input class="input100 @error('email') is-invalid @enderror" type="text" name="email"
-                                value="{{ old('email') }}" required autocomplete="email" placeholder="Email">
+                                value="{{ old('email') }}" placeholder="Email">
                             <span class="focus-input100"></span>
                             <span class="symbol-input100">
                                 <i class="fa fa-envelope" aria-hidden="true"></i>
@@ -58,7 +58,7 @@
                     <div class="form-group">
                         <div class="wrap-input100 validate-input" data-validate="Password is required">
                             <input class="input100 @error('password') is-invalid @enderror" type="password"
-                                name="password" placeholder="Password" required autocomplete="current-password">
+                                name="password" placeholder="Password">
                             <span class="focus-input100"></span>
                             <span class="symbol-input100">
                                 <i class="fa fa-lock" aria-hidden="true"></i>
