@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="shortcut icon" href="{{ asset('template') }}/dist/img/p3mlogo-ori-hd-remake-logo.png" />
     <title>P3M - @yield('title')</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.7 -->
@@ -42,6 +43,13 @@
     <!-- Google Font -->
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+    <!-- toastr notification -->
+    <link rel="stylesheet" href="{{ asset('template') }}/plugins/toastr_notification/toastr.min.css" />
+    <!-- toastr js -->
+    <script src="{{ asset('template') }}/plugins/toastr_notification/toastr.min.js"></script>
+
+
     @yield('head')
 
     @yield('css')
@@ -211,8 +219,63 @@
             $('.select2').select2()
         });
     </script> -->
-</body>
 
+</body>
+<script>
+    var toastrMsg = function(type, text, title) {
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "500",
+            "timeOut": "3000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        };
+        toastr[type](text, title);
+    };
+
+    var setTable = function(a) {
+        var table = $(a).DataTable({
+            'bSort': false,
+            'bFilter': true,
+            'bLengthChange': true,
+            'aLengthMenu': [
+                [10, 30, 50, -1],
+                [10, 30, 50, "All"]
+            ],
+            'iDisplayLength': 10,
+            'bAutoWidth': false
+        });
+        return table;
+    };
+
+    var reloadTable = function(a, html) {
+        $(a).dataTable().fnDestroy();
+        $(a).find('tbody').html(html);
+        var table = $(a).DataTable({
+            'bSort': false,
+            'bFilter': true,
+            'bLengthChange': true,
+            'aLengthMenu': [
+                [10, 30, 50, -1],
+                [10, 30, 50, "All"]
+            ],
+            'iDisplayLength': 10,
+            'bAutoWidth': false
+        });
+        return table;
+    };
+
+</script>
 @yield('scripts')
 
 </html>

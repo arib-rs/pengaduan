@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Scope;
 use Illuminate\Http\Request;
-use App\Models\User;
 
-class UsersController extends Controller
+class ScopesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,9 +14,25 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $data['title'] = 'Daftar User';
-        $data['alluser'] = User::with('level')->get();
-        return view('user.index', $data);
+        $data['title'] = 'Daftar Bidang';
+        $data['bidang'] = Scope::all();
+        return view('bidang.index', $data);
+    }
+    public function getScopes(Request $request, Scope $scope)
+    {
+        $data = Scope::all();
+        // $data = $scope->getData();
+        return \DataTables::of($data)
+            ->addColumn('Aksi', function ($data) {
+                return '<a id="btn-edit" class="btn btn-xs btn-primary" data-id="' . $data->id . '" title="Edit Data">
+                <i class="fa fa-pencil"></i>
+                </a>
+                <a id="btn-delete" class="btn btn-xs btn-danger" data-id="' . $data->id . '" title="Hapus Data">
+                <i class="fa fa-trash"></i>
+                </a>';
+            })
+            ->rawColumns(['Aksi'])
+            ->make(true);
     }
 
     /**

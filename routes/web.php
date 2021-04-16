@@ -13,9 +13,9 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 Auth::routes();
 
-// Route::get('/login', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('login');
 Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('/login', 'Auth\LoginController@login')->name('login');
 Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
@@ -39,9 +39,11 @@ Route::get('/form_pengaduan', function () {
     return view('pengaduan.form_pengaduan');
 });
 
-Route::get('/user', 'UsersController@index');
-
-// Route::get('/opd', );
-// Route::get('/bidang', );
-// Route::get('/media', );
-// Route::get('/pekerjaan', );
+Route::resources([
+    'bidang' => 'ScopesController',
+    'media' => 'MediaController',
+    'pekerjaan' => 'JobsController',
+    'opd' => 'UnitsController',
+    'user' => 'UsersController'
+]);
+Route::get('get-scopes', 'ScopesController@getScopes')->name('get-scopes');
