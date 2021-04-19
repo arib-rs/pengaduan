@@ -44,11 +44,7 @@
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 
-    <!-- toastr notification -->
-    <link rel="stylesheet" href="{{ asset('template') }}/plugins/toastr_notification/toastr.min.css" />
-    <!-- toastr js -->
-    <script src="{{ asset('template') }}/plugins/toastr_notification/toastr.min.js"></script>
-
+    @toastr_css
 
     @yield('head')
 
@@ -221,61 +217,8 @@
     </script> -->
 
 </body>
-<script>
-    var toastrMsg = function(type, text, title) {
-        toastr.options = {
-            "closeButton": false,
-            "debug": false,
-            "newestOnTop": false,
-            "progressBar": false,
-            "positionClass": "toast-top-right",
-            "preventDuplicates": false,
-            "onclick": null,
-            "showDuration": "300",
-            "hideDuration": "500",
-            "timeOut": "3000",
-            "extendedTimeOut": "1000",
-            "showEasing": "swing",
-            "hideEasing": "linear",
-            "showMethod": "fadeIn",
-            "hideMethod": "fadeOut"
-        };
-        toastr[type](text, title);
-    };
-
-    var setTable = function(a) {
-        var table = $(a).DataTable({
-            'bSort': false,
-            'bFilter': true,
-            'bLengthChange': true,
-            'aLengthMenu': [
-                [10, 30, 50, -1],
-                [10, 30, 50, "All"]
-            ],
-            'iDisplayLength': 10,
-            'bAutoWidth': false
-        });
-        return table;
-    };
-
-    var reloadTable = function(a, html) {
-        $(a).dataTable().fnDestroy();
-        $(a).find('tbody').html(html);
-        var table = $(a).DataTable({
-            'bSort': false,
-            'bFilter': true,
-            'bLengthChange': true,
-            'aLengthMenu': [
-                [10, 30, 50, -1],
-                [10, 30, 50, "All"]
-            ],
-            'iDisplayLength': 10,
-            'bAutoWidth': false
-        });
-        return table;
-    };
-
-</script>
+@toastr_js
+@toastr_render
 @yield('scripts')
 
 </html>

@@ -18,10 +18,10 @@ class ScopesController extends Controller
         $data['bidang'] = Scope::all();
         return view('bidang.index', $data);
     }
-    public function getScopes(Request $request, Scope $scope)
+    public function getScopes()
     {
-        $data = Scope::all();
-        // $data = $scope->getData();
+        // $data = Scope::all();
+        $data = Scope::orderBy('bidang','asc')->get();
         return \DataTables::of($data)
             ->addColumn('Aksi', function ($data) {
                 return '<a id="btn-edit" class="btn btn-xs btn-primary" data-id="' . $data->id . '" title="Edit Data">
@@ -32,6 +32,7 @@ class ScopesController extends Controller
                 </a>';
             })
             ->rawColumns(['Aksi'])
+            ->addIndexColumn()
             ->make(true);
     }
 
@@ -53,7 +54,18 @@ class ScopesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = \Validator::make($request->all(), [
+            'bidang' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+              return response()->json(['errors' => $validator->errors()->all()]);
+        }else{
+
+        Scope::create(['bidang' => $request->bidang]);
+
+          return response()->json(['success'=>'Data telah disimpan.']);
+        }
     }
 
     /**
@@ -75,7 +87,8 @@ class ScopesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data = Scope::find($id);
+        return response()->json($data);
     }
 
     /**
@@ -87,7 +100,19 @@ class ScopesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validator = \Validator::make($request->all(), [
+            'bidang' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+                return response()->json(['errors' => $validator->errors()->all()]);
+        }
+
+        Scope::find($id)->update(['bidang' => $request->bidang]);
+
+        return response()->json(['success'=>'Data telah disimpan.']);
+
+
     }
 
     /**
@@ -98,6 +123,7 @@ class ScopesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Scope::find($id)->delete();
+        return response()->json(['success'=>'Data telah dihapus.']);
     }
 }

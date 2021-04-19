@@ -19,7 +19,7 @@
                             <div class="box-body">
                                 <div class="row">
                                     <div class="col-md-12 overflow-y">
-                                        <table class="table table-bordered table-hover dataTable">
+                                        <table class="table table-bordered table-hover datatable">
                                             <thead>
                                                 <tr>
                                                     <th style="width: 2%">No</th>
@@ -49,7 +49,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3 class="modal-title" id="ModalInputTitle">Input Data Bidang</h3>
+                    <h3 class="modal-title" id="ModalInputTitle">Form Data Bidang</h3>
                 </div>
                 <form id="form-data">
                     <div class="modal-body">
@@ -74,7 +74,7 @@
 @section('scripts')
     <script>
         $(function() {
-            var dataTable = $('.dataTable').DataTable({
+            var dataTable = $('.datatable').DataTable({
                 processing: true,
                 serverSide: true,
                 lengthChange: false,
@@ -89,8 +89,8 @@
                 ],
                 ajax: '{{ route('get-scopes') }}',
                 columns: [{
-                        data: 'id',
-                        name: 'Id'
+                        data: 'DT_RowIndex',
+                        name: 'DT_RowIndex'
                     },
                     {
                         data: 'bidang',
@@ -117,23 +117,117 @@
                 //show modal
                 $('#ModalInput').modal('show');
             });
-            $('#btn-edit').click(function() {
+            $('#btn-save').click(function() {
                 var b = $(this),
                     i = b.find('i'),
                     cls = i.attr('class'),
-                    id = $(this).data('id');
-                $.ajax({
-                    url: "articles/" + id + "/edit",
-                    method: 'GET',
-                    success: function(result) {
-                        console.log(result);
-                        $('#EditArticleModalBody').html(result.html);
-                        $('#EditArticleModal').show();
+                    id = $('#id').val(),
+                    url = '',
+                    method = '';
+
+                var form = $('#form-data'),
+                    data = form.serializeArray();
+
+                if (id == '') {
+                    url = "{{ route('bidang.store') }}";
+                    method = 'POST';
+                } else {
+                    url = "bidang/" + id;
+                    method = 'PUT';
+                }
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
                 });
-                $('#ModalInput').modal('show');
+                $.ajax({
+                    url: url,
+                    method: method,
+                    data: data,
+                    beforeSend: function() {
+                        b.attr('disabled', 'disabled');
+                        i.removeClass().addClass('fa fa-spin fa-circle-o-notch');
+                    },
+                    success: function(result) {
+                        if (result.success) {
+                            toastr['success'](result.success);
+                            $('.datatable').DataTable().ajax.reload();
+                            $('#ModalInput').modal('hide');
+                            $('#form-data').find('input.form-control').val('');
+                        } else {
+                            $.each(result.errors, function(key, value) {
+                                toastr['error'](value);
+                            });
+                        }
+                        b.removeAttr('disabled');
+                        i.removeClass().addClass(cls);
+
+                    },
+                    error: function() {
+                        b.removeAttr('disabled');
+                        i.removeClass().addClass(cls);
+                    }
+                });
             });
-        })
+        }).on('click', '#btn-edit', function() {
+            var b = $(this),
+                i = b.find('i'),
+                cls = i.attr('class'),
+                id = $(this).data('id');
+
+            var form = $('#form-data');
+            $.ajax({
+                url: "bidang/" + id + "/edit",
+                method: 'GET',
+                beforeSend: function() {
+                    b.attr('disabled', 'disabled');
+                    i.removeClass().addClass('fa fa-spin fa-circle-o-notch');
+                },
+                success: function(result) {
+                    form.find('#btn-save').html('<i class="fa fa-pencil"></i> Edit');
+                    form.find('#id').val(result.id);
+                    form.find('#bidang').val(result.bidang);
+                    b.removeAttr('disabled');
+                    i.removeClass().addClass(cls);
+                    $('#ModalInput').modal('show');
+                },
+                error: function() {
+                    b.removeAttr('disabled');
+                    i.removeClass().addClass(cls);
+                }
+            });
+        }).on('click', '#btn-delete', function() {
+        var b = $(this),
+            i = b.find('i'),
+            cls = i.attr('class'),
+            id = $(this).data('id');
+        var del = confirm("Apakah anda yakin menghapus data ini?");
+        if (del) {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: "bidang/"+id,
+                method: 'DELETE',
+                   beforeSend: function() {
+                    b.attr('disabled', 'disabled');
+                    i.removeClass().addClass('fa fa-spin fa-circle-o-notch');
+                },
+                success: function(result) {
+                        $('.datatable').DataTable().ajax.reload();
+                        toastr['success'](result.success);
+                },
+                   error: function() {
+                    b.removeAttr('disabled');
+                    i.removeClass().addClass(cls);
+                }
+            });
+        }
+
+    });
 
     </script>
 
