@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Unit;
 use Illuminate\Http\Request;
-use App\Models\User;
 
-class UsersController extends Controller
+class UnitsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,12 +14,12 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $data['title'] = 'Daftar User';
-        return view('user.index', $data);
+        $data['title'] = 'Daftar OPD';
+        return view('opd.index', $data);
     }
-    public function getUsers()
+    public function getOpds()
     {
-        $data = User::with('level')->orderBy('nama', 'asc')->get();
+        $data = Unit::orderBy('nama', 'asc')->get();
         return \DataTables::of($data)
             ->addColumn('Aksi', function ($data) {
                 return '<a id="btn-edit" class="btn btn-xs btn-primary" data-id="' .
@@ -55,7 +55,30 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = \Validator::make($request->all(), [
+            'kode' => 'required',
+            'nama' => 'required',
+            'alamat' => 'required',
+            'telepon' => 'required',
+            'email' => 'required',
+            'tingkat' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()->all()]);
+        } else {
+            Unit::create([
+                'kode' => $request->kode,
+                'nama' => ucwords($request->nama),
+                'alamat' => ucwords($request->alamat),
+                'telepon' => $request->telepon,
+                'email' => $request->email,
+                'tingkat' => $request->tingkat,
+                'is_active' => true
+            ]);
+
+            return response()->json(['success' => 'Data telah disimpan.']);
+        }
     }
 
     /**
@@ -77,7 +100,7 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
-        $data = User::find($id)->with('level');
+        $data = Unit::find($id);
         return response()->json($data);
     }
 
@@ -90,7 +113,29 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validator = \Validator::make($request->all(), [
+            'kode' => 'required',
+            'nama' => 'required',
+            'alamat' => 'required',
+            'telepon' => 'required',
+            'email' => 'required',
+            'tingkat' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()->all()]);
+        } else {
+            Unit::find($id)->update([
+                'kode' => $request->kode,
+                'nama' => ucwords($request->nama),
+                'alamat' => ucwords($request->alamat),
+                'telepon' => $request->telepon,
+                'email' => $request->email,
+                'tingkat' => $request->tingkat
+            ]);
+
+            return response()->json(['success' => 'Data telah disimpan.']);
+        }
     }
 
     /**
@@ -101,6 +146,7 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Unit::find($id)->delete();
+        return response()->json(['success' => 'Data telah dihapus.']);
     }
 }

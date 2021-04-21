@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Media;
 use Illuminate\Http\Request;
-use App\Models\User;
 
-class UsersController extends Controller
+class MediaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,12 +14,12 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $data['title'] = 'Daftar User';
-        return view('user.index', $data);
+        $data['title'] = 'Daftar Media';
+        return view('media.index', $data);
     }
-    public function getUsers()
+    public function getMedia()
     {
-        $data = User::with('level')->orderBy('nama', 'asc')->get();
+        $data = Media::orderBy('media', 'asc')->get();
         return \DataTables::of($data)
             ->addColumn('Aksi', function ($data) {
                 return '<a id="btn-edit" class="btn btn-xs btn-primary" data-id="' .
@@ -55,7 +55,17 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = \Validator::make($request->all(), [
+            'media' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()->all()]);
+        } else {
+            Media::create(['media' => ucwords($request->media)]);
+
+            return response()->json(['success' => 'Data telah disimpan.']);
+        }
     }
 
     /**
@@ -77,7 +87,7 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
-        $data = User::find($id)->with('level');
+        $data = Media::find($id);
         return response()->json($data);
     }
 
@@ -90,7 +100,17 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validator = \Validator::make($request->all(), [
+            'media' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()->all()]);
+        }
+
+        Media::find($id)->update(['media' => ucwords($request->media)]);
+
+        return response()->json(['success' => 'Data telah disimpan.']);
     }
 
     /**
@@ -101,6 +121,7 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Media::find($id)->delete();
+        return response()->json(['success' => 'Data telah dihapus.']);
     }
 }

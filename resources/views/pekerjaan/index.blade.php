@@ -23,14 +23,11 @@
                                             <thead>
                                                 <tr>
                                                     <th style="width: 2%">No</th>
-                                                    <th style="width: 10%">Kode</th>
-                                                    <th style="width: 30%">Nama OPD</th>
-                                                    <th style="width: 40%">Alamat</th>
-                                                    <th style="width: 10%">Telepon</th>
+                                                    <th style="width: 90%">Nama Pekerjaan</th>
                                                     <th style="width: 8%">
                                                         <a id="btn-add" class="btn btn-xs btn-success" data-toggle="tooltip"
-                                                            data-placement="left" title="Tambah Data User Baru"><i
-                                                                class="fa fa-plus"></i> User Baru</a>
+                                                            data-placement="left" title="Tambah Data Pekerjaan Baru"><i
+                                                                class="fa fa-plus"></i> Pekerjaan Baru</a>
                                                     </th>
                                                 </tr>
                                             </thead>
@@ -52,39 +49,14 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3 class="modal-title" id="ModalInputTitle">Form Data User</h3>
+                    <h3 class="modal-title" id="ModalInputTitle">Form Data Pekerjaan</h3>
                 </div>
                 <form id="form-data">
                     <div class="modal-body">
                         <input type="hidden" class="form-control" id="id" name="id" value="">
                         <div class="form-group">
-                            <label for="kode">Kode OPD</label>
-                            <input type="text" class="form-control" id="kode" name="kode" value="" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="nama">Nama OPD</label>
-                            <input type="text" class="form-control" id="nama" name="nama" value="" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="alamat">Alamat</label>
-                            <textarea class="form-control" id="alamat" name="alamat" value="" required></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="telepon">Telepon</label>
-                            <input type="text" class="form-control" id="telepon" name="telepon" value="" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="text" class="form-control" id="email" name="email" value="" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="tingkat">Tingkat</label>
-                            <select class="form-control" id="tingkat" name="tingkat">
-                                <option value="Induk">Induk</option>
-                                <option value="Sub">Sub</option>
-                                <option value="Kecamatan">Kecamatan</option>
-                                <option value="Desa/Kelurahan">Desa/Kelurahan</option>
-                            </select>
+                            <label for="pekerjaan">Pekerjaan</label>
+                            <input type="text" class="form-control" id="pekerjaan" name="pekerjaan" value="" required>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -115,26 +87,14 @@
                 "order": [
                     [0, "desc"]
                 ],
-                ajax: '{{ route('get-users') }}',
+                ajax: '{{ route('get-jobs') }}',
                 columns: [{
                         data: 'DT_RowIndex',
                         name: 'DT_RowIndex'
                     },
                     {
-                        data: 'kode',
-                        name: 'kode'
-                    },
-                    {
-                        data: 'nama',
-                        name: 'nama'
-                    },
-                    {
-                        data: 'alamat',
-                        name: 'alamat'
-                    },
-                    {
-                        data: 'telepon',
-                        name: 'telepon'
+                        data: 'pekerjaan',
+                        name: 'Pekerjaan'
                     },
                     {
                         data: 'Aksi',
@@ -153,7 +113,6 @@
             $('#btn-add').click(function() {
                 //reset
                 $('#form-data').find('input.form-control').val('');
-                $('#form-data').find('textarea.form-control').val('');
                 $('#form-data').find('#btn-save').html('<i class="fa fa-save"></i> Simpan');
                 //show modal
                 $('#ModalInput').modal('show');
@@ -170,10 +129,10 @@
                     data = form.serializeArray();
 
                 if (id == '') {
-                    url = "{{ route('user.store') }}";
+                    url = "{{ route('pekerjaan.store') }}";
                     method = 'POST';
                 } else {
-                    url = "user/" + id;
+                    url = "pekerjaan/" + id;
                     method = 'PUT';
                 }
 
@@ -219,7 +178,7 @@
 
             var form = $('#form-data');
             $.ajax({
-                url: "user/" + id + "/edit",
+                url: "pekerjaan/" + id + "/edit",
                 method: 'GET',
                 beforeSend: function() {
                     b.attr('disabled', 'disabled');
@@ -228,13 +187,7 @@
                 success: function(result) {
                     form.find('#btn-save').html('<i class="fa fa-pencil"></i> Edit');
                     form.find('#id').val(result.id);
-                    form.find('#kode').val(result.kode);
-                    form.find('#nama').val(result.nama);
-                    form.find('#alamat').val(result.alamat);
-                    form.find('#telepon').val(result.telepon);
-                    form.find('#email').val(result.email);
-                    form.find('#tingkat option[value="' + result.tingkat + '"]').attr('selected',
-                        'selected');
+                    form.find('#pekerjaan').val(result.pekerjaan);
                     b.removeAttr('disabled');
                     i.removeClass().addClass(cls);
                     $('#ModalInput').modal('show');
@@ -257,7 +210,7 @@
                     }
                 });
                 $.ajax({
-                    url: "user/" + id,
+                    url: "pekerjaan/" + id,
                     method: 'DELETE',
                     beforeSend: function() {
                         b.attr('disabled', 'disabled');

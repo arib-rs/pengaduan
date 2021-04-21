@@ -8,8 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Scope extends Model
 {
     use HasFactory;
-public $timestamps = false;
-    protected $fillable = [
-        'bidang'
-    ];
+    public $timestamps = false;
+    protected $fillable = ['bidang'];
 }

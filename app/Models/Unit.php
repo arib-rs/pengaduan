@@ -9,4 +9,13 @@ class Unit extends Model
 {
     use HasFactory;
     public $timestamps = false;
+    protected $fillable = [
+        'kode',
+        'nama',
+        'alamat',
+        'telepon',
+        'email',
+        'tingkat',
+        'is_active'
+    ];
 }

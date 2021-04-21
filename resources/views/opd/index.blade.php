@@ -29,8 +29,8 @@
                                                     <th style="width: 10%">Telepon</th>
                                                     <th style="width: 8%">
                                                         <a id="btn-add" class="btn btn-xs btn-success" data-toggle="tooltip"
-                                                            data-placement="left" title="Tambah Data User Baru"><i
-                                                                class="fa fa-plus"></i> User Baru</a>
+                                                            data-placement="left" title="Tambah Data OPD Baru"><i
+                                                                class="fa fa-plus"></i> OPD Baru</a>
                                                     </th>
                                                 </tr>
                                             </thead>
@@ -52,7 +52,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3 class="modal-title" id="ModalInputTitle">Form Data User</h3>
+                    <h3 class="modal-title" id="ModalInputTitle">Form Data OPD</h3>
                 </div>
                 <form id="form-data">
                     <div class="modal-body">
@@ -115,7 +115,7 @@
                 "order": [
                     [0, "desc"]
                 ],
-                ajax: '{{ route('get-users') }}',
+                ajax: '{{ route('get-opds') }}',
                 columns: [{
                         data: 'DT_RowIndex',
                         name: 'DT_RowIndex'
@@ -170,10 +170,10 @@
                     data = form.serializeArray();
 
                 if (id == '') {
-                    url = "{{ route('user.store') }}";
+                    url = "{{ route('opd.store') }}";
                     method = 'POST';
                 } else {
-                    url = "user/" + id;
+                    url = "opd/" + id;
                     method = 'PUT';
                 }
 
@@ -219,7 +219,7 @@
 
             var form = $('#form-data');
             $.ajax({
-                url: "user/" + id + "/edit",
+                url: "opd/" + id + "/edit",
                 method: 'GET',
                 beforeSend: function() {
                     b.attr('disabled', 'disabled');
@@ -257,7 +257,7 @@
                     }
                 });
                 $.ajax({
-                    url: "user/" + id,
+                    url: "opd/" + id,
                     method: 'DELETE',
                     beforeSend: function() {
                         b.attr('disabled', 'disabled');

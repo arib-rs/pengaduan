@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddFieldIsActiveScopeTable extends Migration
+class AddFieldKodeunitUnitTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddFieldIsActiveScopeTable extends Migration
      */
     public function up()
     {
-        Schema::table('scopes', function (Blueprint $table) {
-            $table->boolean('is_deleted')->default(false);
+        Schema::table('units', function (Blueprint $table) {
+            $table->string('kode');
         });
     }
 

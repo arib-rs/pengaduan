@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Job;
 use Illuminate\Http\Request;
-use App\Models\User;
 
-class UsersController extends Controller
+class JobsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,12 +14,12 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $data['title'] = 'Daftar User';
-        return view('user.index', $data);
+        $data['title'] = 'Daftar Pekerjaan';
+        return view('pekerjaan.index', $data);
     }
-    public function getUsers()
+    public function getJobs()
     {
-        $data = User::with('level')->orderBy('nama', 'asc')->get();
+        $data = Job::orderBy('pekerjaan', 'asc')->get();
         return \DataTables::of($data)
             ->addColumn('Aksi', function ($data) {
                 return '<a id="btn-edit" class="btn btn-xs btn-primary" data-id="' .
@@ -55,7 +55,17 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = \Validator::make($request->all(), [
+            'pekerjaan' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()->all()]);
+        } else {
+            Job::create(['pekerjaan' => ucwords($request->pekerjaan)]);
+
+            return response()->json(['success' => 'Data telah disimpan.']);
+        }
     }
 
     /**
@@ -77,7 +87,7 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
-        $data = User::find($id)->with('level');
+        $data = Job::find($id);
         return response()->json($data);
     }
 
@@ -90,7 +100,17 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validator = \Validator::make($request->all(), [
+            'pekerjaan' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()->all()]);
+        }
+
+        Job::find($id)->update(['pekerjaan' => ucwords($request->pekerjaan)]);
+
+        return response()->json(['success' => 'Data telah disimpan.']);
     }
 
     /**
@@ -101,6 +121,7 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Job::find($id)->delete();
+        return response()->json(['success' => 'Data telah dihapus.']);
     }
 }
