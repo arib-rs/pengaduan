@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
+use App\Models\Job;
 use App\Models\User;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -20,7 +21,7 @@ class RegisterController extends Controller
     | validation and creation. By default this controller uses a trait to
     | provide this functionality without requiring any additional code.
     |
-    */
+     */
 
     use RegistersUsers;
 
@@ -65,15 +66,15 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            'nik'=> $data['nik'],
+            'nik' => $data['nik'],
             'name' => $data['name'],
-            'alamat'=> $data['alamat'],
-            'desa'=> $data['desa'],
-            'kecamatan'=> $data['kecamatan'],
-            'kota'=> $data['kota'],
-            'gender'=> $data['jk'],
-            'pekerjaan'=> $data['pekerjaan'],
-            'telepon'=> $data['telepon'],
+            'alamat' => $data['alamat'],
+            'desa' => $data['desa'],
+            'kecamatan' => $data['kecamatan'],
+            'kota' => $data['kota'],
+            'gender' => $data['jk'],
+            'pekerjaan' => $data['pekerjaan'],
+            'telepon' => $data['telepon'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
@@ -81,6 +82,7 @@ class RegisterController extends Controller
 
     public function showRegistrationForm()
     {
-        return view('layout.v_register');
+        $data['pekerjaan'] = Job::all();
+        return view('layout.v_register', $data);
     }
 }

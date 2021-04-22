@@ -67,7 +67,7 @@
                         </div>
                         <div class="form-group">
                             <label for="alamat">Alamat</label>
-                            <textarea class="form-control" id="alamat" name="alamat" value="" required></textarea>
+                            <textarea style="resize:vertical;" class="form-control" id="alamat" name="alamat" value="" required></textarea>
                         </div>
                         <div class="form-group">
                             <label for="telepon">Telepon</label>
@@ -110,7 +110,7 @@
                 searching: true,
                 ordering: false,
                 info: true,
-                pageLength: 5,
+                pageLength: 10,
                 // scrollX: true,
                 "order": [
                     [0, "desc"]

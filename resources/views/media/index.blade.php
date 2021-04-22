@@ -82,7 +82,7 @@
                 searching: true,
                 ordering: false,
                 info: true,
-                pageLength: 5,
+                pageLength: 10,
                 // scrollX: true,
                 "order": [
                     [0, "desc"]

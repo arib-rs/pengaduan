@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Http\Request;
 
 class UsersController extends Controller
 {
@@ -23,12 +23,12 @@ class UsersController extends Controller
         return \DataTables::of($data)
             ->addColumn('Aksi', function ($data) {
                 return '<a id="btn-edit" class="btn btn-xs btn-primary" data-id="' .
-                    $data->id .
-                    '" title="Edit Data">
+                $data->id .
+                '" title="Edit Data">
                 <i class="fa fa-pencil"></i>
                 </a>
                 <a id="btn-delete" class="btn btn-xs btn-danger" data-id="' .
-                    $data->id .
+                $data->id .
                     '" title="Hapus Data">
                 <i class="fa fa-trash"></i>
                 </a>';

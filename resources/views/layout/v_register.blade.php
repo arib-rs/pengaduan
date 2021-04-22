@@ -161,12 +161,12 @@
                         <div class="wrap-input100">
                             <div class="col-sm-12 radio-styled text-center mt-4">
                                 <label>
-                                    <input type="radio" class="minimal" name="jk" checked>
-                                    <i class="fa fa-male" aria-hidden="true" value="Laki-Laki"></i> Laki-Laki
+                                    <input type="radio" class="minimal" name="jk" value="Laki-Laki" checked>
+                                    <i class="fa fa-male"></i> Laki-Laki
                                 </label>
                                 <label>
-                                    <input type="radio" class="minimal" name="jk">
-                                    <i class="fa fa-female" aria-hidden="true" value="Perempuan"></i> Perempuan
+                                    <input type="radio" class="minimal" name="jk" value="Perempuan">
+                                    <i class="fa fa-female"></i> Perempuan
                                 </label>
                             </div>
                         </div>
@@ -188,21 +188,17 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <div class="wrap-input100 validate-input" data-validate="Pekerjaan tidak boleh kosong">
-                            <input class="input100 @error('pekerjaan') is-invalid @enderror" type="text"
-                                name="pekerjaan" value="{{ old('pekerjaan') }}" placeholder="Pekerjaan"
-                                autocomplete="pekerjaan">
-                            <span class="focus-input100"></span>
+                        <div class="wrap-input100">
+                            <select class="input100" id="pekerjaan" name="pekerjaan">
+                                <option value="" style="color:#999999">Pilih Pekerjaan</option>
+                                @foreach ($pekerjaan as $d)
+                                    <option value="{{ $d->id }}">{{ $d->pekerjaan }}</option>
+                                @endforeach
+                            </select>
                             <span class="symbol-input100">
                                 <i class="fa fa-briefcase" aria-hidden="true"></i>
                             </span>
                         </div>
-
-                        @error('pekerjaan')
-                            <span class="invalid-feedback d-block" role="alert">
-                                {{ $message }}
-                            </span>
-                        @enderror
                     </div>
                     <div class="form-group">
                         <div class="wrap-input100 validate-input" data-validate="Password tidak boleh kosong">
