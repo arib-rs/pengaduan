@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Scope;
 use App\Models\Unit;
+use App\Models\UnitMapping;
 use Illuminate\Http\Request;
 
 class UnitsController extends Controller
@@ -15,7 +17,18 @@ class UnitsController extends Controller
     public function index()
     {
         $data['title'] = 'Daftar OPD';
+        $data['bidang'] = Scope::orderBy('bidang', 'asc')->get();
         return view('opd.index', $data);
+    }
+    public function getTingkats()
+    {
+        $data = "
+            <option value='Induk'>Induk</option>
+            <option value='Sub'>Sub</option>
+            <option value='Kecamatan'>Kecamatan</option>
+            <option value='Desa/Kelurahan'>Desa/Kelurahan</option>
+        ";
+        return response()->json($data);
     }
     public function getOpds()
     {
@@ -58,16 +71,13 @@ class UnitsController extends Controller
         $validator = \Validator::make($request->all(), [
             'kode' => 'required',
             'nama' => 'required',
-            'alamat' => 'required',
-            'telepon' => 'required',
-            'email' => 'required',
             'tingkat' => 'required'
         ]);
 
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()->all()]);
         } else {
-            Unit::create([
+            $lastInsertedId = Unit::create([
                 'kode' => $request->kode,
                 'nama' => ucwords($request->nama),
                 'alamat' => ucwords($request->alamat),
@@ -75,7 +85,14 @@ class UnitsController extends Controller
                 'email' => $request->email,
                 'tingkat' => $request->tingkat,
                 'is_active' => true
-            ]);
+            ])->id;
+            UnitMapping::where('unit_id', $lastInsertedId)->delete();
+            foreach ($request->bidang as $d) {
+                UnitMapping::create([
+                    'unit_id' => $lastInsertedId,
+                    'scope_id' => $d
+                ]);
+            }
 
             return response()->json(['success' => 'Data telah disimpan.']);
         }
@@ -100,7 +117,13 @@ class UnitsController extends Controller
      */
     public function edit($id)
     {
-        $data = Unit::find($id);
+        $data['opd'] = Unit::find($id);
+        $data['mapping'] = UnitMapping::with('scope', 'unit')->where('unit_id', $id)->get();
+        $data['tingkat'] = "
+            <option value='Induk'>Induk</option>
+            <option value='Sub'>Sub</option>
+            <option value='Kecamatan'>Kecamatan</option>
+            <option value='Desa/Kelurahan'>Desa/Kelurahan</option>";
         return response()->json($data);
     }
 
@@ -116,9 +139,6 @@ class UnitsController extends Controller
         $validator = \Validator::make($request->all(), [
             'kode' => 'required',
             'nama' => 'required',
-            'alamat' => 'required',
-            'telepon' => 'required',
-            'email' => 'required',
             'tingkat' => 'required'
         ]);
 
@@ -133,7 +153,13 @@ class UnitsController extends Controller
                 'email' => $request->email,
                 'tingkat' => $request->tingkat
             ]);
-
+            UnitMapping::where('unit_id', $id)->delete();
+            foreach ($request->bidang as $d) {
+                UnitMapping::create([
+                    'unit_id' => $id,
+                    'scope_id' => $d
+                ]);
+            }
             return response()->json(['success' => 'Data telah disimpan.']);
         }
     }

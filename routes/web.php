@@ -50,4 +50,5 @@ Route::get('get-scopes', 'ScopesController@getScopes')->name('get-scopes');
 Route::get('get-media', 'MediaController@getMedia')->name('get-media');
 Route::get('get-jobs', 'JobsController@getJobs')->name('get-jobs');
 Route::get('get-opds', 'UnitsController@getOpds')->name('get-opds');
-Route::get('get-users', 'UnitsController@getUsers')->name('get-users');
+Route::get('get-tingkats', 'UnitsController@getTingkats')->name('get-tingkats');
+Route::get('get-users', 'UsersController@getUsers')->name('get-users');

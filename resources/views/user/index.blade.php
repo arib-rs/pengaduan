@@ -23,10 +23,11 @@
                                             <thead>
                                                 <tr>
                                                     <th style="width: 2%">No</th>
-                                                    <th style="width: 10%">Kode</th>
-                                                    <th style="width: 30%">Nama OPD</th>
-                                                    <th style="width: 40%">Alamat</th>
-                                                    <th style="width: 10%">Telepon</th>
+                                                    <th style="width: 15%">Kode</th>
+                                                    <th style="width: 20%">Nama</th>
+                                                    <th style="width: 15%">Email</th>
+                                                    <th style="width: 10%">Tingkat</th>
+                                                    <th style="width: 30%">OPD</th>
                                                     <th style="width: 8%">
                                                         <a id="btn-add" class="btn btn-xs btn-success" data-toggle="tooltip"
                                                             data-placement="left" title="Tambah Data User Baru"><i
@@ -58,28 +59,24 @@
                     <div class="modal-body">
                         <input type="hidden" class="form-control" id="id" name="id" value="">
                         <div class="form-group">
-                            <label for="kode">Kode OPD</label>
+                            <label for="kode">Kode</label>
                             <input type="text" class="form-control" id="kode" name="kode" value="" required>
                         </div>
                         <div class="form-group">
-                            <label for="nama">Nama OPD</label>
-                            <input type="text" class="form-control" id="nama" name="nama" value="" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="alamat">Alamat</label>
-                            <textarea style="resize:vertical;" class="form-control" id="alamat" name="alamat" value="" required></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="telepon">Telepon</label>
-                            <input type="text" class="form-control" id="telepon" name="telepon" value="" required>
+                            <label for="nama">Nama</label>
+                            <input type="text" class="form-control" id="name" name="name" value="" required>
                         </div>
                         <div class="form-group">
                             <label for="email">Email</label>
                             <input type="text" class="form-control" id="email" name="email" value="" required>
                         </div>
                         <div class="form-group">
-                            <label for="tingkat">Tingkat</label>
-                            <select class="form-control" id="tingkat" name="tingkat">
+                            <label for="level">Tingkat</label>
+                            <input type="text" class="form-control" id="level" name="level" value="" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="opd">OPD</label>
+                            <select autocomplete="off" class="form-control" id="opd" name="opd">
                                 <option value="Induk">Induk</option>
                                 <option value="Sub">Sub</option>
                                 <option value="Kecamatan">Kecamatan</option>
@@ -125,16 +122,20 @@
                         name: 'kode'
                     },
                     {
-                        data: 'nama',
+                        data: 'name',
                         name: 'nama'
                     },
                     {
-                        data: 'alamat',
-                        name: 'alamat'
+                        data: 'email',
+                        name: 'email'
                     },
                     {
-                        data: 'telepon',
-                        name: 'telepon'
+                        data: 'level.level',
+                        name: 'level'
+                    },
+                    {
+                        data: 'unit.nama',
+                        name: 'unit'
                     },
                     {
                         data: 'Aksi',

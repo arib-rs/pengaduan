@@ -18,4 +18,8 @@ class Unit extends Model
         'tingkat',
         'is_active'
     ];
+    public function scopes()
+    {
+        return $this->hasMany(UnitMapping::class);
+    }
 }

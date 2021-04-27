@@ -49,7 +49,7 @@
 @section('modal')
     <div class="modal fade" id="ModalInput" tabindex="-1" role="dialog" aria-labelledby="ModalInputTitle"
         aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="modal-title" id="ModalInputTitle">Form Data OPD</h3>
@@ -67,24 +67,33 @@
                         </div>
                         <div class="form-group">
                             <label for="alamat">Alamat</label>
-                            <textarea style="resize:vertical;" class="form-control" id="alamat" name="alamat" value="" required></textarea>
+                            <textarea style="resize:vertical;" class="form-control" id="alamat" name="alamat"
+                                value=""></textarea>
                         </div>
                         <div class="form-group">
                             <label for="telepon">Telepon</label>
-                            <input type="text" class="form-control" id="telepon" name="telepon" value="" required>
+                            <input type="text" class="form-control" id="telepon" name="telepon" value="">
                         </div>
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="text" class="form-control" id="email" name="email" value="" required>
+                            <input type="text" class="form-control" id="email" name="email" value="">
                         </div>
                         <div class="form-group">
                             <label for="tingkat">Tingkat</label>
-                            <select class="form-control" id="tingkat" name="tingkat">
-                                <option value="Induk">Induk</option>
-                                <option value="Sub">Sub</option>
-                                <option value="Kecamatan">Kecamatan</option>
-                                <option value="Desa/Kelurahan">Desa/Kelurahan</option>
+                            <select autocomplete="off" class="form-control" id="tingkat" name="tingkat">
                             </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="bidang">Bidang</label>
+                            @foreach ($bidang as $d)
+                                <div style="margin-left:20px" class="checkbox">
+                                    <label>
+                                        <input type="checkbox" id="bidang{{ $d->id }}"
+                                            name="bidang[{{ $d->id }}]" value="{{ $d->id }}">
+                                        {{ $d->bidang }}
+                                    </label>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -154,9 +163,29 @@
                 //reset
                 $('#form-data').find('input.form-control').val('');
                 $('#form-data').find('textarea.form-control').val('');
+                $('#form-data').find('input:checkbox').prop('checked', false);
                 $('#form-data').find('#btn-save').html('<i class="fa fa-save"></i> Simpan');
-                //show modal
-                $('#ModalInput').modal('show');
+                var b = $(this),
+                    i = b.find('i'),
+                    cls = i.attr('class');
+                $.ajax({
+                    url: "{{ route('get-tingkats') }}",
+                    method: 'GET',
+                    beforeSend: function() {
+                        b.attr('disabled', 'disabled');
+                        i.removeClass().addClass('fa fa-spin fa-circle-o-notch');
+                    },
+                    success: function(result) {
+                        $('#tingkat').html(result);
+                        b.removeAttr('disabled');
+                        i.removeClass().addClass(cls);
+                        $('#ModalInput').modal('show');
+                    },
+                    error: function() {
+                        b.removeAttr('disabled');
+                        i.removeClass().addClass(cls);
+                    }
+                });
             });
             $('#btn-save').click(function() {
                 var b = $(this),
@@ -224,17 +253,30 @@
                 beforeSend: function() {
                     b.attr('disabled', 'disabled');
                     i.removeClass().addClass('fa fa-spin fa-circle-o-notch');
+
                 },
                 success: function(result) {
                     form.find('#btn-save').html('<i class="fa fa-pencil"></i> Edit');
-                    form.find('#id').val(result.id);
-                    form.find('#kode').val(result.kode);
-                    form.find('#nama').val(result.nama);
-                    form.find('#alamat').val(result.alamat);
-                    form.find('#telepon').val(result.telepon);
-                    form.find('#email').val(result.email);
-                    form.find('#tingkat option[value="' + result.tingkat + '"]').attr('selected',
-                        'selected');
+                    form.find('#id').val(result.opd.id);
+                    form.find('#kode').val(result.opd.kode);
+                    form.find('#nama').val(result.opd.nama);
+                    form.find('#alamat').val(result.opd.alamat);
+                    form.find('#telepon').val(result.opd.telepon);
+                    form.find('#email').val(result.opd.email);
+                    if (result.opd.tingkat == null) {
+                        $('#tingkat').html("<option value=''>--Pilih Tingkat--</option>");
+                        $('#tingkat').append(result.tingkat);
+                    } else {
+                        $('#tingkat').html(result.tingkat);
+                        form.find('#tingkat option[value="' + result.opd.tingkat + '"]').attr(
+                            'selected',
+                            'selected');
+                    }
+                    form.find('input:checkbox').prop('checked', false);
+                    $.each(result.mapping, function(key, value) {
+                        form.find('#bidang' + value.scope_id).prop('checked', true);
+                    });
+
                     b.removeAttr('disabled');
                     i.removeClass().addClass(cls);
                     $('#ModalInput').modal('show');

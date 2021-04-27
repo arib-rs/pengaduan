@@ -28,7 +28,7 @@ class User extends Authenticatable
         'pekerjaan',
         'email',
         'password',
-        'level',
+        'level_id',
         'unit_id'
     ];
 
@@ -51,7 +51,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function level(){
-          return $this->belongsTo(Level::class);
+    public function level()
+    {
+        return $this->belongsTo(Level::class);
+    }
+    public function unit()
+    {
+        return $this->belongsTo(Unit::class);
     }
 }
