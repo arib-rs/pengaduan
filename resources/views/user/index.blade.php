@@ -61,30 +61,43 @@
                         <div class="form-group">
                             <label for="kode">Kode</label>
                             <input type="text" class="form-control" id="kode" name="kode" value="" required>
+
                         </div>
                         <div class="form-group">
-                            <label for="nama">Nama</label>
+                            <label for="name">Nama</label>
                             <input type="text" class="form-control" id="name" name="name" value="" required>
+
                         </div>
+
                         <div class="form-group">
                             <label for="email">Email</label>
                             <input type="text" class="form-control" id="email" name="email" value="" required>
+
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control" id="password" name="password" value="" required>
+
+                        </div>
+                        <div class="form-group">
+                            <label for="password_confirmation">Konfirmasi Password</label>
+                            <input type="password" class="form-control" id="password_confirmation"
+                                name="password_confirmation" value="" required>
+
                         </div>
                         <div class="form-group">
                             <label for="level">Tingkat</label>
-                            <input type="text" class="form-control" id="level" name="level" value="" required>
+                            <select autocomplete="off" class="form-control" id="level" name="level">
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="opd">OPD</label>
                             <select autocomplete="off" class="form-control" id="opd" name="opd">
-                                <option value="Induk">Induk</option>
-                                <option value="Sub">Sub</option>
-                                <option value="Kecamatan">Kecamatan</option>
-                                <option value="Desa/Kelurahan">Desa/Kelurahan</option>
                             </select>
                         </div>
                     </div>
                     <div class="modal-footer">
+                        <button id="btn-reset-pass" type="button" class="btn btn-warning">Reset Password</button>
                         <button id="btn-reset" type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                         <button id="btn-save" type="button" class="btn btn-primary"><i class="fa fa-save"></i>
                             Simpan</button>
@@ -158,6 +171,73 @@
                 $('#form-data').find('#btn-save').html('<i class="fa fa-save"></i> Simpan');
                 //show modal
                 $('#ModalInput').modal('show');
+                var b = $(this),
+                    i = b.find('i'),
+                    cls = i.attr('class');
+                $.ajax({
+                    url: "{{ route('get-tingkats-opds') }}",
+                    method: 'GET',
+                    beforeSend: function() {
+                        b.attr('disabled', 'disabled');
+                        i.removeClass().addClass('fa fa-spin fa-circle-o-notch');
+                        $('#btn-reset-pass').css("display", "none");
+                    },
+                    success: function(result) {
+                        $('#level').html(result.tingkats);
+                        $('#opd').html(result.opds);
+                        b.removeAttr('disabled');
+                        i.removeClass().addClass(cls);
+                        $('#ModalInput').modal('show');
+                    },
+                    error: function() {
+                        b.removeAttr('disabled');
+                        i.removeClass().addClass(cls);
+                    }
+                });
+            });
+            $('#btn-reset-pass').click(function() {
+                var b = $(this),
+                    i = b.find('i'),
+                    cls = i.attr('class'),
+                    id = $('#id').val();
+                var resetPass = confirm("Apakah anda yakin reset password data user ini ?");
+                if (resetPass) {
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    $.ajax({
+                        url: "{{ route('resetPassword') }}/" + id,
+                        method: 'PUT',
+                        beforeSend: function() {
+                            b.attr('disabled', 'disabled');
+                            i.removeClass().addClass('fa fa-spin fa-circle-o-notch');
+                        },
+                        success: function(result) {
+                            if (result.success) {
+                                toastr['success'](result.success);
+                                $('.datatable').DataTable().ajax.reload();
+                                $('#ModalInput').modal('hide');
+                                $('#form-data').find('input.form-control').val('');
+
+                            } else {
+                                var temp = '';
+                                $.each(result.errors, function(key, value) {
+                                    temp = temp + value + "<br>";
+                                });
+                                toastr['error'](temp);
+                            }
+                            b.removeAttr('disabled');
+                            i.removeClass().addClass(cls);
+
+                        },
+                        error: function() {
+                            b.removeAttr('disabled');
+                            i.removeClass().addClass(cls);
+                        }
+                    });
+                }
             });
             $('#btn-save').click(function() {
                 var b = $(this),
@@ -198,9 +278,11 @@
                             $('#ModalInput').modal('hide');
                             $('#form-data').find('input.form-control').val('');
                         } else {
+                            var temp = '';
                             $.each(result.errors, function(key, value) {
-                                toastr['error'](value);
+                                temp = temp + value + "<br>";
                             });
+                            toastr['error'](temp);
                         }
                         b.removeAttr('disabled');
                         i.removeClass().addClass(cls);
@@ -225,17 +307,27 @@
                 beforeSend: function() {
                     b.attr('disabled', 'disabled');
                     i.removeClass().addClass('fa fa-spin fa-circle-o-notch');
+                    $('#btn-reset-pass').css("display", "inline-block");
                 },
                 success: function(result) {
                     form.find('#btn-save').html('<i class="fa fa-pencil"></i> Edit');
-                    form.find('#id').val(result.id);
-                    form.find('#kode').val(result.kode);
-                    form.find('#nama').val(result.nama);
-                    form.find('#alamat').val(result.alamat);
-                    form.find('#telepon').val(result.telepon);
-                    form.find('#email').val(result.email);
-                    form.find('#tingkat option[value="' + result.tingkat + '"]').attr('selected',
+                    form.find('#id').val(result.user.id);
+                    form.find('#kode').val(result.user.kode);
+                    form.find('#name').val(result.user.name);
+                    form.find('#email').val(result.user.email);
+                    $('#level').html(result.tingkats);
+                    form.find('#level option[value="' + result.user.level_id + '"]').attr('selected',
                         'selected');
+                    if (result.user.unit_id == null) {
+                        $('#opd').html("<option value=''>-- Pilih OPD --</option>");
+                        $('#opd').append(result.opds);
+                    } else {
+                        $('#opd').html(result.opds);
+                        form.find('#opd option[value="' + result.user.unit_id + '"]').attr(
+                            'selected',
+                            'selected');
+                    }
+                    form.find('input:password').attr('disabled', 'disabled');
                     b.removeAttr('disabled');
                     i.removeClass().addClass(cls);
                     $('#ModalInput').modal('show');

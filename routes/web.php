@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Route;
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
-*/
+ */
 
 Auth::routes();
 
@@ -44,11 +44,13 @@ Route::resources([
     'media' => 'MediaController',
     'pekerjaan' => 'JobsController',
     'opd' => 'UnitsController',
-    'user' => 'UsersController'
+    'user' => 'UsersController',
 ]);
 Route::get('get-scopes', 'ScopesController@getScopes')->name('get-scopes');
 Route::get('get-media', 'MediaController@getMedia')->name('get-media');
 Route::get('get-jobs', 'JobsController@getJobs')->name('get-jobs');
 Route::get('get-opds', 'UnitsController@getOpds')->name('get-opds');
 Route::get('get-tingkats', 'UnitsController@getTingkats')->name('get-tingkats');
+Route::get('get-tingkats-opds', 'UsersController@getTingkatsOpds')->name('get-tingkats-opds');
 Route::get('get-users', 'UsersController@getUsers')->name('get-users');
+Route::put('resetPassword/{id?}', 'UsersController@resetPassword')->name('resetPassword');

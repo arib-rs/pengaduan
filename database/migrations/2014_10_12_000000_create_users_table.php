@@ -17,18 +17,19 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('kode');
             $table->string('name');
-            $table->string('gender');
-            $table->string('alamat');
-            $table->string('desa');
-            $table->string('kecamatan');
-            $table->string('kota');
-            $table->string('telepon');
-            $table->bigInteger('pekerjaan');
+            $table->string('gender')->nullable();
+            $table->string('alamat')->nullable();
+            $table->string('desa')->nullable();
+            $table->string('kecamatan')->nullable();
+            $table->string('kota')->nullable();
+            $table->string('telepon')->nullable();
+            $table->bigInteger('pekerjaan')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->integer('level_id')->nullable();
             $table->integer('unit_id')->nullable();
+            $table->boolean('is_active')->default(1);
 
             $table->rememberToken();
             $table->timestamps();
