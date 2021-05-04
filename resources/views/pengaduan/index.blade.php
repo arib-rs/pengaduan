@@ -1,6 +1,6 @@
 @extends('layout/main')
 
-@section('title', 'Daftar Pengaduan')
+@section('title', $title)
 
 @section('container')
     <div class="content-wrapper">
@@ -13,7 +13,7 @@
                 <div class="col-md-12">
                     <div class="white-box">
                         <div class="header-title">
-                            <h2>Daftar Pengaduan</h2>
+                            <h2>{{ $title }}</h2>
                             <hr>
                         </div>
                         <div>

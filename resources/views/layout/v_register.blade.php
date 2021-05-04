@@ -161,12 +161,12 @@
                         <div class="wrap-input100">
                             <div class="col-sm-12 radio-styled text-center mt-4">
                                 <label>
-                                    <input type="radio" class="minimal" name="jk" value="Laki-Laki" checked>
-                                    <i class="fa fa-male"></i> Laki-Laki
+                                    <input type="radio" class="minimal" name="gender" value="Pria" checked>
+                                    <i class="fa fa-male"></i> Pria
                                 </label>
                                 <label>
-                                    <input type="radio" class="minimal" name="jk" value="Perempuan">
-                                    <i class="fa fa-female"></i> Perempuan
+                                    <input type="radio" class="minimal" name="gender" value="Wanita">
+                                    <i class="fa fa-female"></i> Wanita
                                 </label>
                             </div>
                         </div>

@@ -112,8 +112,8 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="{{ '/form_pengaduan' }}"><i class="fa fa-edit"></i>Form Pengaduan</a></li>
-                            <li><a href="{{ '/daftar_pengaduan' }}"><i class="fa fa-list"></i>Daftar Pengaduan</a>
+                            <li><a href="{{ '/pengaduan/create' }}"><i class="fa fa-edit"></i>Form Pengaduan</a></li>
+                            <li><a href="{{ '/pengaduan' }}"><i class="fa fa-list"></i>Daftar Pengaduan</a>
                             </li>
                             <li><a href="{{ '/klasifikasi' }}"><i class="fa fa-share-alt"></i> Klasifikasi</a></li>
                             <li><a href="{{ '/distribusi' }}"><i class="fa fa-chain"></i> Distribusi</a></li>

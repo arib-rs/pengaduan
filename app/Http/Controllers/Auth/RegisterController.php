@@ -72,7 +72,7 @@ class RegisterController extends Controller
             'desa' => $data['desa'],
             'kecamatan' => $data['kecamatan'],
             'kota' => $data['kota'],
-            'gender' => $data['jk'],
+            'gender' => $data['gender'],
             'pekerjaan' => $data['pekerjaan'],
             'telepon' => $data['telepon'],
             'email' => $data['email'],

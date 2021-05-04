@@ -27,17 +27,9 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/pengaduan', [PengaduanController::class, 'index']);
 });
 
 Route::get('/home', 'HomeController@index')->name('home');
-
-Route::get('/daftar_pengaduan', function () {
-    return view('pengaduan.daftar_pengaduan');
-});
-Route::get('/form_pengaduan', function () {
-    return view('pengaduan.form_pengaduan');
-});
 
 Route::resources([
     'bidang' => 'ScopesController',
@@ -45,6 +37,7 @@ Route::resources([
     'pekerjaan' => 'JobsController',
     'opd' => 'UnitsController',
     'user' => 'UsersController',
+    'pengaduan' => 'ComplaintsController',
 ]);
 Route::get('get-scopes', 'ScopesController@getScopes')->name('get-scopes');
 Route::get('get-media', 'MediaController@getMedia')->name('get-media');
