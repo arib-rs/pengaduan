@@ -27,12 +27,11 @@ class ComplaintsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         $data['title'] = 'Form Pengaduan';
         $data['media'] = Media::orderBy('media', 'asc')->get();
         $data['jobs'] = Job::orderBy('pekerjaan', 'asc')->get();
-
         return view('pengaduan.create', $data);
     }
 
@@ -46,13 +45,43 @@ class ComplaintsController extends Controller
     {
         $validator = \Validator::make($request->all(), [
             'name' => 'required',
+            'pekerjaan' => 'required',
+            'media' => 'required',
+            'pict_1' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'pict_2' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'pict_3' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()->all()]);
         } else {
+            $pict_1 = null;
+            $pict_2 = null;
+            $pict_3 = null;
+            if ($request->pict_1) {
+                $pict_1 = date('YmdHis') . '_1' . '.' . $request->pict_1->extension();
+                $request->pict_1->move(public_path('upload-photo'), $pict_1);
+            }
+            if ($request->pict_2) {
+                $pict_2 = date('YmdHis') . '_2' . '.' . $request->pict_2->extension();
+                $request->pict_2->move(public_path('upload-photo'), $pict_2);
+            }
+            if ($request->pict_3) {
+                $pict_3 = date('YmdHis') . '_3' . '.' . $request->pict_3->extension();
+                $request->pict_3->move(public_path('upload-photo'), $pict_3);
+            }
+
+
             Complaint::create(
-                $request->all()
+                $request->except(['pict_1', 'pict_2', 'pict_3']) +
+                    [
+                        'kode' => date('YmdHis'),
+                        'status' => 0,
+                        'pelapor' => $request->session()->get('id'),
+                        'pict_1' => $pict_1,
+                        'pict_2' => $pict_2,
+                        'pict_3' => $pict_3
+                    ]
             );
             return response()->json(['success' => 'Data telah disimpan.']);
         }
