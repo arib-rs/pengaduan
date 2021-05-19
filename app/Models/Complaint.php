@@ -25,6 +25,9 @@ class Complaint extends Model
         'status',
         'pict_1',
         'pict_2',
-        'pict_3'
+        'pict_3',
+        'lng',
+        'lat',
+        'kode_lanjutan'
     ];
 }

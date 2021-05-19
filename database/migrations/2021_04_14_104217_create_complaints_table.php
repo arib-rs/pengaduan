@@ -34,13 +34,13 @@ class CreateComplaintsTable extends Migration
             $table->string('pict_1')->nullable();
             $table->string('pict_2')->nullable();
             $table->string('pict_3')->nullable();
-            $table->string('long')->nullable();
+            $table->string('lng')->nullable();
             $table->string('lat')->nullable();
             $table->boolean('is_urgent')->nullable();
             $table->boolean('is_valid')->nullable();
             $table->string('alasan')->nullable();
             $table->boolean('is_public')->nullable();
-            $table->bigInteger('complaint_id')->nullable();
+            $table->string('kode_lanjutan')->nullable();
             $table->timestamps();
         });
     }
