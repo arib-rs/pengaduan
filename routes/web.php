@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,8 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
  */
 
-Auth::routes();
-
 Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('/login', 'Auth\LoginController@login')->name('login');
 Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
@@ -27,23 +24,23 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth'])->group(function () {
+
+    Route::get('/home', 'HomeController@index')->name('home');
+
+    Route::resources([
+        'bidang' => 'ScopesController',
+        'media' => 'MediaController',
+        'pekerjaan' => 'JobsController',
+        'opd' => 'UnitsController',
+        'user' => 'UsersController',
+        'pengaduan' => 'ComplaintsController',
+    ]);
+    Route::get('get-scopes', 'ScopesController@getScopes')->name('get-scopes');
+    Route::get('get-media', 'MediaController@getMedia')->name('get-media');
+    Route::get('get-jobs', 'JobsController@getJobs')->name('get-jobs');
+    Route::get('get-opds', 'UnitsController@getOpds')->name('get-opds');
+    Route::get('get-tingkats', 'UnitsController@getTingkats')->name('get-tingkats');
+    Route::get('get-tingkats-opds', 'UsersController@getTingkatsOpds')->name('get-tingkats-opds');
+    Route::get('get-users', 'UsersController@getUsers')->name('get-users');
+    Route::put('resetPassword/{id?}', 'UsersController@resetPassword')->name('resetPassword');
 });
-
-Route::get('/home', 'HomeController@index')->name('home');
-
-Route::resources([
-    'bidang' => 'ScopesController',
-    'media' => 'MediaController',
-    'pekerjaan' => 'JobsController',
-    'opd' => 'UnitsController',
-    'user' => 'UsersController',
-    'pengaduan' => 'ComplaintsController',
-]);
-Route::get('get-scopes', 'ScopesController@getScopes')->name('get-scopes');
-Route::get('get-media', 'MediaController@getMedia')->name('get-media');
-Route::get('get-jobs', 'JobsController@getJobs')->name('get-jobs');
-Route::get('get-opds', 'UnitsController@getOpds')->name('get-opds');
-Route::get('get-tingkats', 'UnitsController@getTingkats')->name('get-tingkats');
-Route::get('get-tingkats-opds', 'UsersController@getTingkatsOpds')->name('get-tingkats-opds');
-Route::get('get-users', 'UsersController@getUsers')->name('get-users');
-Route::put('resetPassword/{id?}', 'UsersController@resetPassword')->name('resetPassword');
