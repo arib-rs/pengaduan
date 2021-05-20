@@ -6,6 +6,7 @@ use App\Models\Complaint;
 use App\Models\Job;
 use App\Models\Media;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Config;
 
 class ComplaintsController extends Controller
 {
@@ -32,7 +33,11 @@ class ComplaintsController extends Controller
         $data['title'] = 'Form Pengaduan';
         $data['media'] = Media::orderBy('media', 'asc')->get();
         $data['jobs'] = Job::orderBy('pekerjaan', 'asc')->get();
-        $data['usertamu'] = $request->session()->get('user');
+        $data['usertamu'] = false;
+        if ($request->session()->get('user.level_id') == 9) {
+            $data['usertamu'] = $request->session()->get('user');
+        }
+        // dd(Config::get('toastr'));
         return view('pengaduan.create', $data);
     }
 
@@ -47,13 +52,14 @@ class ComplaintsController extends Controller
         $validator = \Validator::make($request->all(), [
             'name' => 'required',
             'pekerjaan' => 'required',
+            'email' => 'nullable|email',
+            'media' => 'required',
             'subyek' => 'required',
             'uraian' => 'required',
-            'media' => 'required',
             'foto_1' => 'image|mimes:jpeg,png,jpg,bmp,gif|max:2048',
             'foto_2' => 'image|mimes:jpeg,png,jpg,bmp,gif|max:2048',
             'foto_3' => 'image|mimes:jpeg,png,jpg,bmp,gif|max:2048',
-            'kode_lanjutan' => 'exists:complaints,kode'
+            'kode_lanjutan' => 'nullable|exists:complaints,kode'
         ], [
             'kode_lanjutan.exists' => 'No. aduan lanjutan tidak tersedia.'
 
@@ -66,17 +72,17 @@ class ComplaintsController extends Controller
             $pict_1 = null;
             $pict_2 = null;
             $pict_3 = null;
-            if ($request->pict_1) {
-                $pict_1 = $kode . '_1' . '.' . $request->pict_1->extension();
-                $request->pict_1->move(public_path('upload-photo'), $pict_1);
+            if ($request->foto_1) {
+                $pict_1 = $kode . '_1' . '.' . $request->foto_1->extension();
+                $request->foto_1->move(public_path('upload-photo'), $pict_1);
             }
-            if ($request->pict_2) {
-                $pict_2 = $kode . '_2' . '.' . $request->pict_2->extension();
-                $request->pict_2->move(public_path('upload-photo'), $pict_2);
+            if ($request->foto_2) {
+                $pict_2 = $kode . '_2' . '.' . $request->foto_2->extension();
+                $request->foto_2->move(public_path('upload-photo'), $pict_2);
             }
-            if ($request->pict_3) {
-                $pict_3 = $kode . '_3' . '.' . $request->pict_3->extension();
-                $request->pict_3->move(public_path('upload-photo'), $pict_3);
+            if ($request->foto_3) {
+                $pict_3 = $kode . '_3' . '.' . $request->foto_3->extension();
+                $request->foto_3->move(public_path('upload-photo'), $pict_3);
             }
 
             Complaint::create(
@@ -84,7 +90,7 @@ class ComplaintsController extends Controller
                     [
                         'kode' => $kode,
                         'status' => 0,
-                        'pelapor' => $request->session()->get('id'),
+                        'pelapor' => $request->session()->get('user.id'),
                         'pict_1' => $pict_1,
                         'pict_2' => $pict_2,
                         'pict_3' => $pict_3

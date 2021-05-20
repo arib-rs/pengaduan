@@ -28,6 +28,7 @@ class Complaint extends Model
         'pict_3',
         'lng',
         'lat',
+        'is_urgent',
         'kode_lanjutan'
     ];
 }

@@ -42,7 +42,7 @@
                     <div class="form-group">
                         <div class="wrap-input100 validate-input" data-validate="NIK tidak boleh kosong">
                             <input class="input100 @error('nik') is-invalid @enderror" type="text" name="nik"
-                                value="{{ old('nik') }}" placeholder="NIK">
+                                value="{{ old('nik') }}" placeholder="NIK" onkeypress="return onlyNumber(event)">
                             <span class="focus-input100"></span>
                             <span class="symbol-input100">
                                 <i class="fa fa-id-card-o" aria-hidden="true"></i>
@@ -174,7 +174,8 @@
                     <div class="form-group">
                         <div class="wrap-input100 validate-input" data-validate="Telepon tidak boleh kosong">
                             <input class="input100 @error('telepon') is-invalid @enderror" type="text" name="telepon"
-                                value="{{ old('telepon') }}" placeholder="Telepon" autocomplete="telepon">
+                                value="{{ old('telepon') }}" placeholder="Telepon" autocomplete="telepon"
+                                onkeypress="return onlyNumber(event)">
                             <span class="focus-input100"></span>
                             <span class="symbol-input100">
                                 <i class="fa fa-phone-square" aria-hidden="true"></i>
@@ -263,7 +264,17 @@
     </script>
     <!--===============================================================================================-->
     <script src="{{ asset('lgn') }}/js/main.js"></script>
+    <script>
+        function onlyNumber(evt) {
 
+            // Only ASCII character in that range allowed
+            var ASCIICode = (evt.which) ? evt.which : evt.keyCode
+            if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57))
+                return false;
+            return true;
+        }
+
+    </script>
 </body>
 
 </html>

@@ -6,7 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\Job;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -30,7 +33,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo = '/login';
 
     /**
      * Create a new controller instance.
@@ -76,10 +79,26 @@ class RegisterController extends Controller
             'pekerjaan' => $data['pekerjaan'],
             'telepon' => $data['telepon'],
             'email' => $data['email'],
+            'level_id' => 9,
             'password' => Hash::make($data['password']),
         ]);
     }
+    public function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
 
+        event(new Registered($user = $this->create($request->all())));
+
+        // $this->guard()->login($user);
+
+        if ($response = $this->registered($request, $user)) {
+            return $response;
+        }
+
+        return $request->wantsJson()
+            ? new JsonResponse([], 201)
+            : redirect($this->redirectPath());
+    }
     public function showRegistrationForm()
     {
         $data['pekerjaan'] = Job::all();

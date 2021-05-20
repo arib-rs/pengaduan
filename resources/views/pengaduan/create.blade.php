@@ -35,13 +35,13 @@
                                         <div class="col-sm-10 radio-styled">
                                             <label>
                                                 <input type="radio" class="minimal" value="Pria" name="gender"
-                                                    {{ $usertamu['gender'] == 'Pria' ? 'checked' : '' }}>
+                                                    {{ $usertamu && $usertamu['gender'] == 'Pria' ? 'checked' : '' }}>
                                                 <i class="fa fa-male" aria-hidden="true"></i>
                                                 <span style="font-weight:normal"> Pria</span>
                                             </label>
                                             <label>
                                                 <input type="radio" class="minimal" value="Wanita" name="gender"
-                                                    {{ $usertamu['gender'] == 'Wanita' ? 'checked' : '' }}>
+                                                    {{ $usertamu && $usertamu['gender'] == 'Wanita' ? 'checked' : '' }}>
                                                 <i class="fa fa-female" aria-hidden="true"></i>
                                                 <span style="font-weight:normal"> Wanita</span>
                                             </label>
@@ -51,10 +51,10 @@
                                         <label for="alamat" class="col-sm-2 control-label">Alamat</label>
                                         <div class="col-sm-10">
                                             <div class="form-group">
-                                                <label for="jalan" class="col-sm-2 control-label">Jalan</label>
+                                                <label for="alamat" class="col-sm-2 control-label">Jalan</label>
                                                 <div class="col-sm-10">
-                                                    <input type="text" class="form-control" id="jalan" name="jalan"
-                                                        placeholder="Jalan"
+                                                    <input type="text" class="form-control" id="alamat" name="alamat"
+                                                        placeholder="Nama Jalan"
                                                         value="{{ $usertamu ? $usertamu['alamat'] : '' }}">
                                                 </div>
                                             </div>
@@ -92,7 +92,7 @@
                                                 <option value="">-- Pilih Pekerjaan --</option>
                                                 @foreach ($jobs as $d)
                                                     <option value="{{ $d->id }}"
-                                                        {{ $usertamu['pekerjaan'] == $d->id ? 'selected' : '' }}>
+                                                        {{ $usertamu && $usertamu['pekerjaan'] == $d->id ? 'selected' : '' }}>
                                                         {{ $d->pekerjaan }}
                                                     </option>
                                                 @endforeach
@@ -103,7 +103,7 @@
                                         <label for="telepon" class="col-sm-2 control-label">Telepon</label>
                                         <div class="col-sm-10">
                                             <input type="text" class="form-control" id="telepon" name="telepon"
-                                                placeholder="Telepon"
+                                                placeholder="Telepon" onkeypress="return onlyNumber(event)"
                                                 value="{{ $usertamu ? $usertamu['telepon'] : '' }}">
                                         </div>
                                     </div>
@@ -147,6 +147,21 @@
                                         <div class="col-sm-10">
                                             <textarea style="resize:vertical;" class="form-control" id="uraian"
                                                 name="uraian" placeholder="Isikan uraian pengaduan"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="is_urgent" class="col-sm-2 control-label">Aduan Darurat ?</label>
+                                        <div class="col-sm-10 radio-styled">
+                                            <label>
+                                                <input type="radio" class="minimal" value=1 name="is_urgent"
+                                                    autocomplete="off">
+                                                <span style="font-weight:normal"> Ya</span>
+                                            </label>
+                                            <label>
+                                                <input type="radio" class="minimal" value=0 name="is_urgent" checked
+                                                    autocomplete="off">
+                                                <span style="font-weight:normal"> Tidak</span>
+                                            </label>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -202,25 +217,22 @@
 
                                             </div>
 
-
-
-
-
-
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="lanjutan" class="col-sm-2 control-label">Lokasi</label>
+                                        <label for="mapid" class="col-sm-2 control-label">Lokasi</label>
                                         <div class="col-sm-10">
-                                            <input type="hidden" name="lng" id="lng" />
-                                            <input type="hidden" name="lat" id="lat" />
+                                            <input type="hidden" class="form-control" name="lng" id="lng" />
+                                            <input type="hidden" class="form-control" name="lat" id="lat" />
                                             <div id="mapid" style="height:400px"></div>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="lanjutan" class="col-sm-2 control-label">Lanjutan No. Aduan </label>
+                                        <label for="kode_lanjutan" class="col-sm-2 control-label">Lanjutan No. Aduan
+                                        </label>
                                         <div class="col-sm-10">
                                             <input type="text" class="form-control" id="kode_lanjutan" name="kode_lanjutan"
+                                                value=""
                                                 placeholder="Isi no. aduan sebelumnya / Abaikan jika merupakan aduan baru">
                                         </div>
                                     </div>
@@ -250,8 +262,21 @@
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
         integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
         crossorigin="">
+
     </script>
     <script>
+        toastr.options = {
+            "closeButton": true,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "showDuration": "300",
+            "hideDuration": "500",
+            "timeOut": "10000",
+            "extendedTimeOut": "5000",
+            'tapToDismiss': false,
+        };
         $(function() {
             var mymap = L.map('mapid').setView([-7.445999016651402, 112.71844103230215], 11);
             var marker = '';
@@ -284,8 +309,6 @@
             }
 
             mymap.on('click', onMapClick);
-
-
 
             $("#foto_1").change(function() {
                 if (this.files && this.files[0]) {
@@ -392,6 +415,10 @@
                             $('#foto_1_del').trigger('click');
                             $('#foto_2_del').trigger('click');
                             $('#foto_3_del').trigger('click');
+                            if (marker != '') {
+                                mymap.removeLayer(marker);
+                            }
+                            location.href = "/pengaduan"
                         } else {
                             $.each(result.errors, function(key, value) {
                                 toastr['error'](value);
