@@ -19,6 +19,7 @@ class Complaint extends Model
         'telepon',
         'pekerjaan',
         'email',
+        'media',
         'subyek',
         'uraian',
         'pelapor',
@@ -29,6 +30,22 @@ class Complaint extends Model
         'lng',
         'lat',
         'is_urgent',
-        'kode_lanjutan'
+        'kode_lanjutan',
+        'is_valid',
+        'alasan',
+        'is_public'
     ];
+    protected $casts = ['kode' => 'string'];
+    public function job()
+    {
+        return $this->belongsTo(Job::class, 'pekerjaan');
+    }
+    public function media_()
+    {
+        return $this->belongsTo(Media::class, 'media');
+    }
+    public function parent()
+    {
+        return $this->belongsTo(Complaint::class, 'kode_lanjutan', 'kode');
+    }
 }

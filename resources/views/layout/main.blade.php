@@ -45,7 +45,19 @@
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 
     @toastr_css
+    <style>
+        .aduan-urgent {
+            animation: blinker 2s linear infinite;
+        }
 
+        @keyframes blinker {
+            50% {
+                /* background: #FFFACD; */
+                background: #f6e58d;
+            }
+        }
+
+    </style>
     @yield('head')
 
     @yield('css')
@@ -115,7 +127,6 @@
                             <li><a href="{{ '/pengaduan/create' }}"><i class="fa fa-edit"></i>Form Pengaduan</a></li>
                             <li><a href="{{ '/pengaduan' }}"><i class="fa fa-list"></i>Daftar Pengaduan</a>
                             </li>
-                            <li><a href="{{ '/klasifikasi' }}"><i class="fa fa-share-alt"></i> Klasifikasi</a></li>
                             <li><a href="{{ '/distribusi' }}"><i class="fa fa-chain"></i> Distribusi</a></li>
                         </ul>
                     </li>
@@ -229,6 +240,7 @@
 
 </body>
 @toastr_js
+@toastr_render
 @yield('scripts')
 
 </html>

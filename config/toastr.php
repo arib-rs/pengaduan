@@ -15,7 +15,7 @@ return [
         'containerId' => 'toast-container',
         'debug' => false,
         'escapeHtml' => false,
-        'extendedTimeOut' => 5000,
+        'extendedTimeOut' => 10000,
         'hideDuration' => 1000,
         'hideEasing' => 'linear',
         'hideMethod' => 'fadeOut',

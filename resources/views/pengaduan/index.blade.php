@@ -4,10 +4,6 @@
 
 @section('container')
     <div class="content-wrapper">
-        {{-- <section class="content-header">
-		<h1>Pengaduan</h1>
-	</section> --}}
-
         <section class="content">
             <div class="row">
                 <div class="col-md-12">
@@ -20,56 +16,42 @@
                             <div class="box-body">
                                 <div class="row">
                                     <div class="col-md-8">
-                                        <form class="form-horizontal">
-                                            <label for="nama" class="col-xs-3 control-label">Pengaduan Bulan</label>
+                                        <form id="form-bulan" class="form-horizontal">
+                                            <label for="bulan" class="col-md-1 control-label">Bulan</label>
                                             <div class="col-md-3">
-                                                <select class="form-control" id="bulan" name="bulan">
-                                                    <option>Januari</option>
-                                                    <option>Februari</option>
-                                                    <option>Maret</option>
+                                                <select class="form-control" id="bulan" name="bulan" autocomplete="off">
+                                                    @foreach ($bulan as $key => $d)
+                                                        <option value={{ $key }} @if (date('n') == $key) selected @endif>{{ $d }}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
-                                            <div class="col-md-3">
+                                            <div class="col-md-2">
                                                 <input type="text" class="form-control" id="tahun" name="tahun"
-                                                    placeholder="Tahun">
+                                                    placeholder="Tahun" value="{{ date('Y') }}">
                                             </div>
                                             <div class="col-md-3">
-                                                <a href="" class="right-bottom-button" style="float: left;"><i
-                                                        class="fa fa-eye"></i>&nbsp;&nbsp;&nbsp;Lihat</a>
+                                                <button id="btn-tampil" class="btn right-bottom-button"
+                                                    style="float: left;"><i
+                                                        class="fa fa-eye"></i>&nbsp;&nbsp;&nbsp;Tampilkan</button>
                                             </div>
                                         </form>
                                     </div>
                                 </div>
-                                <div class="row" style="margin-top: 5rem;">
+                                <div class="row">
                                     <div class="col-md-12 overflow-y">
-                                        <table id="example1" class="table table-bordered table-hover">
+                                        <table class="table table-bordered table-hover datatable">
                                             <thead>
                                                 <tr>
-                                                    <th>NO</th>
-                                                    <th>TANGGAL TERIMA</th>
-                                                    <th>SUBYEK</th>
-                                                    <th>STATUS</th>
-                                                    <th>AKSI</th>
+                                                    <th style="width: 2%">No</th>
+                                                    <th style="width: 10%">No. Aduan</th>
+                                                    <th style="width: 10%">Tanggal</th>
+                                                    <th style="width: 25%">Subyek</th>
+                                                    <th style="width: 15%">Nama Pelapor</th>
+                                                    <th style="width: 20%">Alamat</th>
+                                                    <th style="width: 10%">Status</th>
+                                                    <th style="width: 8%">Aksi</th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td>23-12-2020</td>
-                                                    <td>Example</td>
-                                                    <td>Proses</td>
-                                                    <td><i class="edit-icon fa fa-pencil"></i>&nbsp;&nbsp;<i
-                                                            class="delete-icon fa fa-trash"></i></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>2</td>
-                                                    <td>23-12-2020</td>
-                                                    <td>Try</td>
-                                                    <td>Proses</td>
-                                                    <td><i class="edit-icon fa fa-pencil"></i>&nbsp;&nbsp;<i
-                                                            class="delete-icon fa fa-trash"></i></td>
-                                                </tr>
-                                            </tbody>
                                         </table>
                                     </div>
                                 </div>
@@ -82,19 +64,75 @@
     </div>
 @endsection
 
+@section('css')
+
+@endsection
 @section('scripts')
 
     <script>
         $(function() {
-            // $('#example2').DataTable()
-            $('#example1').DataTable({
-                'paging': true,
-                'lengthChange': false,
-                'searching': true,
-                'ordering': false,
-                'info': true,
-                'autoWidth': false
-            })
+
+            var tahun = $('#tahun').val(),
+                bulan = $('#bulan').val();
+            var dataTable = $('.datatable').DataTable({
+                processing: true,
+                serverSide: true,
+                lengthChange: false,
+                autoWidth: false,
+                searching: true,
+                ordering: false,
+                info: true,
+                pageLength: 20,
+                // scrollX: true,
+                "order": [
+                    [0, "desc"]
+                ],
+                ajax: "get-pengaduans-bymonth/" + tahun + "/" + bulan,
+                columns: [{
+                        data: 'DT_RowIndex'
+                    },
+                    {
+                        data: 'kode'
+                    },
+                    {
+                        data: 'created_at',
+                        sClass: 'text-center'
+                    },
+                    {
+                        data: 'subyek'
+                    },
+                    {
+                        data: 'name'
+                    },
+                    {
+                        data: 'alamat'
+                    },
+                    {
+                        data: 'status',
+                        sClass: 'text-center'
+                    },
+                    {
+                        data: 'Aksi',
+                        orderable: false,
+                        serachable: false,
+                        sClass: 'text-center'
+                    }
+                ]
+
+            });
+
+            $('#form-bulan').submit(function(e) {
+                e.preventDefault();
+            });
+            $('#btn-tampil').click(function() {
+
+                tahun = $('#tahun').val();
+                bulan = $('#bulan').val();
+
+                $('.datatable').DataTable().ajax.url("get-pengaduans-bymonth/" + tahun +
+                    "/" + bulan).load();
+            });
+
         })
 
     </script>

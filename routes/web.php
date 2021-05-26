@@ -44,4 +44,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('get-tingkats-opds', 'UsersController@getTingkatsOpds')->name('get-tingkats-opds');
     Route::get('get-users', 'UsersController@getUsers')->name('get-users');
     Route::put('resetPassword/{id?}', 'UsersController@resetPassword')->name('resetPassword');
+    Route::get('get-pengaduans-bymonth/{tahun?}/{bulan?}', 'ComplaintsController@getPengaduansByMonth')->name('get-pengaduans-bymonth');
+    Route::get('get-progresses/{id?}', 'ComplaintsController@getProgresses')->name('get-progresses');
+    Route::post('validasi', 'ComplaintsController@validasi');
+    Route::post('kembalikan-save', 'ComplaintsController@kembalikanSave');
 });

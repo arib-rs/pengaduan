@@ -70,11 +70,11 @@ class RegisterController extends Controller
     {
         return User::create([
             'kode' => $data['nik'],
-            'name' => $data['name'],
-            'alamat' => $data['alamat'],
-            'desa' => $data['desa'],
-            'kecamatan' => $data['kecamatan'],
-            'kota' => $data['kota'],
+            'name' => ucwords($data['name']),
+            'alamat' => ucwords($data['alamat']),
+            'desa' => ucwords($data['desa']),
+            'kecamatan' => ucwords($data['kecamatan']),
+            'kota' => ucwords($data['kota']),
             'gender' => $data['gender'],
             'pekerjaan' => $data['pekerjaan'],
             'telepon' => $data['telepon'],

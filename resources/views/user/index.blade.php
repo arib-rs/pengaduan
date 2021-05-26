@@ -144,11 +144,13 @@
                     },
                     {
                         data: 'level.level',
-                        name: 'level'
+                        name: 'level',
+                        defaultContent: "-"
                     },
                     {
                         data: 'unit.nama',
-                        name: 'unit'
+                        name: 'unit',
+                        defaultContent: "-"
                     },
                     {
                         data: 'Aksi',
