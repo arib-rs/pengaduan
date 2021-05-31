@@ -79,14 +79,18 @@ class ComplaintsController extends Controller
     }
     public function getPengaduansByMonth($tahun, $bulan)
     {
-        // $unitId = session()->get('user.unit_id');
-        // $complaintId = Mapping::where('unit_id','=',$unitId)->groupBy('complaint_id')->get();
+        $unitId = session()->get('user.unit_id');
+        $complaintId = Mapping::where('unit_id', '=', $unitId)->select('complaint_id')->groupBy('complaint_id')->get();
+        $c = [];
+        foreach($complaintId as $cid){
+            $c[] = $cid->complaint_id;
+        }
+            $data = Complaint::whereYear('created_at', '=', $tahun)
+                ->whereMonth('created_at', '=', $bulan)
+                ->whereIn('id', $c)
+                ->orderBy('created_at', 'desc')
+                ->get();
 
-        $data = Complaint::whereYear('created_at', '=', $tahun)
-            ->whereMonth('created_at', '=', $bulan)
-            // ->whereIn('id', array_values($complaintId->complaint_id))
-            ->orderBy('created_at', 'desc')
-            ->get();
         return \DataTables::of($data)
             ->setRowClass(function ($data) {
                 return $data->is_urgent == 1 ? 'aduan-urgent' : '';
@@ -336,10 +340,8 @@ class ComplaintsController extends Controller
     }
 
     public function storeKlasifikasi(Request $request){
-        // dd(session()->all());
         $unitMapping = UnitMapping::whereIn('scope_id', array_values($request->bidang))->distinct()->get();
         foreach($unitMapping as $up){
-            // echo $request->id.'<br>'; die;
             Mapping::create([
                 'complaint_id' => $request->id,
                 'unit_id' => $up->unit_id,
