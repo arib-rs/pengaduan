@@ -357,7 +357,7 @@
                             toastr['success'](result.success);
                             $('.datatable').DataTable().ajax.reload();
                             $('#ModalKlasifikasi').modal('hide');
-                            $('#form-data').find('input.form-control').val('');
+                            $('#form-klasifikasi').find('input.form-control').val('');
                         } else {
                             $.each(result.errors, function(key, value) {
                                 toastr['error'](value);

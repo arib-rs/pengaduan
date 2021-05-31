@@ -48,4 +48,8 @@ class Complaint extends Model
     {
         return $this->belongsTo(Complaint::class, 'kode_lanjutan', 'kode');
     }
+    public function mapping()
+    {
+        return $this->hasMany(Mapping::class);
+    }
 }
