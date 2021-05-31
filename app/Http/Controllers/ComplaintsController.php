@@ -5,9 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\Complaint;
 use App\Models\ComplaintProgress;
 use App\Models\Job;
+use App\Models\Mapping;
 use App\Models\Media;
+use App\Models\Scope;
+use App\Models\Unit;
+use App\Models\UnitMapping;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\DB;
 
 class ComplaintsController extends Controller
 {
@@ -257,6 +262,7 @@ class ComplaintsController extends Controller
         $data['bulan'] = $this->bulan;
         $data['aduan'] = $aduan;
         $data['startdate'] = $this->hari[$aduan->created_at->format('l')] . ', ' . $aduan->created_at->format('d-m-Y');
+        $data['bidang'] = Scope::orderBy('bidang', 'asc')->get();
         $interval = "";
         if ($aduan->is_urgent == 1) {
             $interval = "+7 days";
@@ -323,5 +329,25 @@ class ComplaintsController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function storeKlasifikasi(Request $request){
+        // dd($request->kode);
+        $unitMapping = UnitMapping::whereIn('scope_id', array_values($request->bidang))->distinct()->get();
+        foreach($unitMapping as $up){
+            // echo $request->id.'<br>'; die;
+            Mapping::create([
+                'complaint_id' => $request->id,
+                'unit_id' => $up->unit_id,
+                'scope_id' => $up->scope_id
+            ]);
+        }
+        ComplaintProgress::create([
+            'complaint_id' => $request->id,
+            'aksi' => 'Klasifikasi',
+            'lokasi' => 'Manajemen'
+        ]);
+        $affected = DB::table('complaints')->where('kode',$request->kode)->update(['status' => '2']);
+        return response()->json(['success' => 'Data telah disimpan.']);
     }
 }

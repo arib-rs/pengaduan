@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Mapping extends Model
 {
     use HasFactory;
+    protected $fillable = ['complaint_id','unit_id','scope_id'];
 }

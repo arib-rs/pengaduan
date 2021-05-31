@@ -202,6 +202,7 @@
             </div>
         </div>
     </div>
+    
     <div class="modal fade" id="ModalKlasifikasi" tabindex="-1" role="dialog" aria-labelledby="ModalKlasifikasiTitle"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -209,19 +210,32 @@
                 <div class="modal-header">
                     <h3 class="modal-title" id="ModalKlasifikasiTitle">Klasifikasi Aduan</h3>
                 </div>
-                <form id="form-data" method="POST" action={{ url('/klasifikasi-save') }}>
-                    @csrf
+                {{-- <form id="form-klasifikasi" method="POST" action={{ url('/klasifikasi-save') }}> --}}
+                <form id="form-klasifikasi">
+                    {{-- @csrf --}}
                     <div class="modal-body">
                         <input type="hidden" class="form-control" id="id" name="id" value={{ $aduan->id }}>
+                        <input type="hidden" class="form-control" id="kode" name="kode" value={{ $aduan->kode }}>
+                        {{-- <div class="form-group">
+                            <label for="kode">No. Aduan</label>
+                            <input type="text" class="form-control" id="kode" name="kode" value="{{ $aduan->kode }}" required>
+                        </div> --}}
                         <div class="form-group">
-                            <textarea style="resize:vertical;" autocomplete="off"
-                                placeholder="Tuliskan alasan aduan tidak layak" class="form-control" id="alasan"
-                                name="alasan" required></textarea>
+                            <label for="bidang">Pilih Klasifikasi Bidang</label>
+                            @foreach ($bidang as $d)
+                                <div style="margin-left:20px" class="checkbox">
+                                    <label>
+                                        <input type="checkbox" id="bidang{{ $d->id }}"
+                                            name="bidang[{{ $d->id }}]" value="{{ $d->id }}">
+                                        {{ $d->bidang }}
+                                    </label>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button id="btn-reset" type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                        <button id="btn-kembalikan-save" type="submit" class="btn btn-primary"><i class="fa fa-save"></i>
+                        <button id="btn-save-klasifikasi" type="submit" class="btn btn-primary"><i class="fa fa-save"></i>
                             Simpan</button>
                     </div>
                 </form>
@@ -309,6 +323,56 @@
             $('#btn-klasifikasi').click(function() {
                 $('#ModalKlasifikasi').modal('show');
             })
+
+            $('#form-klasifikasi').submit(function(e) {
+                e.preventDefault();
+            });
+            $('#btn-save-klasifikasi').click(function() {
+                var b = $(this),
+                    i = b.find('i'),
+                    cls = i.attr('class'),
+                    id = $('#id').val(),
+                    url = '',
+                    method = '';
+
+                var form = $('#form-klasifikasi'),
+                    data = form.serializeArray();
+                console.log(data);
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: "{{ route('klasifikasi') }}",
+                    method: "POST",
+                    data: data,
+                    beforeSend: function() {
+                        b.attr('disabled', 'disabled');
+                        i.removeClass().addClass('fa fa-spin fa-circle-o-notch');
+                    },
+                    success: function(result) {
+                        if (result.success) {
+                            toastr['success'](result.success);
+                            $('.datatable').DataTable().ajax.reload();
+                            $('#ModalKlasifikasi').modal('hide');
+                            $('#form-data').find('input.form-control').val('');
+                        } else {
+                            $.each(result.errors, function(key, value) {
+                                toastr['error'](value);
+                            });
+                        }
+                        b.removeAttr('disabled');
+                        i.removeClass().addClass(cls);
+
+                    },
+                    error: function() {
+                        b.removeAttr('disabled');
+                        i.removeClass().addClass(cls);
+                    }
+                });
+            });
         })
 
     </script>

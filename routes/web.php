@@ -48,4 +48,5 @@ Route::middleware(['auth'])->group(function () {
     Route::get('get-progresses/{id?}', 'ComplaintsController@getProgresses')->name('get-progresses');
     Route::post('validasi', 'ComplaintsController@validasi');
     Route::post('kembalikan-save', 'ComplaintsController@kembalikanSave');
+    Route::post('klasifikasi', 'ComplaintsController@storeKlasifikasi')->name('klasifikasi');
 });
