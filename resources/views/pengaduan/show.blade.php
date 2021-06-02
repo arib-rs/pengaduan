@@ -175,7 +175,29 @@
                                 </div>
                             </div>
                         </div>
-
+                        <hr>
+                        <div class="row">
+                            <div style="line-height:1.7" class="col-lg-4">
+                                <div style="margin-bottom:5px;font-size:16px">Detail Respon</div>
+                                <div class="col-lg-12">
+                                    <table class="table table-bordered table-hover datatable">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 25%">Tanggal</th>
+                                                <th style="width: 25%">Nama Bakohumas</th>
+                                                <th style="width: 50%">Uraian</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                            <div style="line-height:1.7" class="col-lg-4">
+                                <div style="margin-bottom:5px;font-size:16px">Detail Foto</div>
+                            </div>
+                            <div style="line-height:1.7" class="col-lg-4">
+                                <div style="margin-bottom:5px;font-size:16px">Lokasi Respon</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -381,9 +403,7 @@
                         data: 'lokasi',
                         sClass: 'text-center'
                     }
-
                 ]
-
             });
 
 
