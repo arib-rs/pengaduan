@@ -7,6 +7,7 @@ use App\Models\ComplaintProgress;
 use App\Models\Job;
 use App\Models\Mapping;
 use App\Models\Media;
+use App\Models\Response;
 use App\Models\Scope;
 use App\Models\Unit;
 use App\Models\UnitMapping;
@@ -175,7 +176,6 @@ class ComplaintsController extends Controller
             'kode_lanjutan' => 'nullable|exists:complaints,kode'
         ], [
             'kode_lanjutan.exists' => 'No. aduan lanjutan tidak tersedia.'
-
         ]);
 
         if ($validator->fails()) {
@@ -355,5 +355,56 @@ class ComplaintsController extends Controller
         ]);
         $affected = DB::table('complaints')->where('kode',$request->kode)->update(['status' => '2']);
         return response()->json(['success' => 'Data telah disimpan.']);
+    }
+
+    public function storeRespon(Request $request){
+        // dd($request->all());
+        $validator = \Validator::make($request->all(), [
+            'uraian' => 'required',
+            'lat' => 'required',
+            'foto_1' => 'image|mimes:jpeg,png,jpg,bmp,gif|max:2048',
+            'foto_2' => 'image|mimes:jpeg,png,jpg,bmp,gif|max:2048',
+            'foto_3' => 'image|mimes:jpeg,png,jpg,bmp,gif|max:2048',
+        ], [
+            'kode_lanjutan.exists' => 'No. aduan lanjutan tidak tersedia.',
+            'lat.required' => 'Silahkan pilih lokasi terlebih dahulu',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()->all()]);
+        } else {
+            $kode = date('Y-md-His');
+            $pict_1 = null;
+            $pict_2 = null;
+            $pict_3 = null;
+            if ($request->foto_1) {
+                $pict_1 = $kode . '_1' . '.' . $request->foto_1->extension();
+                $request->foto_1->move(public_path('upload-photo'), $pict_1);
+            }
+            if ($request->foto_2) {
+                $pict_2 = $kode . '_2' . '.' . $request->foto_2->extension();
+                $request->foto_2->move(public_path('upload-photo'), $pict_2);
+            }
+            if ($request->foto_3) {
+                $pict_3 = $kode . '_3' . '.' . $request->foto_3->extension();
+                $request->foto_3->move(public_path('upload-photo'), $pict_3);
+            }
+
+            $lastInsertedId = Response::create(
+                $request->except(['foto_1', 'foto_2', 'foto_3']) +
+                    [
+                        'complaint_id' => $request->id,
+                        'lat' => $request->lat,
+                        'long' => $request->lng,
+                        'jenis' => 'Respon',
+                        'responden' => $request->session()->get('user.id'),
+                        'pict_1' => $pict_1,
+                        'pict_2' => $pict_2,
+                        'pict_3' => $pict_3
+                    ]
+            )->id;
+            toastr()->success('Data telah disimpan.');
+            return response()->json(['success' => 'Data telah disimpan.']);
+        }
     }
 }

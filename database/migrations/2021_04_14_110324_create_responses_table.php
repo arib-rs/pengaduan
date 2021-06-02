@@ -20,11 +20,11 @@ class CreateResponsesTable extends Migration
             $table->string('jenis');
             $table->bigInteger('responden');
             $table->dateTime('read_at')->nullable();
-            $table->string('pict_1');
-            $table->string('pict_2');
-            $table->string('pict_3');
-            $table->string('long');
-            $table->string('lat');
+            $table->string('pict_1')->nullable();
+            $table->string('pict_2')->nullable();
+            $table->string('pict_3')->nullable();
+            $table->string('long')->nullable();
+            $table->string('lat')->nullable();
             $table->timestamps();
         });
     }

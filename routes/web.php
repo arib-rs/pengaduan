@@ -49,4 +49,5 @@ Route::middleware(['auth'])->group(function () {
     Route::post('validasi', 'ComplaintsController@validasi');
     Route::post('kembalikan-save', 'ComplaintsController@kembalikanSave');
     Route::post('klasifikasi', 'ComplaintsController@storeKlasifikasi')->name('klasifikasi');
+    Route::post('respon', 'ComplaintsController@storeRespon')->name('respon');
 });

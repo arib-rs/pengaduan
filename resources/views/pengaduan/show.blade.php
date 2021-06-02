@@ -62,9 +62,17 @@
                                                 </a>
                                             </span>
                                         @endif
-                                        <a href="{{ url('pengaduan') }}" id="btn-batal" class="btn btn-default">
+                                        @if ($aduan->status == 2)
+                                            <span id="respon">
+                                                <a id="btn-respon" class="btn btn-success">
+                                                    <i class="fa fa-justify"></i>
+                                                    Respon
+                                                </a>
+                                            </span>
+                                        @endif
+                                        {{-- <a href="{{ url('pengaduan') }}" id="btn-batal" class="btn btn-default">
                                             Batal
-                                        </a>
+                                        </a> --}}
                                     </div>
                                 </div>
                             </div>
@@ -210,16 +218,11 @@
                 <div class="modal-header">
                     <h3 class="modal-title" id="ModalKlasifikasiTitle">Klasifikasi Aduan</h3>
                 </div>
-                {{-- <form id="form-klasifikasi" method="POST" action={{ url('/klasifikasi-save') }}> --}}
                 <form id="form-klasifikasi">
                     {{-- @csrf --}}
                     <div class="modal-body">
                         <input type="hidden" class="form-control" id="id" name="id" value={{ $aduan->id }}>
                         <input type="hidden" class="form-control" id="kode" name="kode" value={{ $aduan->kode }}>
-                        {{-- <div class="form-group">
-                            <label for="kode">No. Aduan</label>
-                            <input type="text" class="form-control" id="kode" name="kode" value="{{ $aduan->kode }}" required>
-                        </div> --}}
                         <div class="form-group">
                             <label for="bidang">Pilih Klasifikasi Bidang</label>
                             @foreach ($bidang as $d)
@@ -236,6 +239,97 @@
                     <div class="modal-footer">
                         <button id="btn-reset" type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                         <button id="btn-save-klasifikasi" type="submit" class="btn btn-primary"><i class="fa fa-save"></i>
+                            Simpan</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="ModalRespon" tabindex="-1" role="dialog" aria-labelledby="ModalResponTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="ModalResponTitle">Respon Aduan</h3>
+                </div>
+                <form id="form-respon">
+                    <div class="modal-body">
+                        <input type="hidden" class="form-control" id="id" name="id" value={{ $aduan->id }}>
+                        <input type="hidden" class="form-control" id="kode" name="kode" value={{ $aduan->kode }}>
+                        <div class="form-group">
+                            <textarea style="resize:vertical;" autocomplete="off"
+                                placeholder="Tuliskan uraian respon aduan" class="form-control" id="uraian"
+                                name="uraian"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Foto</label>
+                            <div class="col-sm-10">
+                                <input style="display:none" type="file" name="foto_1" id="foto_1"
+                                    accept=".jpeg,.png,.jpg,.bmp,.gif">
+                                <label for="foto_1" class="btn btn-app img-upload" id="foto_1_label">
+                                    <i class="fa fa-plus"></i>
+                                    Foto 1
+                                </label>
+                                <div id="foto_1_preview"
+                                    style=" display:none; position: relative; margin:10px; border:1px solid #666">
+
+                                    <a id="foto_1_del" class="btn btn-xs btn-danger"
+                                        style="position:absolute; right:2px; top:3px">
+                                        <i class="fa fa-times"></i>
+                                    </a>
+                                    <img style="max-width:200px;max-height:200px">
+
+                                </div>
+                                <input style="display:none" type="file" name="foto_2" id="foto_2"
+                                    accept=".jpeg,.png,.jpg,.bmp,.gif">
+                                <label for="foto_2" class="btn btn-app img-upload" id="foto_2_label">
+                                    <i class="fa fa-plus"></i>
+                                    Foto 2
+                                </label>
+                                <div id="foto_2_preview"
+                                    style=" display:none; position: relative;  margin:10px; border:1px solid #666">
+
+                                    <a id="foto_2_del" class="btn btn-xs btn-danger"
+                                        style="position:absolute; right:2px; top:3px">
+                                        <i class="fa fa-times"></i>
+                                    </a>
+                                    <img style="max-width:200px;max-height:200px">
+
+                                </div>
+                                <input style="display:none" type="file" name="foto_3" id="foto_3"
+                                    accept=".jpeg,.png,.jpg,.bmp,.gif">
+
+                                <label for="foto_3" class="btn btn-app img-upload" id="foto_3_label">
+                                    <i class="fa fa-plus"></i>
+                                    Foto 3
+                                </label>
+                                <div id="foto_3_preview"
+                                    style=" display:none; position: relative;   margin:10px; border:1px solid #666">
+
+                                    <a id="foto_3_del" class="btn btn-xs btn-danger"
+                                        style="position:absolute; right:2px; top:3px">
+                                        <i class="fa fa-times"></i>
+                                    </a>
+                                    <img style="max-width:200px;max-height:200px">
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="mapid" class="col-sm-2 control-label">Lokasi</label>
+                            <div class="col-sm-10">
+                                <input type="hidden" class="form-control" name="lng" id="lng2" />
+                                <input type="hidden" class="form-control" name="lat" id="lat2" />
+                                <div id="mapid2" style="height:400px"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="btn-reset" type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                        <button id="btn-save-respon" type="submit" class="btn btn-primary"><i class="fa fa-save"></i>
                             Simpan</button>
                     </div>
                 </form>
@@ -323,6 +417,14 @@
             $('#btn-klasifikasi').click(function() {
                 $('#ModalKlasifikasi').modal('show');
             })
+            $('#btn-respon').click(function() {
+                $('#ModalRespon').modal('show');
+            })
+            $('#ModalRespon').on('shown.bs.modal', function(){
+                setTimeout(function() {
+                    mymap2.invalidateSize();
+            }, 1);
+            })
 
             $('#form-klasifikasi').submit(function(e) {
                 e.preventDefault();
@@ -372,6 +474,167 @@
                         i.removeClass().addClass(cls);
                     }
                 });
+            });
+            
+            $('#form-respon').submit(function(e) {
+                e.preventDefault();
+            });
+            $('#btn-save-respon').click(function() {
+                var b = $(this),
+                    i = b.find('i'),
+                    cls = i.attr('class'),
+                    id = $('#id').val(),
+                    url = '',
+                    method = '';
+
+                var form = $('#form-respon'),
+                    data = new FormData(form[0]);
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: "{{ route('respon') }}",
+                    method: "POST",
+                    data: data,
+                    processData: false,
+                    contentType: false,
+                    beforeSend: function() {
+                        b.attr('disabled', 'disabled');
+                        i.removeClass().addClass('fa fa-spin fa-circle-o-notch');
+                    },
+                    success: function(result) {
+                        if (result.success) {
+                            toastr['success'](result.success);
+                            $('.datatable').DataTable().ajax.reload();
+                            $('#ModalRespon').modal('hide');
+                            $('#form-respon').find('input.form-control').val('');
+                            $('#uraian').val('');
+                            $('#lng2').val('');
+                            $('#lat2').val('');
+                            $('#foto_1_label').css('display', 'inline-block');
+                            $('#foto_1_preview').css('display', 'none');
+                            $('#foto_2_label').css('display', 'inline-block');
+                            $('#foto_2_preview').css('display', 'none');
+                            $('#foto_3_label').css('display', 'inline-block');
+                            $('#foto_3_preview').css('display', 'none');
+                        } else {
+                            $.each(result.errors, function(key, value) {
+                                toastr['error'](value);
+                            });
+                        }
+                        b.removeAttr('disabled');
+                        i.removeClass().addClass(cls);
+
+                    },
+                    error: function() {
+                        b.removeAttr('disabled');
+                        i.removeClass().addClass(cls);
+                    }
+                });
+            });
+
+            var mymap2 = L.map('mapid2').setView([-7.445999016651402, 112.71844103230215], 11);
+            var marker2 = '';
+
+            L.tileLayer(
+                'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYXJpYnJzIiwiYSI6ImNrb3V6ODhyYTAyeGwycHB0Z2RqZXZ2dTgifQ.0OhJv5NM-IiX9GE9E00CWw', {
+                    attribution: '',
+                    maxZoom: 18,
+                    id: 'mapbox/streets-v11',
+                    tileSize: 512,
+                    zoomOffset: -1,
+                    accessToken: 'your.mapbox.access.token'
+                }).addTo(mymap2);
+
+            function onMapClick(e) {
+                if (marker2 != '') {
+                    mymap2.removeLayer(marker2);
+                }
+                marker2 = L.marker(e.latlng).addTo(mymap2);
+
+                $('#lng2').val(e.latlng.lng);
+                $('#lat2').val(e.latlng.lat);
+
+                $.get('https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=' + e.latlng.lat + '&lon=' + e
+                    .latlng.lng,
+                    function(data) {
+                        marker2.bindPopup("<b>" + data.display_name + "</b><br />" + e.latlng.lat + ', ' +
+                            e.latlng.lng).openPopup();
+                    });
+            }
+
+            mymap2.on('click', onMapClick);
+
+            $("#foto_1").change(function() {
+                if (this.files && this.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function(e) {
+                        $('#foto_1_label').css('display', 'none');
+                        $('#foto_1_preview img').removeAttr('src');
+                        $('#foto_1_preview img').attr('src', e.target.result);
+                        $('#foto_1_preview').css('display', 'inline-block');
+                    }
+
+                    reader.readAsDataURL(this.files[0]);
+                } else {
+                    $('#foto_1_label').css('display', 'inline-block');
+                    $('#foto_1_preview').css('display', 'none');
+                }
+            });
+            $("#foto_2").change(function() {
+                if (this.files && this.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function(e) {
+                        $('#foto_2_label').css('display', 'none');
+                        $('#foto_2_preview img').removeAttr('src');
+                        $('#foto_2_preview img').attr('src', e.target.result);
+                        $('#foto_2_preview').css('display', 'inline-block');
+                    }
+
+                    reader.readAsDataURL(this.files[0]);
+                } else {
+                    $('#foto_2_label').css('display', 'inline-block');
+                    $('#foto_2_preview').css('display', 'none');
+                }
+            });
+            $("#foto_3").change(function() {
+                if (this.files && this.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function(e) {
+                        $('#foto_3_label').css('display', 'none');
+                        $('#foto_3_preview img').removeAttr('src');
+                        $('#foto_3_preview img').attr('src', e.target.result);
+                        $('#foto_3_preview').css('display', 'inline-block');
+                    }
+
+                    reader.readAsDataURL(this.files[0]);
+                } else {
+                    $('#foto_3_label').css('display', 'inline-block');
+                    $('#foto_3_preview').css('display', 'none');
+                }
+            });
+
+            $("#foto_1").trigger('change');
+            $("#foto_2").trigger('change');
+            $("#foto_3").trigger('change');
+
+            $('#foto_1_del').click(function() {
+                $("#foto_1").val("");
+                $("#foto_1").trigger('change');
+            });
+            $('#foto_2_del').click(function() {
+                $("#foto_2").val("");
+                $("#foto_2").trigger('change');
+            });
+            $('#foto_3_del').click(function() {
+                $("#foto_3").val("");
+                $("#foto_3").trigger('change');
             });
         })
 
