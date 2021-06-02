@@ -403,6 +403,13 @@ class ComplaintsController extends Controller
                         'pict_3' => $pict_3
                     ]
             )->id;
+
+            $unit = Unit::where('id', '=', session()->get('user.unit_id'))->select('nama')->first();
+            ComplaintProgress::create([
+                'complaint_id' => $request->id,
+                'aksi' => 'Respon',
+                'lokasi' => $unit->nama
+            ]);
             toastr()->success('Data telah disimpan.');
             return response()->json(['success' => 'Data telah disimpan.']);
         }
