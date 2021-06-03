@@ -180,7 +180,7 @@
                             <div style="line-height:1.7" class="col-lg-4">
                                 <div style="margin-bottom:5px;font-size:16px">Detail Respon</div>
                                 <div class="col-lg-12">
-                                    <table class="table table-bordered table-hover datatable">
+                                    <table class="table table-bordered table-hover datatable-respon">
                                         <thead>
                                             <tr>
                                                 <th style="width: 25%">Tanggal</th>
@@ -193,9 +193,45 @@
                             </div>
                             <div style="line-height:1.7" class="col-lg-4">
                                 <div style="margin-bottom:5px;font-size:16px">Detail Foto</div>
+                                <div class="col-lg-12">
+                                    @if ($respon == null)
+                                        - Tidak Tersedia -
+                                    @elseif ($respon->pict_1)
+                                        <div style="margin:10px 10px 10px 0px; border:1px solid #666">
+                                            <a href="{{ url('/upload-photo/' . $respon->pict_1) }}">
+                                                <img style="width:100%;"
+                                                    src="{{ url('/upload-photo/' . $respon->pict_1) }}">
+                                            </a>
+                                        </div>
+                                    @elseif ($respon->pict_2)
+                                        <div style="margin:10px 10px 10px 0px;border:1px solid #666">
+                                            <a href="{{ url('/upload-photo/' . $respon->pict_2) }}">
+                                                <img style="width:100%;"
+                                                    src="{{ url('/upload-photo/' . $respon->pict_2) }}">
+                                            </a>
+                                        </div>
+                                    @elseif ($respon->pict_3)
+                                        <div style="margin:10px 10px 10px 0px;border:1px solid #666">
+                                            <a href="{{ url('/upload-photo/' . $respon->pict_3) }}">
+                                                <img style="width:100%;"
+                                                    src="{{ url('/upload-photo/' . $respon->pict_3) }}">
+                                            </a>
+                                        </div>
+                                    @endif
+                                </div>
                             </div>
                             <div style="line-height:1.7" class="col-lg-4">
                                 <div style="margin-bottom:5px;font-size:16px">Lokasi Respon</div>
+                                <div class="col-lg-12">
+                                    @if ($respon == null)
+                                        <div id="mapid3" style="display:none"></div>
+                                        - Tidak Tersedia -
+                                    @elseif ($respon->long && $respon->lat)
+                                        <input type="hidden" name="lng3" id="lng3" value="{{ $respon->long }}" />
+                                        <input type="hidden" name="lat3" id="lat3" value="{{ $respon->lat }}" />
+                                        <div id="mapid3" style="height:400px"></div>
+                                    @endif
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -656,6 +692,60 @@
                 $("#foto_3").val("");
                 $("#foto_3").trigger('change');
             });
+
+            var dataTable = $('.datatable-respon').DataTable({
+                processing: true,
+                serverSide: true,
+                lengthChange: false,
+                autoWidth: false,
+                searching: false,
+                ordering: false,
+                info: false,
+                pageLength: 0,
+                paging: false,
+                // scrollX: true,
+                "order": [
+                    [0, "desc"]
+                ],
+                ajax: "../get-responses/" + pengaduan_id,
+                columns: [{
+                        data: 'created_at',
+                        sClass: 'text-center'
+                    },
+                    {
+                        data: 'nama',
+                        sClass: 'text-center'
+                    },
+                    {
+                        data: 'uraian',
+                        sClass: 'text-center'
+                    }
+                ]
+            });
+
+            var lng3 = $('#lng3').val(),
+                lat3 = $('#lat3').val(),
+                mymap3 = L.map('mapid3').setView([lat3, lng3], 11),
+                marker = '';
+
+
+            L.tileLayer(
+                'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYXJpYnJzIiwiYSI6ImNrb3V6ODhyYTAyeGwycHB0Z2RqZXZ2dTgifQ.0OhJv5NM-IiX9GE9E00CWw', {
+                    attribution: '',
+                    maxZoom: 18,
+                    id: 'mapbox/streets-v11',
+                    tileSize: 512,
+                    zoomOffset: -1,
+                    accessToken: 'your.mapbox.access.token'
+                }).addTo(mymap3);
+
+            marker = L.marker([lat3, lng3]).addTo(mymap3);
+
+            $.get('https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=' + lat3 + '&lon=' + lng3,
+                function(data) {
+                    marker.bindPopup("<b>" + data.display_name + "</b><br />" + lat3 + ', ' +
+                        lng3).openPopup();
+                });
         })
 
     </script>

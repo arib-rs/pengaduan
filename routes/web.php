@@ -38,7 +38,7 @@ Route::middleware(['auth'])->group(function () {
     ]);
     Route::get('get-scopes', 'ScopesController@getScopes')->name('get-scopes');
     Route::get('get-media', 'MediaController@getMedia')->name('get-media');
-    Route::get('get-jobs', 'JobsController@getJobs')->name('get-jobs');
+    Route::get('get-jobs', 'JobsController@getJobs')->name('get-jobs');  
     Route::get('get-opds', 'UnitsController@getOpds')->name('get-opds');
     Route::get('get-tingkats', 'UnitsController@getTingkats')->name('get-tingkats');
     Route::get('get-tingkats-opds', 'UsersController@getTingkatsOpds')->name('get-tingkats-opds');
@@ -46,6 +46,7 @@ Route::middleware(['auth'])->group(function () {
     Route::put('resetPassword/{id?}', 'UsersController@resetPassword')->name('resetPassword');
     Route::get('get-pengaduans-bymonth/{tahun?}/{bulan?}', 'ComplaintsController@getPengaduansByMonth')->name('get-pengaduans-bymonth');
     Route::get('get-progresses/{id?}', 'ComplaintsController@getProgresses')->name('get-progresses');
+    Route::get('get-responses/{id?}', 'ComplaintsController@getResponses')->name('get-responses');
     Route::post('validasi', 'ComplaintsController@validasi');
     Route::post('kembalikan-save', 'ComplaintsController@kembalikanSave');
     Route::post('klasifikasi', 'ComplaintsController@storeKlasifikasi')->name('klasifikasi');

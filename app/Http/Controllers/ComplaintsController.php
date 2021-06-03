@@ -131,6 +131,20 @@ class ComplaintsController extends Controller
             })
             ->make(true);
     }
+    
+    public function getResponses($id)
+    {
+        $data = Response::where('complaint_id', '=', $id)
+            ->join('users','users.id','=','responses.responden')
+            ->join('units','units.id','=','users.unit_id')
+            ->orderBy('responses.created_at', 'asc')
+            ->get();
+        return \DataTables::of($data)
+            ->editColumn('created_at', function ($data) {
+                return $data->created_at->format('d-m-Y H:i:s');
+            })
+            ->make(true);
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -264,11 +278,15 @@ class ComplaintsController extends Controller
     public function show($id)
     {
         $aduan = Complaint::with('job', 'media_', 'parent')->find($id);
+        $respon = Response::where('complaint_id',$id)->first();
+        // if($respon == null){
+        //     $respon = "tes";
+        // }
         $data['status'] = $this->status($aduan->status);
-
         $data['title'] = 'Detail Pengaduan';
         $data['bulan'] = $this->bulan;
         $data['aduan'] = $aduan;
+        $data['respon'] = $respon;
         $data['startdate'] = $this->hari[$aduan->created_at->format('l')] . ', ' . $aduan->created_at->format('d-m-Y');
         $data['bidang'] = Scope::orderBy('bidang', 'asc')->get();
         $interval = "";
