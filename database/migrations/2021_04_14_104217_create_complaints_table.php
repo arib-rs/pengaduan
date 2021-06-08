@@ -26,6 +26,7 @@ class CreateComplaintsTable extends Migration
             $table->string('telepon')->nullable();
             $table->bigInteger('pekerjaan')->nullable();
             $table->string('email')->nullable();
+            $table->string('sosmed')->nullable();
 
             $table->bigInteger('media');
             $table->string('subyek');

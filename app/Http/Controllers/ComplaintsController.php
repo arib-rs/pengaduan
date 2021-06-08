@@ -254,6 +254,7 @@ class ComplaintsController extends Controller
                         'kota' => ucwords($request->kota),
                         'kode' => $kode,
                         'status' => 0,
+                        'sosmed' => $request->sosmed,
                         'pelapor' => $request->session()->get('user.id'),
                         'pict_1' => $pict_1,
                         'pict_2' => $pict_2,

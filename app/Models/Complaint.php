@@ -19,6 +19,7 @@ class Complaint extends Model
         'telepon',
         'pekerjaan',
         'email',
+        'sosmed',
         'media',
         'subyek',
         'uraian',

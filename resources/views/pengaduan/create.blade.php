@@ -114,6 +114,13 @@
                                                 placeholder="E-mail" value="{{ $usertamu ? $usertamu['email'] : '' }}">
                                         </div>
                                     </div>
+                                    <div class="form-group">
+                                        <label for="sosmed" class="col-sm-2 control-label">Sosial Media</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="sosmed" name="sosmed"
+                                                placeholder="contoh:facebook.com/netizenbaik -- @instagramusername -- @twitterusername">
+                                        </div>
+                                    </div>
                                 </div>
 
                             </div>
