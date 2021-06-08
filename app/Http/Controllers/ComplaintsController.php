@@ -86,15 +86,48 @@ class ComplaintsController extends Controller
         foreach($complaintId as $cid){
             $c[] = $cid->complaint_id;
         }
-            $data = Complaint::whereYear('created_at', '=', $tahun)
-                ->whereMonth('created_at', '=', $bulan)
-                ->whereIn('id', $c)
-                ->orderBy('created_at', 'desc')
-                ->get();
+        
+        // $data = Complaint::whereYear('created_at', '=', $tahun)
+        // ->whereMonth('created_at', '=', $bulan)
+        // ->whereIn('id', $c)
+        // ->orderBy('created_at', 'desc')
+        // ->get();
+        // dd($data);
+
+        $query = Complaint::whereYear('created_at', '=', $tahun)
+        ->whereMonth('created_at', '=', $bulan)
+        ->orderBy('created_at', 'desc');
+
+        if (session()->get('user.level_id') != 1) {
+            $query = $query->whereIn('id', $c);
+        }
+
+        $data = $query->get();
 
         return \DataTables::of($data)
             ->setRowClass(function ($data) {
-                return $data->is_urgent == 1 ? 'aduan-urgent' : '';
+                $interval = "";
+                if ($data->is_urgent == 1) {
+                    $interval = "+7 days";
+                } else {
+                    $interval = "+10 days";
+                }
+                $enddate = strtotime($data->created_at . $interval);
+                $startdate_ = date('Y-m-d');
+                $enddate_ = date('Y-m-d', $enddate);
+                $awal  = date_create($startdate_);
+                $akhir = date_create($enddate_);
+                $diff  = date_diff($awal, $akhir);
+                
+                if($data->is_urgent == 1){
+                    $class = 'aduan-urgent';
+                    if($startdate_ > $enddate_){
+                        $class = 'aduan-danger';
+                    }
+                }
+
+                // return $data->is_urgent == 1 ? 'aduan-darurat' : '';
+                return $class;
             })
             ->editColumn('created_at', function ($data) {
                 return $data->created_at->format('d-m-Y');
@@ -279,9 +312,7 @@ class ComplaintsController extends Controller
     {
         $aduan = Complaint::with('job', 'media_', 'parent')->find($id);
         $respon = Response::where('complaint_id',$id)->first();
-        // if($respon == null){
-        //     $respon = "tes";
-        // }
+        
         $data['status'] = $this->status($aduan->status);
         $data['title'] = 'Detail Pengaduan';
         $data['bulan'] = $this->bulan;
@@ -307,10 +338,13 @@ class ComplaintsController extends Controller
         if ($aduan->status < 3) {
             if ($startdate_ < $enddate_) {
                 $data['keterangan'] = "(Kurang " . $diff->days . " hari lagi)";
+                $data['statusTerlambat'] = "";
             } else if ($startdate_ == $enddate_) {
                 $data['keterangan'] = "(Hari terakhir)";
+                $data['statusTerlambat'] = "";
             } else {
                 $data['keterangan'] = "(Terlambat " . $diff->days . " hari)";
+                $data['statusTerlambat'] = "aduan-danger";
             }
         }
 

@@ -107,8 +107,10 @@
                                     <div><strong>Tgl Aduan :</strong> <br>
                                         <p style="padding-left:10px">{{ $startdate }}</p>
                                     </div>
-                                    <div><strong>Tgl Maks Proses :</strong> <br>
-                                        <p style="padding-left:10px">{{ $enddate . ' ' . $keterangan }} </p>
+                                    <div><span class="{{ $statusTerlambat }}">
+                                        <strong>Tgl Maks Proses :</strong> <br>
+                                        <p style="padding-left:10px" class="{{ $statusTerlambat }}">{{ $enddate . ' ' . $keterangan }} </p>
+                                        </span>
                                     </div>
                                 </div>
                             </div>

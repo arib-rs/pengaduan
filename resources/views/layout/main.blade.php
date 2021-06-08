@@ -49,11 +49,20 @@
         .aduan-urgent {
             animation: blinker 2s linear infinite;
         }
+        .aduan-danger {
+            animation: blinker-danger 2s linear infinite;
+        }
 
         @keyframes blinker {
             50% {
                 /* background: #FFFACD; */
                 background: #f6e58d;
+            }
+        }
+        @keyframes blinker-danger {
+            50% {
+                /* background: #FFFACD; */
+                background: #f54263;
             }
         }
 
