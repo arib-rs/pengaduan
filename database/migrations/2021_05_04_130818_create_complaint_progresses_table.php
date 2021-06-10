@@ -18,6 +18,7 @@ class CreateComplaintProgressesTable extends Migration
             $table->bigInteger('complaint_id');
             $table->string('aksi');
             $table->string('lokasi');
+            $table->string('user_id');
             $table->timestamps();
         });
     }

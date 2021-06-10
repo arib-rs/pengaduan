@@ -9,5 +9,5 @@ class ComplaintProgress extends Model
 {
     use HasFactory;
     protected $table = "complaint_progresses";
-    protected $fillable = ['complaint_id', 'aksi', 'lokasi'];
+    protected $fillable = ['complaint_id', 'aksi', 'lokasi','user_id'];
 }

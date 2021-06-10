@@ -264,7 +264,8 @@ class ComplaintsController extends Controller
             ComplaintProgress::create([
                 'complaint_id' => $lastInsertedId,
                 'aksi' => 'Simpan',
-                'lokasi' => 'Sekretariat'
+                'lokasi' => 'Sekretariat',
+                'user_id' => $request->session()->get('user.id')
             ]);
             toastr()->success('Data telah disimpan. <br/> No. aduan <br/> ' . $kode);
             return response()->json(['success' => 'Data telah disimpan. <br/> No. aduan <br/> ' . $kode]);
@@ -281,7 +282,8 @@ class ComplaintsController extends Controller
         ComplaintProgress::create([
             'complaint_id' => $request->id,
             'aksi' => 'Validasi',
-            'lokasi' => 'Manajemen'
+            'lokasi' => 'Manajemen',
+            'user_id' => $request->session()->get('user.id')
         ]);
         toastr()->success('Data aduan berhasil divalidasi');
         return redirect('pengaduan/' . $request->id);
@@ -336,7 +338,7 @@ class ComplaintsController extends Controller
         $diff  = date_diff($awal, $akhir);
 
         $data['keterangan'] = "";
-        if ($aduan->status < 3) {
+        if ($aduan->status <= 3) {
             if ($startdate_ < $enddate_) {
                 $data['keterangan'] = "(Kurang " . $diff->days . " hari lagi)";
                 $data['statusTerlambat'] = "";
@@ -404,7 +406,8 @@ class ComplaintsController extends Controller
         ComplaintProgress::create([
             'complaint_id' => $request->id,
             'aksi' => 'Klasifikasi',
-            'lokasi' => 'Manajemen'
+            'lokasi' => 'Manajemen',
+            'user_id' => $request->session()->get('user.id')
         ]);
         $affected = DB::table('complaints')->where('kode',$request->kode)->update(['status' => '2']);
         return response()->json(['success' => 'Data telah disimpan.']);
@@ -461,8 +464,10 @@ class ComplaintsController extends Controller
             ComplaintProgress::create([
                 'complaint_id' => $request->id,
                 'aksi' => 'Respon',
-                'lokasi' => $unit->nama
+                'lokasi' => $unit->nama,
+                'user_id' => $request->session()->get('user.id')
             ]);
+            $affected = DB::table('complaints')->where('id', $request->id)->update(['status' => '3']);
             toastr()->success('Data telah disimpan.');
             return response()->json(['success' => 'Data telah disimpan.']);
         }

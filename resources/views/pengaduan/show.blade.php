@@ -70,6 +70,14 @@
                                                 </a>
                                             </span>
                                         @endif
+                                        @if ($aduan->status == 3 /* && complain_progress dari pemilik userId/opd tersebut */)
+                                            <span id="respon">
+                                                <a id="btn-respon" class="btn btn-success">
+                                                    <i class="fa fa-justify"></i>
+                                                    Tindak Lanjut
+                                                </a>
+                                            </span>
+                                        @endif
                                         {{-- <a href="{{ url('pengaduan') }}" id="btn-batal" class="btn btn-default">
                                             Batal
                                         </a> --}}
@@ -107,7 +115,7 @@
                                     <div><strong>Tgl Aduan :</strong> <br>
                                         <p style="padding-left:10px">{{ $startdate }}</p>
                                     </div>
-                                    <div><span class="{{ $statusTerlambat }}">
+                                    <div><span class="{{ $statusTerlambat ? $statusTerlambat : '' }}">
                                         <strong>Tgl Maks Proses :</strong> <br>
                                         <p style="padding-left:10px" class="{{ $statusTerlambat }}">{{ $enddate . ' ' . $keterangan }} </p>
                                         </span>
@@ -578,6 +586,7 @@
                             $('#foto_2_preview').css('display', 'none');
                             $('#foto_3_label').css('display', 'inline-block');
                             $('#foto_3_preview').css('display', 'none');
+                            location.reload();
                         } else {
                             $.each(result.errors, function(key, value) {
                                 toastr['error'](value);
