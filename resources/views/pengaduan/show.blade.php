@@ -36,47 +36,56 @@
                                         <p style="padding-left:10px"> {!! nl2br($aduan->uraian) !!}</p>
                                     </div>
                                     <div>
-                                        @if ($aduan->status == 0)
-                                            <span id="validasi-operation">
-                                                <form method="POST" action="{{ url('validasi') }}"
-                                                    style="display: inline-block">
-                                                    @csrf
-                                                    <input type="hidden" id="id" name="id" value={{ $aduan->id }}>
-                                                    <button onclick="return confirm('Apakah anda yakin ?')"
-                                                        id="btn-validasi" class="btn btn-success">
-                                                        <i class="fa fa-check"></i>
-                                                        Layak
-                                                    </button>
-                                                </form>
-                                                <a id="btn-kembalikan" class="btn btn-danger">
-                                                    <i class="fa fa-times"></i>
-                                                    Tidak Layak
-                                                </a>
-                                            </span>
-                                        @endif
-                                        @if ($aduan->status == 1)
-                                            <span id="klasifikasi-operation">
-                                                <a id="btn-klasifikasi" class="btn btn-primary">
-                                                    <i class="fa fa-justify"></i>
-                                                    Klasifikasi
-                                                </a>
-                                            </span>
-                                        @endif
-                                        @if ($aduan->status == 2)
-                                            <span id="respon">
-                                                <a id="btn-respon" class="btn btn-success">
-                                                    <i class="fa fa-justify"></i>
-                                                    Respon
-                                                </a>
-                                            </span>
-                                        @endif
-                                        @if ($aduan->status == 3 /* && complain_progress dari pemilik userId/opd tersebut */)
-                                            <span id="respon">
-                                                <a id="btn-respon" class="btn btn-success">
-                                                    <i class="fa fa-justify"></i>
-                                                    Tindak Lanjut
-                                                </a>
-                                            </span>
+                                        @if(session()->get('user.level_id') != 8)
+                                            @if ($aduan->status == 0)
+                                                <span id="validasi-operation">
+                                                    <form method="POST" action="{{ url('validasi') }}"
+                                                        style="display: inline-block">
+                                                        @csrf
+                                                        <input type="hidden" id="id" name="id" value={{ $aduan->id }}>
+                                                        <button onclick="return confirm('Apakah anda yakin ?')"
+                                                            id="btn-validasi" class="btn btn-success">
+                                                            <i class="fa fa-check"></i>
+                                                            Layak
+                                                        </button>
+                                                    </form>
+                                                    <a id="btn-kembalikan" class="btn btn-danger">
+                                                        <i class="fa fa-times"></i>
+                                                        Tidak Layak
+                                                    </a>
+                                                </span>
+                                            @endif
+                                            @if ($aduan->status == 1)
+                                                <span id="klasifikasi-operation">
+                                                    <a id="btn-klasifikasi" class="btn btn-primary">
+                                                        <i class="fa fa-justify"></i>
+                                                        Klasifikasi
+                                                    </a>
+                                                </span>
+                                            @endif
+                                            @if ($aduan->status == 2)
+                                                <span id="respon">
+                                                    <a id="btn-respon" class="btn btn-success">
+                                                        <i class="fa fa-justify"></i>
+                                                        Respon
+                                                    </a>
+                                                </span>
+                                            @endif
+                                            @if ($aduan->status == 3 && $statusRespon != null)
+                                                <span id="respon">
+                                                    <a id="btn-tindaklanjut" class="btn btn-success">
+                                                        <i class="fa fa-justify"></i>
+                                                        Tindak Lanjut
+                                                    </a>
+                                                </span>
+                                            @else
+                                                <span id="respon">
+                                                    <a id="btn-respon" class="btn btn-success">
+                                                        <i class="fa fa-justify"></i>
+                                                        Respon
+                                                    </a>
+                                                </span>
+                                            @endif
                                         @endif
                                         {{-- <a href="{{ url('pengaduan') }}" id="btn-batal" class="btn btn-default">
                                             Batal
@@ -405,6 +414,66 @@
             </div>
         </div>
     </div>
+    
+    <div class="modal fade" id="ModalTindakLanjut" tabindex="-1" role="dialog" aria-labelledby="ModalTindakLanjutTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="ModalTindakLanjutTitle">Tindak Lanjut Aduan</h3>
+                </div>
+                <form id="form-tindaklanjut">
+                    <div class="modal-body">
+                        <input type="hidden" class="form-control" id="id" name="id" value={{ $aduan->id }}>
+                        <input type="hidden" class="form-control" id="kode" name="kode" value={{ $aduan->kode }}>
+                        <div class="form-group">
+                            <label for="tgl">Tanggal Pelaksanaan</label>
+                            <br>Mulai<input type="date" class="form-control" id="tglmulai" name="tglmulai">
+                            Selesai<input type="date" class="form-control" id="tglselesai" name="tglselesai">
+                        </div>
+                        <div class="form-group">
+                            <label for="kegiatan">Kegiatan yang dilaksanakan</label>
+                            <input type="text" class="form-control" id="kegiatan" name="kegiatan" placeholder="Detail kegiatan yang dilaksanakan">
+                        </div>
+                        <div class="form-group">
+                            <label for="biaya">Biaya</label>
+                            <input type="number" class="form-control" id="biaya" name="biaya" placeholder="Rp. " onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+                        </div>
+                        <div class="form-group">
+                            <label for="sumber">Sumber Dana</label>
+                            <select autocomplete="off" class="form-control" id="sumber" name="sumber">
+                                <option value="1">APBD I</option>
+                                <option value="2">APBD II</option>
+                              </select>
+                            <input type="text" class="form-control" id="detailsumber" name="detailsumber" placeholder="Detail Sumber Dana">
+                        </div>
+                        <div class="form-group">
+                            <label for="dasar">Dasar Pelaksanaan Kegiatan</label>
+                            <input type="text" class="form-control" id="dasar" name="dasar" placeholder="Misalnya Surat Perintah Kerja">
+                        </div>
+                        <div class="form-group">
+                            <label for="tgldokumen">Tanggal Dokumen</label>
+                            <input type="date" class="form-control" id="tgldokumen" name="tgldokumen" >
+                        </div>
+                        <div class="form-group">
+                            <label for="nodokumen">Nomor Dokumen</label>
+                            <input type="text" class="form-control" id="nodokumen" name="nodokumen" placeholder="Mis: 028/101/404.4.7/2021">
+                        </div>
+                        <div class="form-group">
+                            <label for="rekanan">Rekanan</label>
+                            <input type="text" class="form-control" id="rekanan" name="rekanan" placeholder="Nama Rekanan">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="btn-reset" type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                        <button id="btn-save-tindaklanjut" type="submit" class="btn btn-primary"><i class="fa fa-save"></i>
+                            Simpan</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
 
 @endsection
 @section('css')
@@ -486,6 +555,9 @@
             $('#btn-respon').click(function() {
                 $('#ModalRespon').modal('show');
             })
+            $('#btn-tindaklanjut').click(function() {
+                $('#ModalTindakLanjut').modal('show');
+            })
             $('#ModalRespon').on('shown.bs.modal', function(){
                 setTimeout(function() {
                     mymap2.invalidateSize();
@@ -526,6 +598,7 @@
                             $('.datatable').DataTable().ajax.reload();
                             $('#ModalKlasifikasi').modal('hide');
                             $('#form-klasifikasi').find('input.form-control').val('');
+                            location.reload();
                         } else {
                             $.each(result.errors, function(key, value) {
                                 toastr['error'](value);
@@ -757,6 +830,58 @@
                     marker.bindPopup("<b>" + data.display_name + "</b><br />" + lat3 + ', ' +
                         lng3).openPopup();
                 });
+
+            $('#form-tindaklanjut').submit(function(e) {
+            e.preventDefault();
+            });
+            $('#btn-save-tindaklanjut').click(function() {
+                var b = $(this),
+                    i = b.find('i'),
+                    cls = i.attr('class'),
+                    id = $('#id').val(),
+                    url = '',
+                    method = '';
+
+                var form = $('#form-tindaklanjut'),
+                    data = new FormData(form[0]);
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: "{{ route('followup') }}",
+                    method: "POST",
+                    data: data,
+                    processData: false,
+                    contentType: false,
+                    beforeSend: function() {
+                        b.attr('disabled', 'disabled');
+                        i.removeClass().addClass('fa fa-spin fa-circle-o-notch');
+                    },
+                    success: function(result) {
+                        if (result.success) {
+                            toastr['success'](result.success);
+                            $('.datatable').DataTable().ajax.reload();
+                            $('#ModalTindakLanjut').modal('hide');
+                            $('#form-tindaklanjut').find('input.form-control').val('');
+                            location.reload();
+                        } else {
+                            $.each(result.errors, function(key, value) {
+                                toastr['error'](value);
+                            });
+                        }
+                        b.removeAttr('disabled');
+                        i.removeClass().addClass(cls);
+
+                    },
+                    error: function() {
+                        b.removeAttr('disabled');
+                        i.removeClass().addClass(cls);
+                    }
+                });
+            });
         })
 
     </script>

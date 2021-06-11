@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Complaint;
 use App\Models\ComplaintProgress;
+use App\Models\Followup;
 use App\Models\Job;
 use App\Models\Mapping;
 use App\Models\Media;
@@ -49,7 +50,7 @@ class ComplaintsController extends Controller
     {
         $status = [];
         $tingkat = session()->get('user.level_id');
-        if ($tingkat == 9) {
+        if ($tingkat == 8) {
             $status = [
                 0 => 'Terkirim',
                 1 => 'Klasifikasi',
@@ -99,7 +100,16 @@ class ComplaintsController extends Controller
         ->orderBy('created_at', 'desc');
 
         if (session()->get('user.level_id') != 1) {
-            $query = $query->whereIn('id', $c);
+            if (session()->get('user.level_id') == 8){
+                $complaintIdUser = ComplaintProgress::where('user_id',session()->get('user.id'))->get();
+                $cUser = [];
+                foreach($complaintIdUser as $ciu){
+                    $cUser[] = $ciu->complaint_id;
+                }
+                $query = $query->whereIn('id', $cUser);
+            }else{
+                $query = $query->whereIn('id', $c);
+            }
         }
 
         $data = $query->get();
@@ -315,12 +325,14 @@ class ComplaintsController extends Controller
     {
         $aduan = Complaint::with('job', 'media_', 'parent')->find($id);
         $respon = Response::where('complaint_id',$id)->first();
+        $statusRespon = Response::where([['complaint_id',$id],['responden',session()->get('user.id')]])->first();
         
         $data['status'] = $this->status($aduan->status);
         $data['title'] = 'Detail Pengaduan';
         $data['bulan'] = $this->bulan;
         $data['aduan'] = $aduan;
         $data['respon'] = $respon;
+        $data['statusRespon'] = $statusRespon;
         $data['startdate'] = $this->hari[$aduan->created_at->format('l')] . ', ' . $aduan->created_at->format('d-m-Y');
         $data['bidang'] = Scope::orderBy('bidang', 'asc')->get();
         $interval = "";
@@ -469,6 +481,60 @@ class ComplaintsController extends Controller
             ]);
             $affected = DB::table('complaints')->where('id', $request->id)->update(['status' => '3']);
             toastr()->success('Data telah disimpan.');
+            return response()->json(['success' => 'Data telah disimpan.']);
+        }
+    }
+
+    public function storeFollowup(Request $request){
+        // dd($request->all());
+        $validator = \Validator::make($request->all(), [
+            'tglmulai' => 'required',
+            'tglselesai' => 'required',
+            'kegiatan' => 'required',
+            'biaya' => 'required',
+            'sumber' => 'required',
+            'detailsumber' => 'required',
+            'dasar' => 'required',
+            'tgldokumen' => 'required',
+            'nodokumen' => 'required'
+        ], [
+            'tglmulai.required' => 'Silahkan isi tanggal pelaksanaan terlebih dahulu',
+            'tglselesai.required' => 'Silahkan isi tanggal pelaksanaan terlebih dahulu',
+            'kegiatan.required' => 'Silahkan isi kegiatan yang dilaksanakan terlebih dahulu',
+            'biaya.required' => 'Silahkan isi biaya terlebih dahulu',
+            'sumber.required' => 'Silahkan isi sumber dana terlebih dahulu',
+            'detailsumber.required' => 'Silahkan isi detail sumber dana terlebih dahulu',
+            'dasar.required' => 'Silahkan isi dasar pelaksanaan kegiatan terlebih dahulu',
+            'tgldokumen.required' => 'Silahkan isi tanggal dokumen terlebih dahulu',
+            'nodokumen.required' => 'Silahkan isi nomor dokumen terlebih dahulu',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()->all()]);
+        } else {
+            Followup::create([
+                'complaint_id' => $request->id,
+                'user_id' => session()->get('user.id'),
+                'tgl_mulai' => $request->tglmulai,
+                'tgl_selesai' => $request->tglselesai,
+                'kegiatan' => $request->kegiatan,
+                'biaya' => $request->biaya,
+                'sumber' => $request->sumber,
+                'detail_sumber' => $request->detailsumber,
+                'dasar' => $request->dasar,
+                'tgl_dokumen' => $request->tgldokumen,
+                'no_dokumen' => $request->nodokumen,
+                'rekanan' => $request->rekanan,
+            ]);
+
+            $unit = Unit::where('id', '=', session()->get('user.unit_id'))->select('nama')->first();
+            ComplaintProgress::create([
+                'complaint_id' => $request->id,
+                'aksi' => 'Respon',
+                'lokasi' => $unit->nama,
+                'user_id' => $request->session()->get('user.id')
+            ]);
+            // $affected = DB::table('complaints')->where('kode',$request->kode)->update(['status' => '2']);
             return response()->json(['success' => 'Data telah disimpan.']);
         }
     }
