@@ -195,7 +195,7 @@
                             </div>
                         </div>
                         <hr>
-                        <div class="row">
+                        {{-- <div class="row">
                             <div style="line-height:1.7" class="col-lg-4">
                                 <div style="margin-bottom:5px;font-size:16px">Detail Respon</div>
                                 <div class="col-lg-12">
@@ -252,7 +252,100 @@
                                     @endif
                                 </div>
                             </div>
+                        </div> --}}
+                        <?php $i=1; ?>
+                        @foreach($responAll as $ra)
+                        <div class="row">
+                            <div class="callout">
+                                <h4 id="conveying-meaning-to-assistive-technologies">{{ $ra->user->unit->nama }} <small>{{ $ra->created_at->format('d-m-Y')}}</small></h4>
+                                <div class="col-lg-4">
+                                    <p>{{ $ra->uraian }}</p>
+                                </div>
+                                <div class="col-lg-4">
+                                    @if($ra->pict_1 != null)
+                                        <img width="200px" height="200px" src="{{ url('/upload-photo/' . $ra->pict_1) }}" class="rounded float-left" alt="">
+                                    @endif
+                                    @if($ra->pict_2 != null)
+                                        <img width="200px" height="200px" src="{{ url('/upload-photo/' . $ra->pict_2) }}" class="rounded float-left" alt="">
+                                    @endif
+                                    @if($ra->pict_3 != null)
+                                        <img width="200px" height="200px" src="{{ url('/upload-photo/' . $ra->pict_3) }}" class="rounded float-left" alt="">
+                                    @endif
+                                </div>
+                                <div class="col-lg-4 show-maps">
+                                    <input class="lng1" type="hidden" name="lng1" id="lng1" value="{{ $ra->long }}" />
+                                    <input class="lat1" type="hidden" name="lat1" id="lat1" value="{{ $ra->lat }}" />
+                                    <input type="hidden" name="responid" id="responid" value="{{ $ra->id }}">
+                                    {{-- <div class="mapid-respon" id="mapid-respon" style="height:200px"></div> --}}
+                                </div>
+                            </div>
                         </div>
+                        <?php $i++; ?>
+                        @endforeach
+                        <hr>
+                        <div style="margin-bottom:5px;font-size:16px">Detail Tindak Lanjut</div>
+                        @foreach ($tindakLanjut as $tl)   
+                        <div class="row">
+                            <div style="line-height:1.7" class="col">
+                                <div style="margin-bottom:5px;font-size:16px">{{ $ra->user->unit->nama }}</div>
+                                    <div class="callout">
+                                        <div class="col-lg-6">
+                                            <table>
+                                                <tr>
+                                                    <th style="text-align: left">Tanggal Mulai Pelaksanaan</th>
+                                                    <th>&emsp;:&emsp;</th>
+                                                    <td style="text-align: left">{{ $tl->tgl_mulai }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th style="text-align: left">Tanggal Selesai Pelaksanaan</th>
+                                                    <th>&emsp;:&emsp;</th>
+                                                    <td style="text-align: left">{{ $tl->tgl_selesai }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th style="text-align: left">Kegiatan yang dilaksanakan</th>
+                                                    <th>&emsp;:&emsp;</th>
+                                                    <td style="text-align: left">{{ $tl->kegiatan }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th style="text-align: left">Biaya</th>
+                                                    <th>&emsp;:&emsp;</th>
+                                                    <td style="text-align: left">{{ $tl->biaya }}</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <table>
+                                                <tr>
+                                                    <th style="text-align: left">Sumber Dana</th>
+                                                    <th>&emsp;:&emsp;</th>
+                                                    <td style="text-align: left">{{ $tl->sumber }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th style="text-align: left">Dasar Pelaksanaan </th>
+                                                    <th>&emsp;:&emsp;</th>
+                                                    <td style="text-align: left">{{ $tl->dasar }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th style="text-align: left">Tanggal Dokumen</th>
+                                                    <th>&emsp;:&emsp;</th>
+                                                    <td style="text-align: left">{{ $tl->tgl_dokumen }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th style="text-align: left">Nomor Dokumen</th>
+                                                    <th>&emsp;:&emsp;</th>
+                                                    <td style="text-align: left">{{ $tl->no_dokumen }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th style="text-align: left">Rekanan</th>
+                                                    <th>&emsp;:&emsp;</th>
+                                                    <td style="text-align: left">{{ $tl->rekanan }}</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -444,7 +537,7 @@
                             <select autocomplete="off" class="form-control" id="sumber" name="sumber">
                                 <option value="1">APBD I</option>
                                 <option value="2">APBD II</option>
-                              </select>
+                            </select>
                             <input type="text" class="form-control" id="detailsumber" name="detailsumber" placeholder="Detail Sumber Dana">
                         </div>
                         <div class="form-group">
@@ -490,7 +583,7 @@
     <script>
         $(function() {
             var pengaduan_id = $('#id').val();
-            console.log(pengaduan_id);
+            // console.log(pengaduan_id);
             var dataTable = $('.datatable').DataTable({
                 processing: true,
                 serverSide: true,
@@ -577,7 +670,7 @@
 
                 var form = $('#form-klasifikasi'),
                     data = form.serializeArray();
-                console.log(data);
+                // console.log(data);
 
                 $.ajaxSetup({
                     headers: {
@@ -807,29 +900,7 @@
                 ]
             });
 
-            var lng3 = $('#lng3').val(),
-                lat3 = $('#lat3').val(),
-                mymap3 = L.map('mapid3').setView([lat3, lng3], 11),
-                marker = '';
-
-
-            L.tileLayer(
-                'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYXJpYnJzIiwiYSI6ImNrb3V6ODhyYTAyeGwycHB0Z2RqZXZ2dTgifQ.0OhJv5NM-IiX9GE9E00CWw', {
-                    attribution: '',
-                    maxZoom: 18,
-                    id: 'mapbox/streets-v11',
-                    tileSize: 512,
-                    zoomOffset: -1,
-                    accessToken: 'your.mapbox.access.token'
-                }).addTo(mymap3);
-
-            marker = L.marker([lat3, lng3]).addTo(mymap3);
-
-            $.get('https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=' + lat3 + '&lon=' + lng3,
-                function(data) {
-                    marker.bindPopup("<b>" + data.display_name + "</b><br />" + lat3 + ', ' +
-                        lng3).openPopup();
-                });
+            
 
             $('#form-tindaklanjut').submit(function(e) {
             e.preventDefault();
@@ -882,6 +953,34 @@
                     }
                 });
             });
+
+            // itr = 8;
+            $('.show-maps').each(function(i){
+                var lng3 = $(this).find('input.lng1').val(),
+                lat3 = $(this).find('input.lat1').val(),
+                mymap3 = L.map('mapid-respon').setView([lat3, lng3], 11),
+                marker3 = '';
+                // console.log('input.lng1'+i);
+                L.tileLayer(
+                    'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYXJpYnJzIiwiYSI6ImNrb3V6ODhyYTAyeGwycHB0Z2RqZXZ2dTgifQ.0OhJv5NM-IiX9GE9E00CWw', {
+                        attribution: '',
+                        maxZoom: 18,
+                        id: 'mapbox/streets-v11',
+                        tileSize: 512,
+                        zoomOffset: -1,
+                        accessToken: 'your.mapbox.access.token'
+                    }).addTo(mymap3);
+
+                marker3 = L.marker([lat3, lng3]).addTo(mymap3);
+
+                $.get('https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=' + lat3 + '&lon=' + lng3,
+                    function(data) {
+                        marker3.bindPopup("<b>" + data.display_name + "</b><br />" + lat3 + ', ' +
+                            lng3).openPopup();
+                    });
+            });
+
+            
         })
 
     </script>

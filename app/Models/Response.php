@@ -19,4 +19,20 @@ class Response extends Model
         'long',
         'lat'
     ];
+
+    public function nama()
+    {
+        return $this->hasOneThrough(
+            User::class,
+            Unit::class,
+            'id', // Foreign key on the unit table...
+            'unit_id', // Foreign key on the User table...
+            'responden', // Local key on the respon table...
+            'id' // Local key on the unit table...
+        );
+    }
+
+    public function user(){
+        return $this->belongsTo(User::class,'responden');
+    }
 }

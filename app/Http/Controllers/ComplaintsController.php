@@ -56,6 +56,7 @@ class ComplaintsController extends Controller
                 1 => 'Klasifikasi',
                 2 => 'Proses',
                 3 => 'Sudah Direspon',
+                4 => 'Telah ditindak lanjut',
                 9 => 'Selesai',
                 10 => 'Dikembalikan'
             ];
@@ -65,6 +66,7 @@ class ComplaintsController extends Controller
                 1 => '<span style="vertical-align: middle;" class="label label-warning">Belum Klasifikasi</span>',
                 2 => '<span style="vertical-align: middle;" class="label label-warning">Menunggu Respon</span>',
                 3 => 'Sudah Direspon',
+                4 => 'Telah ditindak lanjut',
                 9 => 'Selesai',
                 10 => 'Dikembalikan'
             ];
@@ -326,12 +328,16 @@ class ComplaintsController extends Controller
         $aduan = Complaint::with('job', 'media_', 'parent')->find($id);
         $respon = Response::where('complaint_id',$id)->first();
         $statusRespon = Response::where([['complaint_id',$id],['responden',session()->get('user.id')]])->first();
+        $responAll = Response::with('user','user.unit')->where('complaint_id', $id)->get();
+        $tindakLanjut = Followup::with('user', 'user.unit')->where('complaint_id', $id)->get();
         
         $data['status'] = $this->status($aduan->status);
         $data['title'] = 'Detail Pengaduan';
         $data['bulan'] = $this->bulan;
         $data['aduan'] = $aduan;
         $data['respon'] = $respon;
+        $data['responAll'] = $responAll;
+        $data['tindakLanjut'] = $tindakLanjut;
         $data['statusRespon'] = $statusRespon;
         $data['startdate'] = $this->hari[$aduan->created_at->format('l')] . ', ' . $aduan->created_at->format('d-m-Y');
         $data['bidang'] = Scope::orderBy('bidang', 'asc')->get();
@@ -534,7 +540,7 @@ class ComplaintsController extends Controller
                 'lokasi' => $unit->nama,
                 'user_id' => $request->session()->get('user.id')
             ]);
-            // $affected = DB::table('complaints')->where('kode',$request->kode)->update(['status' => '2']);
+            $affected = DB::table('complaints')->where('kode',$request->kode)->update(['status' => '4']);
             return response()->json(['success' => 'Data telah disimpan.']);
         }
     }
