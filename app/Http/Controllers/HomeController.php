@@ -19,6 +19,7 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
+        // dd(session()->all());
         return view('home');
     }
 }
