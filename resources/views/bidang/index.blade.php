@@ -69,6 +69,29 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="ModalListOPD" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Daftar OPD</h3>
+                </div>
+                <form id="form-data">
+                    <div class="modal-body">
+                        <div id="list-OPD">
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="btn-tutup" type="button" class="btn btn-secondary" data-dismiss="modal">Ok</button>
+                        {{-- <button id="btn-reset" type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                        <button id="btn-save" type="button" class="btn btn-primary"><i class="fa fa-save"></i>
+                            Simpan</button> --}}
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
 
 @endsection
 @section('scripts')
@@ -198,36 +221,66 @@
                 }
             });
         }).on('click', '#btn-delete', function() {
-        var b = $(this),
-            i = b.find('i'),
-            cls = i.attr('class'),
-            id = $(this).data('id');
-        var del = confirm("Apakah anda yakin menghapus data ini?");
-        if (del) {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
+            var b = $(this),
+                i = b.find('i'),
+                cls = i.attr('class'),
+                id = $(this).data('id');
+            var del = confirm("Apakah anda yakin menghapus data ini?");
+            if (del) {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: "bidang/" + id,
+                    method: 'DELETE',
+                    beforeSend: function() {
+                        b.attr('disabled', 'disabled');
+                        i.removeClass().addClass('fa fa-spin fa-circle-o-notch');
+                    },
+                    success: function(result) {
+                        $('.datatable').DataTable().ajax.reload();
+                        toastr['success'](result.success);
+                    },
+                    error: function() {
+                        b.removeAttr('disabled');
+                        i.removeClass().addClass(cls);
+                    }
+                });
+            }
+
+        }).on('click', '#btn-list', function() {
+            var b = $(this),
+                i = b.find('i'),
+                cls = i.attr('class'),
+                id = $(this).data('id');
             $.ajax({
-                url: "bidang/"+id,
-                method: 'DELETE',
-                   beforeSend: function() {
+                url: "get-list-opds-by-scope/" + id,
+                method: 'GET',
+                beforeSend: function() {
                     b.attr('disabled', 'disabled');
                     i.removeClass().addClass('fa fa-spin fa-circle-o-notch');
                 },
                 success: function(result) {
-                        $('.datatable').DataTable().ajax.reload();
-                        toastr['success'](result.success);
+                    b.removeAttr('disabled');
+                    i.removeClass().addClass(cls);
+                    if (result.units.length != 0) {
+                        $('#list-OPD').html('<ol></ol>');
+                        $.each(result.units, function(index, value) {
+                            $('#list-OPD ol').append('<li>' + value.unit.nama + '</li>')
+                        });
+                    } else {
+                        $('#list-OPD').html(' -- Belum ada OPD pengemban -- ');
+                    }
+                    $('#ModalListOPD').modal('show');
                 },
-                   error: function() {
+                error: function() {
                     b.removeAttr('disabled');
                     i.removeClass().addClass(cls);
                 }
             });
-        }
-
-    });
+        });
 
     </script>
 

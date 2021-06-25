@@ -17,13 +17,24 @@ class ScopesController extends Controller
         $data['title'] = 'Daftar Bidang';
         return view('bidang.index', $data);
     }
+    public function getListOPD($id)
+    {
+        $data = Scope::with('units.unit')->find($id);
+        // dd($data);
+        return response()->json($data);
+    }
     public function getScopes()
     {
         // $data = Scope::all();
         $data = Scope::orderBy('bidang', 'asc')->get();
         return \DataTables::of($data)
             ->addColumn('Aksi', function ($data) {
-                return '<a id="btn-edit" class="btn btn-xs btn-primary" data-id="' .
+                return '<a id="btn-list" class="btn btn-xs btn-primary" data-id="' .
+                    $data->id .
+                    '" title="List OPD">
+                <i class="fa fa-list"></i>
+                </a>
+                <a id="btn-edit" class="btn btn-xs btn-warning" data-id="' .
                     $data->id .
                     '" title="Edit Data">
                 <i class="fa fa-pencil"></i>

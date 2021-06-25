@@ -10,4 +10,8 @@ class Scope extends Model
     use HasFactory;
     public $timestamps = false;
     protected $fillable = ['bidang'];
+    public function units()
+    {
+        return $this->hasMany(UnitMapping::class);
+    }
 }

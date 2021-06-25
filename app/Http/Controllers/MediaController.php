@@ -17,12 +17,13 @@ class MediaController extends Controller
         $data['title'] = 'Daftar Media';
         return view('media.index', $data);
     }
+
     public function getMedia()
     {
         $data = Media::orderBy('media', 'asc')->get();
         return \DataTables::of($data)
             ->addColumn('Aksi', function ($data) {
-                return '<a id="btn-edit" class="btn btn-xs btn-primary" data-id="' .
+                return '<a id="btn-edit" class="btn btn-xs btn-warning" data-id="' .
                     $data->id .
                     '" title="Edit Data">
                 <i class="fa fa-pencil"></i>

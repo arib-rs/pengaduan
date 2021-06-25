@@ -49,6 +49,7 @@
         .aduan-urgent {
             animation: blinker 2s linear infinite;
         }
+
         .aduan-danger {
             animation: blinker-danger 2s linear infinite;
         }
@@ -59,6 +60,7 @@
                 background: #f6e58d;
             }
         }
+
         @keyframes blinker-danger {
             50% {
                 /* background: #FFFACD; */
@@ -73,7 +75,7 @@
 </head>
 
 <body class="hold-transition sidebar-mini">
-
+    <?php $userRole = Auth::user()->level_id; ?>
     <div class="wrapper">
 
         <header class="main-header header-gradient">
@@ -110,7 +112,10 @@
                     </div> -->
                     <div class="panel-name">
                         <!-- pull-left info -->
-                        <p style="font-weight: normal">{{ Auth::user()->name }}</p>
+                        <p style="font-weight: normal">
+                            {{ Auth::user()->name }}<br><span
+                                style="font-size:16px">{{ Auth::user()->level->level }}</span>
+                        </p>
                         {{-- <p class="h1">Alexander</p>
                         {{ var_dump(Auth::user()) }} --}}
                         <!-- <a href="#"><i class="fa fa-circle text-success"></i> Online</a> -->
@@ -118,12 +123,14 @@
                 </div>
 
                 <ul class="sidebar-menu" data-widget="tree">
-                    <li class="">
-                        <!-- active -->
-                        <a href="{{ '/home' }}">
-                            <i class="fa fa-home"></i> <span>Home</span>
-                        </a>
-                    </li>
+                    @if (in_array($userRole, [1]))
+                        <li class="">
+                            <!-- active -->
+                            <a href="{{ '/home' }}">
+                                <i class="fa fa-home"></i> <span>Home</span>
+                            </a>
+                        </li>
+                    @endif
                     <li class="treeview">
                         <!-- active menu-open -->
                         <a href="#">
@@ -133,23 +140,22 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="{{ '/pengaduan/create' }}"><i class="fa fa-edit"></i>Form Pengaduan</a></li>
+                            <li><a href="{{ '/pengaduan/create' }}"><i class="fa fa-edit"></i>Form Pengaduan</a>
+                            </li>
                             <li><a href="{{ '/pengaduan' }}"><i class="fa fa-list"></i>Daftar Pengaduan</a>
                             </li>
-                            <li><a href="{{ '/distribusi' }}"><i class="fa fa-chain"></i> Distribusi</a></li>
+                            {{-- <li><a href="{{ '/distribusi' }}"><i class="fa fa-chain"></i> Distribusi</a></li> --}}
                         </ul>
                     </li>
-                    <li class="">
-                        <!-- active -->
+                    {{-- <li class="">
                         <a href="">
                             <i class="fa fa-commenting"></i> <span>Respon</span>
                             <span class="pull-right-container">
                                 <small class="label pull-right bg-green">new</small>
                             </span>
                         </a>
-                    </li>
+                    </li> --}}
                     <li class="treeview">
-                        <!-- active menu-open -->
                         <a href="#">
                             <i class="fa fa-cogs"></i> <span>Pengaturan</span>
                             <span class="pull-right-container">
