@@ -1,11 +1,11 @@
-pekerjaan
-Pegawai Negeri Sipil
-TNI
-POLRI
-Pensiunan
-Karyawan Swasta
-Wiraswasta
-Petani/Nelayan
-Jasa
-Pelajar/Mahasiswa
-Lain-lain
+id;pekerjaan
+1;Pegawai Negeri Sipil
+2;TNI
+3;POLRI
+4;Pensiunan
+5;Karyawan Swasta
+6;Wiraswasta
+7;Petani/Nelayan
+8;Jasa
+9;Pelajar/Mahasiswa
+10;Lain-lain

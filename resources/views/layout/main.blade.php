@@ -122,16 +122,15 @@
                     </div>
                 </div>
 
-                <ul class="sidebar-menu" data-widget="tree">
+                <ul class="sidebar-menu" data-widget="tree" data-accordion=0>
                     @if (in_array($userRole, [1]))
-                        <li class="">
-                            <!-- active -->
+                        {{-- <li class="">
                             <a href="{{ '/home' }}">
                                 <i class="fa fa-home"></i> <span>Home</span>
                             </a>
-                        </li>
+                        </li> --}}
                     @endif
-                    <li class="treeview">
+                    <li class="treeview active menu-open" style="font-weight:normal">
                         <!-- active menu-open -->
                         <a href="#">
                             <i class="fa fa-edit"></i> <span>Pengaduan</span>
@@ -155,21 +154,23 @@
                             </span>
                         </a>
                     </li> --}}
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="fa fa-cogs"></i> <span>Pengaturan</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a href="{{ '/user' }}"><i class="fa fa-user"></i> User</a></li>
-                            <li><a href="{{ '/opd' }}"><i class="fa fa-building"></i> OPD</a></li>
-                            <li><a href="{{ '/bidang' }}"><i class="fa fa-archive"></i> Bidang</a></li>
-                            <li><a href="{{ '/media' }}"><i class="fa fa-map"></i> Media</a></li>
-                            <li><a href="{{ '/pekerjaan' }}"><i class="fa fa-briefcase"></i> Pekerjaan</a></li>
-                        </ul>
-                    </li>
+                    @if (in_array($userRole, [1]))
+                        <li class="treeview active menu-open" style="font-weight:normal">
+                            <a href="#">
+                                <i class="fa fa-cogs"></i> <span>Pengaturan</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="{{ '/user' }}"><i class="fa fa-user"></i> User</a></li>
+                                <li><a href="{{ '/opd' }}"><i class="fa fa-building"></i> OPD</a></li>
+                                <li><a href="{{ '/bidang' }}"><i class="fa fa-archive"></i> Bidang</a></li>
+                                <li><a href="{{ '/media' }}"><i class="fa fa-map"></i> Media</a></li>
+                                <li><a href="{{ '/pekerjaan' }}"><i class="fa fa-briefcase"></i> Pekerjaan</a></li>
+                            </ul>
+                        </li>
+                    @endif
                 </ul>
 
             </section>

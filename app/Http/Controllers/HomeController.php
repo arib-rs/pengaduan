@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -20,6 +21,11 @@ class HomeController extends Controller
     public function index(Request $request)
     {
         // dd(session()->all());
-        return view('home');
+        if (Auth::user()->level_id == 9) {
+            return redirect()->route('pengaduan.create');
+        } else {
+            return redirect()->route('pengaduan.index');
+        }
+        // return view('home');
     }
 }

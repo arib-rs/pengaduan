@@ -31,6 +31,7 @@ class CreateComplaintsTable extends Migration
             $table->bigInteger('media');
             $table->string('subyek');
             $table->longText('uraian');
+            $table->longText('lokasi')->nullable();
             $table->bigInteger('pelapor')->nullable();
             $table->string('status');
             $table->string('pict_1')->nullable();

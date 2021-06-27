@@ -1,10 +1,10 @@
-Level
-Administrator
-Manajer Sekretariat P3M
-Manager Organisasi
-Operator Data P3M
-Bakohumas
-Eksekutif/Legislatif
-Operator Laporan
-Tamu
-          
+id;Level
+1;Superadmin
+2;Administrator
+3;Manajer Sekretariat P3M
+4;Manager Organisasi
+5;Operator Data P3M
+6;Bakohumas
+7;Eksekutif/Legislatif
+8;Operator Laporan
+9;Tamu

@@ -23,6 +23,7 @@ class Complaint extends Model
         'media',
         'subyek',
         'uraian',
+        'lokasi',
         'pelapor',
         'status',
         'pict_1',

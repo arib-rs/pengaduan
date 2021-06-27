@@ -86,10 +86,10 @@ class ComplaintsController extends Controller
         $unitId = session()->get('user.unit_id');
         $complaintId = Mapping::where('unit_id', '=', $unitId)->select('complaint_id')->groupBy('complaint_id')->get();
         $c = [];
-        foreach($complaintId as $cid){
+        foreach ($complaintId as $cid) {
             $c[] = $cid->complaint_id;
         }
-        
+
         // $data = Complaint::whereYear('created_at', '=', $tahun)
         // ->whereMonth('created_at', '=', $bulan)
         // ->whereIn('id', $c)
@@ -98,18 +98,18 @@ class ComplaintsController extends Controller
         // dd($data);
 
         $query = Complaint::whereYear('created_at', '=', $tahun)
-        ->whereMonth('created_at', '=', $bulan)
-        ->orderBy('created_at', 'desc');
+            ->whereMonth('created_at', '=', $bulan)
+            ->orderBy('created_at', 'desc');
 
         if (session()->get('user.level_id') != 1) {
-            if (session()->get('user.level_id') == 8){
-                $complaintIdUser = ComplaintProgress::where('user_id',session()->get('user.id'))->get();
+            if (session()->get('user.level_id') == 9) {
+                $complaintIdUser = ComplaintProgress::where('user_id', session()->get('user.id'))->get();
                 $cUser = [];
-                foreach($complaintIdUser as $ciu){
+                foreach ($complaintIdUser as $ciu) {
                     $cUser[] = $ciu->complaint_id;
                 }
                 $query = $query->whereIn('id', $cUser);
-            }else{
+            } else {
                 $query = $query->whereIn('id', $c);
             }
         }
@@ -130,10 +130,10 @@ class ComplaintsController extends Controller
                 $awal  = date_create($startdate_);
                 $akhir = date_create($enddate_);
                 $diff  = date_diff($awal, $akhir);
-                
-                if($data->is_urgent == 1){
+
+                if ($data->is_urgent == 1) {
                     $class = 'aduan-urgent';
-                    if($startdate_ > $enddate_){
+                    if ($startdate_ > $enddate_) {
                         $class = 'aduan-danger';
                     }
                 }
@@ -176,12 +176,12 @@ class ComplaintsController extends Controller
             })
             ->make(true);
     }
-    
+
     public function getResponses($id)
     {
         $data = Response::where('complaint_id', '=', $id)
-            ->join('users','users.id','=','responses.responden')
-            ->join('units','units.id','=','users.unit_id')
+            ->join('users', 'users.id', '=', 'responses.responden')
+            ->join('units', 'units.id', '=', 'users.unit_id')
             ->orderBy('responses.created_at', 'asc')
             ->get();
         return \DataTables::of($data)
@@ -326,11 +326,11 @@ class ComplaintsController extends Controller
     public function show($id)
     {
         $aduan = Complaint::with('job', 'media_', 'parent')->find($id);
-        $respon = Response::where('complaint_id',$id)->first();
-        $statusRespon = Response::where([['complaint_id',$id],['responden',session()->get('user.id')]])->first();
-        $responAll = Response::with('user','user.unit')->where('complaint_id', $id)->get();
+        $respon = Response::where('complaint_id', $id)->first();
+        $statusRespon = Response::where([['complaint_id', $id], ['responden', session()->get('user.id')]])->first();
+        $responAll = Response::with('user', 'user.unit')->where('complaint_id', $id)->get();
         $tindakLanjut = Followup::with('user', 'user.unit')->where('complaint_id', $id)->get();
-        
+
         $data['status'] = $this->status($aduan->status);
         $data['title'] = 'Detail Pengaduan';
         $data['bulan'] = $this->bulan;
@@ -356,18 +356,18 @@ class ComplaintsController extends Controller
         $diff  = date_diff($awal, $akhir);
 
         $data['keterangan'] = "";
-        if ($aduan->status <= 3) {
-            if ($startdate_ < $enddate_) {
-                $data['keterangan'] = "(Kurang " . $diff->days . " hari lagi)";
-                $data['statusTerlambat'] = "";
-            } else if ($startdate_ == $enddate_) {
-                $data['keterangan'] = "(Hari terakhir)";
-                $data['statusTerlambat'] = "";
-            } else {
-                $data['keterangan'] = "(Terlambat " . $diff->days . " hari)";
-                $data['statusTerlambat'] = "aduan-danger";
-            }
+        // if ($aduan->status <= 3) {
+        if ($startdate_ < $enddate_) {
+            $data['keterangan'] = "(Kurang " . $diff->days . " hari lagi)";
+            $data['statusTerlambat'] = "";
+        } else if ($startdate_ == $enddate_) {
+            $data['keterangan'] = "(Hari terakhir)";
+            $data['statusTerlambat'] = "";
+        } else {
+            $data['keterangan'] = "(Terlambat " . $diff->days . " hari)";
+            $data['statusTerlambat'] = "aduan-danger";
         }
+        // }
 
         $data['enddate'] = $this->hari[date('l', $enddate)] . ', ' . date('d-m-Y', $enddate);
 
@@ -412,9 +412,10 @@ class ComplaintsController extends Controller
         //
     }
 
-    public function storeKlasifikasi(Request $request){
+    public function storeKlasifikasi(Request $request)
+    {
         $unitMapping = UnitMapping::whereIn('scope_id', array_values($request->bidang))->distinct()->get();
-        foreach($unitMapping as $up){
+        foreach ($unitMapping as $up) {
             Mapping::create([
                 'complaint_id' => $request->id,
                 'unit_id' => $up->unit_id,
@@ -427,11 +428,12 @@ class ComplaintsController extends Controller
             'lokasi' => 'Manajemen',
             'user_id' => $request->session()->get('user.id')
         ]);
-        $affected = DB::table('complaints')->where('kode',$request->kode)->update(['status' => '2']);
+        $affected = DB::table('complaints')->where('kode', $request->kode)->update(['status' => '2']);
         return response()->json(['success' => 'Data telah disimpan.']);
     }
 
-    public function storeRespon(Request $request){
+    public function storeRespon(Request $request)
+    {
         // dd($request->all());
         $validator = \Validator::make($request->all(), [
             'uraian' => 'required',
@@ -491,7 +493,8 @@ class ComplaintsController extends Controller
         }
     }
 
-    public function storeFollowup(Request $request){
+    public function storeFollowup(Request $request)
+    {
         // dd($request->all());
         $validator = \Validator::make($request->all(), [
             'tglmulai' => 'required',
@@ -536,11 +539,11 @@ class ComplaintsController extends Controller
             $unit = Unit::where('id', '=', session()->get('user.unit_id'))->select('nama')->first();
             ComplaintProgress::create([
                 'complaint_id' => $request->id,
-                'aksi' => 'Respon',
+                'aksi' => 'Tindak Lanjut',
                 'lokasi' => $unit->nama,
                 'user_id' => $request->session()->get('user.id')
             ]);
-            $affected = DB::table('complaints')->where('kode',$request->kode)->update(['status' => '4']);
+            $affected = DB::table('complaints')->where('kode', $request->kode)->update(['status' => '4']);
             return response()->json(['success' => 'Data telah disimpan.']);
         }
     }

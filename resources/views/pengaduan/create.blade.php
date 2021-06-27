@@ -18,111 +18,132 @@
 
                             </div>
                             <div id="data-pelapor">
-                                <div class="header-title">
-                                    <h2 style="font-size:16px !important">Data Pelapor</h2>
-                                    <hr>
-                                </div>
-                                <div class="box-body">
-                                    <div class="form-group">
-                                        <label for="name" class="col-sm-2 control-label">Nama</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="name" name="name" placeholder="Nama"
-                                                value="{{ $usertamu ? $usertamu['name'] : '' }}">
-                                        </div>
+                                @if (!in_array(Auth::user()->level_id, [9]))
+                                    <div class="header-title">
+                                        <h2 style="font-size:16px !important">Data Pelapor</h2>
+                                        <hr>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="gender" class="col-sm-2 control-label">Jenis Kelamin</label>
-                                        <div class="col-sm-10 radio-styled">
-                                            <label>
-                                                <input type="radio" class="minimal" value="Pria" name="gender"
-                                                    {{ $usertamu && $usertamu['gender'] == 'Pria' ? 'checked' : '' }}>
-                                                <i class="fa fa-male" aria-hidden="true"></i>
-                                                <span style="font-weight:normal"> Pria</span>
-                                            </label>
-                                            <label>
-                                                <input type="radio" class="minimal" value="Wanita" name="gender"
-                                                    {{ $usertamu && $usertamu['gender'] == 'Wanita' ? 'checked' : '' }}>
-                                                <i class="fa fa-female" aria-hidden="true"></i>
-                                                <span style="font-weight:normal"> Wanita</span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="alamat" class="col-sm-2 control-label">Alamat</label>
-                                        <div class="col-sm-10">
-                                            <div class="form-group">
-                                                <label for="alamat" class="col-sm-2 control-label">Jalan</label>
-                                                <div class="col-sm-10">
-                                                    <input type="text" class="form-control" id="alamat" name="alamat"
-                                                        placeholder="Nama Jalan"
-                                                        value="{{ $usertamu ? $usertamu['alamat'] : '' }}">
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="desa" class="col-sm-2 control-label">Desa</label>
-                                                <div class="col-sm-10">
-                                                    <input type="text" class="form-control" id="desa" name="desa"
-                                                        placeholder="Desa"
-                                                        value="{{ $usertamu ? $usertamu['desa'] : '' }}">
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="kecamatan" class="col-sm-2 control-label">Kecamatan</label>
-                                                <div class="col-sm-10">
-                                                    <input type="text" class="form-control" id="kecamatan" name="kecamatan"
-                                                        placeholder="Kecamatan"
-                                                        value="{{ $usertamu ? $usertamu['kecamatan'] : '' }}">
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="kota" class="col-sm-2 control-label">Kota</label>
-                                                <div class="col-sm-10">
-                                                    <input type="text" class="form-control" id="kota" name="kota"
-                                                        placeholder="Kota"
-                                                        value="{{ $usertamu ? $usertamu['kota'] : '' }}">
-                                                </div>
+                                    <div class="box-body">
+                                        <div class="form-group">
+                                            <label for="name" class="col-sm-2 control-label">Nama</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="name" name="name"
+                                                    placeholder="Nama" value="{{ $usertamu ? $usertamu['name'] : '' }}">
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label">Pekerjaan</label>
-                                        <div class="col-sm-10">
-                                            <select class="form-control" id="pekerjaan" name="pekerjaan" autocomplete="off"
-                                                required>
-                                                <option value="">-- Pilih Pekerjaan --</option>
-                                                @foreach ($jobs as $d)
-                                                    <option value="{{ $d->id }}"
-                                                        {{ $usertamu && $usertamu['pekerjaan'] == $d->id ? 'selected' : '' }}>
-                                                        {{ $d->pekerjaan }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
+                                        <div class="form-group">
+                                            <label for="gender" class="col-sm-2 control-label">Jenis Kelamin</label>
+                                            <div class="col-sm-10 radio-styled">
+                                                <label>
+                                                    <input type="radio" class="minimal" value="Pria" name="gender"
+                                                        {{ $usertamu && $usertamu['gender'] == 'Pria' ? 'checked' : '' }}>
+                                                    <i class="fa fa-male" aria-hidden="true"></i>
+                                                    <span style="font-weight:normal"> Pria</span>
+                                                </label>
+                                                <label>
+                                                    <input type="radio" class="minimal" value="Wanita" name="gender"
+                                                        {{ $usertamu && $usertamu['gender'] == 'Wanita' ? 'checked' : '' }}>
+                                                    <i class="fa fa-female" aria-hidden="true"></i>
+                                                    <span style="font-weight:normal"> Wanita</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="alamat" class="col-sm-2 control-label">Alamat</label>
+                                            <div class="col-sm-10">
+                                                <div class="form-group">
+                                                    <label for="alamat" class="col-sm-2 control-label">Jalan</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="text" class="form-control" id="alamat" name="alamat"
+                                                            placeholder="Nama Jalan"
+                                                            value="{{ $usertamu ? $usertamu['alamat'] : '' }}">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="desa" class="col-sm-2 control-label">Desa</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="text" class="form-control" id="desa" name="desa"
+                                                            placeholder="Desa"
+                                                            value="{{ $usertamu ? $usertamu['desa'] : '' }}">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="kecamatan" class="col-sm-2 control-label">Kecamatan</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="text" class="form-control" id="kecamatan"
+                                                            name="kecamatan" placeholder="Kecamatan"
+                                                            value="{{ $usertamu ? $usertamu['kecamatan'] : '' }}">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="kota" class="col-sm-2 control-label">Kota</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="text" class="form-control" id="kota" name="kota"
+                                                            placeholder="Kota"
+                                                            value="{{ $usertamu ? $usertamu['kota'] : '' }}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Pekerjaan</label>
+                                            <div class="col-sm-10">
+                                                <select class="form-control" id="pekerjaan" name="pekerjaan"
+                                                    autocomplete="off" required>
+                                                    <option value="">-- Pilih Pekerjaan --</option>
+                                                    @foreach ($jobs as $d)
+                                                        <option value="{{ $d->id }}"
+                                                            {{ $usertamu && $usertamu['pekerjaan'] == $d->id ? 'selected' : '' }}>
+                                                            {{ $d->pekerjaan }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="telepon" class="col-sm-2 control-label">Telepon</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="telepon" name="telepon"
+                                                    placeholder="Telepon" onkeypress="return onlyNumber(event)"
+                                                    value="{{ $usertamu ? $usertamu['telepon'] : '' }}">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="email" class="col-sm-2 control-label">E-mail</label>
+                                            <div class="col-sm-10">
+                                                <input type="email" class="form-control" id="email" name="email"
+                                                    placeholder="E-mail"
+                                                    value="{{ $usertamu ? $usertamu['email'] : '' }}">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sosmed" class="col-sm-2 control-label">Sosial Media</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="sosmed" name="sosmed"
+                                                    placeholder="contoh:facebook.com/netizenbaik -- @instagramusername -- @twitterusername">
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="telepon" class="col-sm-2 control-label">Telepon</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="telepon" name="telepon"
-                                                placeholder="Telepon" onkeypress="return onlyNumber(event)"
-                                                value="{{ $usertamu ? $usertamu['telepon'] : '' }}">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="email" class="col-sm-2 control-label">E-mail</label>
-                                        <div class="col-sm-10">
-                                            <input type="email" class="form-control" id="email" name="email"
-                                                placeholder="E-mail" value="{{ $usertamu ? $usertamu['email'] : '' }}">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="sosmed" class="col-sm-2 control-label">Sosial Media</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="sosmed" name="sosmed"
-                                                placeholder="contoh:facebook.com/netizenbaik -- @instagramusername -- @twitterusername">
-                                        </div>
-                                    </div>
-                                </div>
-
+                                @else
+                                    <input type="hidden" id="name" name="name"
+                                        value="{{ $usertamu ? $usertamu['name'] : '' }}">
+                                    <input type="hidden" id="gender" name="gender"
+                                        value="{{ $usertamu ? $usertamu['gender'] : '' }}">
+                                    <input type="hidden" id="pekerjaan" name="pekerjaan"
+                                        value="{{ $usertamu ? $usertamu['pekerjaan'] : '' }}">
+                                    <input type="hidden" id="alamat" name="alamat"
+                                        value="{{ $usertamu ? $usertamu['alamat'] : '' }}">
+                                    <input type="hidden" id="desa" name="desa"
+                                        value="{{ $usertamu ? $usertamu['desa'] : '' }}">
+                                    <input type="hidden" id="kecamatan" name="kecamatan"
+                                        value="{{ $usertamu ? $usertamu['kecamatan'] : '' }}">
+                                    <input type="hidden" id="kota" name="kota"
+                                        value="{{ $usertamu ? $usertamu['kota'] : '' }}">
+                                    <input type="hidden" id="telepon" name="telepon"
+                                        value="{{ $usertamu ? $usertamu['telepon'] : '' }}">
+                                    <input type="hidden" id="email" name="email"
+                                        value="{{ $usertamu ? $usertamu['email'] : '' }}">
+                                @endif
                             </div>
                             <div class="header-title">
                                 <h2 style="font-size:16px !important">Data Pengaduan</h2>
@@ -130,18 +151,23 @@
                             </div>
                             <div>
                                 <div class="box-body">
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label">Media</label>
-                                        <div class="col-sm-10">
-                                            <select class="form-control" id="media" name="media" autocomplete="off"
-                                                required>
-                                                <option value="">-- Pilih Media --</option>
-                                                @foreach ($media as $d)
-                                                    <option value="{{ $d->id }}">{{ $d->media }}</option>
-                                                @endforeach
-                                            </select>
+                                    @if (in_array(Auth::user()->level_id, [1, 2, 3, 4, 5, 6, 7, 8]))
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Media</label>
+                                            <div class="col-sm-10">
+                                                <select class="form-control" id="media" name="media" autocomplete="off"
+                                                    required>
+                                                    <option value="">-- Pilih Media --</option>
+                                                    @foreach ($media as $d)
+                                                        <option value="{{ $d->id }}">{{ $d->media }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
                                         </div>
-                                    </div>
+                                    @else
+                                        <input type="hidden" id="media" name="media" autocomplete="off"
+                                            value="{{ $media[0]->id }}">
+                                    @endif
                                     <div class="form-group">
                                         <label for="subyek" class="col-sm-2 control-label">Subyek</label>
                                         <div class="col-sm-10">
@@ -227,7 +253,13 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="mapid" class="col-sm-2 control-label">Lokasi</label>
+                                        <label for="lokasi" class="col-sm-2 control-label">Lokasi</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" name="lokasi" id="lokasi"
+                                                placeholder="Tuliskan detail lokasi" autocomplete="off">
+                                        </div>
+                                        <div class="clearfix"></div><br>
+                                        <div class="col-sm-2"></div>
                                         <div class="col-sm-10">
                                             <input type="hidden" class="form-control" name="lng" id="lng" />
                                             <input type="hidden" class="form-control" name="lat" id="lat" />
@@ -263,6 +295,7 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
         integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
         crossorigin="" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-geosearch@3.0.5/dist/geosearch.css" />
 @endsection
 
 @section('scripts')
@@ -271,6 +304,7 @@
         crossorigin="">
 
     </script>
+    <script src="https://unpkg.com/leaflet-geosearch@3.0.5/dist/geosearch.umd.js"></script>
     <script>
         toastr.options = {
             "closeButton": true,
@@ -297,6 +331,22 @@
                     zoomOffset: -1,
                     accessToken: 'your.mapbox.access.token'
                 }).addTo(mymap);
+            const search = new GeoSearch.GeoSearchControl({
+                style: 'bar',
+                autoComplete: true,
+                autoCompleteDelay: 100,
+                searchLabel: 'Cari lokasi..',
+                maxSuggestions: 6,
+                autoClose: true,
+
+                provider: new GeoSearch.OpenStreetMapProvider(),
+            })
+            mymap.addControl(search);
+
+            mymap.on('geosearch/showlocation', function() {
+                mymap.scrollWheelZoom.enable();
+                mymap.dragging.enable();
+            });
 
             function onMapClick(e) {
                 if (marker != '') {
@@ -312,6 +362,9 @@
                     function(data) {
                         marker.bindPopup("<b>" + data.display_name + "</b><br />" + e.latlng.lat + ', ' +
                             e.latlng.lng).openPopup();
+
+                        // $('#lokasi').val(data.display_name)
+
                     });
             }
 
