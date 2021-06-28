@@ -29,18 +29,20 @@
 
     <div class="limiter">
         <div class="container-login100">
-            <div class="wrap-login100" style="padding:50px; width:500px;justify-content: center;">
+            <div class="wrap-login100" style="padding:50px; width:700px;justify-content: center;">
                 {{-- <div class="login100-pic js-tilt" data-tilt>
                     <img src="{{ asset('template') }}/dist/img/p3mlogo-ori-hd-remake.png" alt="IMG">
                 </div> --}}
 
-                <form class="validate-form" method="POST" action="{{ route('register') }}">
+                <form class="validate-form" style="width:100%" method="POST" action="{{ route('register') }}">
                     @csrf
                     <span class="login100-form-title">
                         Silahkan Buat Akun Anda
                     </span>
                     <div class="form-group">
-                        <div class="wrap-input100 validate-input" data-validate="NIK tidak boleh kosong">
+                        <label class="col-lg-2" style="margin-right:20px">NIK</label>
+                        <div class="wrap-input100 validate-input col-lg-9" style="display: inline-block; padding:0"
+                            data-validate="NIK tidak boleh kosong">
                             <input class="input100 @error('nik') is-invalid @enderror" type="text" name="nik"
                                 value="{{ old('nik') }}" placeholder="NIK" onkeypress="return onlyNumber(event)">
                             <span class="focus-input100"></span>
@@ -56,7 +58,8 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <div class="wrap-input100 validate-input" data-validate="Nama tidak boleh kosong">
+                    <label class="col-lg-2" style="margin-right:20px">Nama</label>
+                        <div class="wrap-input100 validate-input col-lg-9" style="display: inline-block; padding:0" data-validate="Nama tidak boleh kosong">
                             <input class="input100 @error('name') is-invalid @enderror" type="text" name="name"
                                 value="{{ old('name') }}" placeholder="Full Name" autocomplete="name"
                                 placeholder="Nama Lengkap">
@@ -73,7 +76,8 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <div class="wrap-input100 validate-input" data-validate="Alamat tidak boleh kosong">
+                    <label class="col-lg-2" style="margin-right:20px">Alamat</label>
+                        <div class="wrap-input100 validate-input col-lg-9" style="display: inline-block; padding:0" data-validate="Alamat tidak boleh kosong">
                             <input class="input100 @error('alamat') is-invalid @enderror" type="text" name="alamat"
                                 value="{{ old('alamat') }}" placeholder="Alamat" autocomplete="alamat"
                                 placeholder="Alamat">
@@ -91,7 +95,8 @@
                     </div>
 
                     <div class="form-group">
-                        <div class="wrap-input100 validate-input" data-validate="Kota tidak boleh kosong">
+                    <label class="col-lg-2" style="margin-right:20px">Kota</label>
+                        <div class="wrap-input100 validate-input col-lg-9" style="display: inline-block; padding:0" data-validate="Kota tidak boleh kosong">
                             <input class="input100 @error('kota') is-invalid @enderror" type="text" name="kota"
                                 value="{{ old('kota') }}" placeholder="Kota" autocomplete="kota" placeholder="kota">
                             <span class="focus-input100"></span>
@@ -107,7 +112,8 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <div class="wrap-input100 validate-input" data-validate="Kecamatan tidak boleh kosong">
+                    <label class="col-lg-2" style="margin-right:20px">Kecamatan</label>
+                        <div class="wrap-input100 validate-input col-lg-9" style="display: inline-block; padding:0" data-validate="Kecamatan tidak boleh kosong">
                             <input class="input100 @error('Kecamatan') is-invalid @enderror" type="text"
                                 name="kecamatan" value="{{ old('kecamatan') }}" placeholder="Kecamatan"
                                 autocomplete="kecamatan">
@@ -126,7 +132,8 @@
 
 
                     <div class="form-group">
-                        <div class="wrap-input100 validate-input" data-validate="Desa tidak boleh kosong">
+                    <label class="col-lg-2" style="margin-right:20px">Desa</label>
+                        <div class="wrap-input100 validate-input col-lg-9" style="display: inline-block; padding:0" data-validate="Desa tidak boleh kosong">
                             <input class="input100 @error('desa') is-invalid @enderror" type="text" name="desa"
                                 value="{{ old('desa') }}" placeholder="Desa" autocomplete="desa" placeholder="desa">
                             <span class="focus-input100"></span>
@@ -142,7 +149,8 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <div class="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
+                    <label class="col-lg-2" style="margin-right:20px">Email</label>
+                        <div class="wrap-input100 validate-input col-lg-9" style="display: inline-block; padding:0" data-validate="Valid email is required: ex@abc.xyz">
                             <input class="input100 @error('email') is-invalid @enderror" type="text" name="email"
                                 value="{{ old('email') }}" autocomplete="Email" placeholder="Email">
                             <span class="focus-input100"></span>
@@ -158,8 +166,9 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <div class="wrap-input100">
-                            <div class="col-sm-12 radio-styled text-center mt-4">
+                    <label class="col-lg-2" style="margin-right:20px">Jenis Kelamin</label>
+                        <div class="wrap-input100 col-lg-9 " style="display: inline-block; padding:0">
+                            <div class="radio-styled text-center" >
                                 <label>
                                     <input type="radio" class="minimal" name="gender" value="Pria" checked>
                                     <i class="fa fa-male"></i> Pria
@@ -172,7 +181,8 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <div class="wrap-input100 validate-input" data-validate="Telepon tidak boleh kosong">
+                    <label class="col-lg-2" style="margin-right:20px">Telepon</label>
+                        <div class="wrap-input100 validate-input col-lg-9" style="display: inline-block; padding:0" data-validate="Telepon tidak boleh kosong">
                             <input class="input100 @error('telepon') is-invalid @enderror" type="text" name="telepon"
                                 value="{{ old('telepon') }}" placeholder="Telepon" autocomplete="telepon"
                                 onkeypress="return onlyNumber(event)">
@@ -189,7 +199,8 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <div class="wrap-input100">
+                    <label class="col-lg-2" style="margin-right:20px">Pekerjaan</label>
+                        <div class="wrap-input100 col-lg-9" style="display: inline-block; padding:0">
                             <select class="input100" id="pekerjaan" name="pekerjaan">
                                 <option value="" style="color:#999999">Pilih Pekerjaan</option>
                                 @foreach ($pekerjaan as $d)
@@ -202,7 +213,8 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <div class="wrap-input100 validate-input" data-validate="Password tidak boleh kosong">
+                    <label class="col-lg-2" style="margin-right:20px">Password</label>
+                        <div class="wrap-input100 validate-input col-lg-9" style="display: inline-block; padding:0" data-validate="Password tidak boleh kosong">
                             <input class="input100 @error('password') is-invalid @enderror" type="password"
                                 name="password" placeholder="Password" autocomplete="new-password">
                             <span class="focus-input100"></span>
@@ -218,7 +230,8 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <div class="wrap-input100 validate-input" data-validate="Password tidak boleh kosong">
+                    <label class="col-lg-2" style="margin-right:20px"></label>
+                        <div class="wrap-input100 validate-input col-lg-9" style="display: inline-block; padding:0" data-validate="Password tidak boleh kosong">
                             <input class="input100" type="password" name="password_confirmation"
                                 placeholder="Confirm Password" autocomplete="new-password">
                             <span class="focus-input100"></span>
