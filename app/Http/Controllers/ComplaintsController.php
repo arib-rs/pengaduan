@@ -130,16 +130,16 @@ class ComplaintsController extends Controller
                 $awal  = date_create($startdate_);
                 $akhir = date_create($enddate_);
                 $diff  = date_diff($awal, $akhir);
-
+                $cls = '';
                 if ($data->is_urgent == 1) {
-                    $class = 'aduan-urgent';
+                    $cls = 'aduan-urgent';
                     if ($startdate_ > $enddate_) {
-                        $class = 'aduan-danger';
+                        $cls = 'aduan-danger';
                     }
                 }
 
                 // return $data->is_urgent == 1 ? 'aduan-darurat' : '';
-                return $class;
+                return $cls;
             })
             ->editColumn('created_at', function ($data) {
                 return $data->created_at->format('d-m-Y');
