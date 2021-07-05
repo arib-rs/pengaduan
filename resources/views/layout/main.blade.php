@@ -86,16 +86,34 @@
                         alt="P3M Logo" class="logo"></span>
             </a>
             <nav class="navbar navbar-static-top" style="margin-right: 5rem;">
-                {{-- <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+                <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
                     <span class="sr-only">Toggle navigation</span>
-                </a> --}}
+                </a>
                 <div class="navbar-custom-menu">
                     <ul class="nav navbar-nav">
-                        <li>
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        <li class="dropdown user user-menu">
+                            {{-- <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                                <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+                                <i class="fa fa-user-circle"></i>
+                                <span
+                                    class="hidden-xs">{{ Auth::user()->name . ' - ' . Auth::user()->level->level }}</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <!-- Menu Footer-->
+                                <li class="user-footer">
+                                    <div class="pull-left">
+                                        <a href="#" class="btn btn-default btn-flat">Profile</a>
+                                    </div>
+                                    <div class="pull-right">
+                                        <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                                    </div>
+                                </li>
+                            </ul> --}}
+
+                            {{-- <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                 @csrf
                                 <button type="submit" class="btn rounded-button">Sign Out</button>
-                            </form>
+                            </form> --}}
                         </li>
                     </ul>
                 </div>
@@ -171,6 +189,17 @@
                             </ul>
                         </li>
                     @endif
+                    <li class="treeview active menu-open" style="font-weight:normal">
+                        <a href="#">
+                            <i class="fa fa-user-circle"></i> <span>Akun</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="{{ route('logout') }}"><i class="fa fa-share"></i>Sign Out</a></li>
+                        </ul>
+                    </li>
                 </ul>
 
             </section>

@@ -44,7 +44,8 @@
                         <div class="wrap-input100 validate-input col-lg-9" style="display: inline-block; padding:0"
                             data-validate="NIK tidak boleh kosong">
                             <input class="input100 @error('nik') is-invalid @enderror" type="text" name="nik"
-                                value="{{ old('nik') }}" placeholder="NIK" onkeypress="return onlyNumber(event)">
+                                value="{{ old('nik') }}" placeholder="16 digit NIK sesuai KTP"
+                                onkeypress="return onlyNumber(event)">
                             <span class="focus-input100"></span>
                             <span class="symbol-input100">
                                 <i class="fa fa-id-card-o" aria-hidden="true"></i>
@@ -52,16 +53,17 @@
                         </div>
 
                         @error('nik')
-                            <span class="invalid-feedback d-block" role="alert">
+                            <span class="invalid-feedback d-block  col-lg-12" role="alert">
                                 {{ $message }}
                             </span>
                         @enderror
                     </div>
                     <div class="form-group">
-                    <label class="col-lg-2" style="margin-right:20px">Nama</label>
-                        <div class="wrap-input100 validate-input col-lg-9" style="display: inline-block; padding:0" data-validate="Nama tidak boleh kosong">
+                        <label class="col-lg-2" style="margin-right:20px">Nama</label>
+                        <div class="wrap-input100 validate-input col-lg-9" style="display: inline-block; padding:0"
+                            data-validate="Nama tidak boleh kosong">
                             <input class="input100 @error('name') is-invalid @enderror" type="text" name="name"
-                                value="{{ old('name') }}" placeholder="Full Name" autocomplete="name"
+                                value="{{ old('name') }}" placeholder="Nama lengkap sesuai KTP" autocomplete="name"
                                 placeholder="Nama Lengkap">
                             <span class="focus-input100"></span>
                             <span class="symbol-input100">
@@ -70,17 +72,18 @@
                         </div>
 
                         @error('name')
-                            <span class="invalid-feedback d-block" role="alert">
+                            <span class="invalid-feedback d-block col-lg-12" role="alert">
                                 {{ $message }}
                             </span>
                         @enderror
                     </div>
                     <div class="form-group">
-                    <label class="col-lg-2" style="margin-right:20px">Alamat</label>
-                        <div class="wrap-input100 validate-input col-lg-9" style="display: inline-block; padding:0" data-validate="Alamat tidak boleh kosong">
+                        <label class="col-lg-2" style="margin-right:20px">Alamat</label>
+                        <div class="wrap-input100 validate-input col-lg-9" style="display: inline-block; padding:0"
+                            data-validate="Alamat tidak boleh kosong">
                             <input class="input100 @error('alamat') is-invalid @enderror" type="text" name="alamat"
-                                value="{{ old('alamat') }}" placeholder="Alamat" autocomplete="alamat"
-                                placeholder="Alamat">
+                                value="{{ old('alamat') }}" placeholder="Contoh: Jl Diponegoro no. 9 RT 08 RW 08"
+                                autocomplete="alamat" placeholder="Alamat">
                             <span class="focus-input100"></span>
                             <span class="symbol-input100">
                                 <i class="fa fa-map-marker" aria-hidden="true"></i>
@@ -88,17 +91,19 @@
                         </div>
 
                         @error('alamat')
-                            <span class="invalid-feedback d-block" role="alert">
+                            <span class="invalid-feedback d-block col-lg-12" role="alert">
                                 {{ $message }}
                             </span>
                         @enderror
                     </div>
 
                     <div class="form-group">
-                    <label class="col-lg-2" style="margin-right:20px">Kota</label>
-                        <div class="wrap-input100 validate-input col-lg-9" style="display: inline-block; padding:0" data-validate="Kota tidak boleh kosong">
+                        <label class="col-lg-2" style="margin-right:20px">Kota / Kabupaten</label>
+                        <div class="wrap-input100 validate-input col-lg-9" style="display: inline-block; padding:0"
+                            data-validate="Kota tidak boleh kosong">
                             <input class="input100 @error('kota') is-invalid @enderror" type="text" name="kota"
-                                value="{{ old('kota') }}" placeholder="Kota" autocomplete="kota" placeholder="kota">
+                                value="{{ old('kota') }}" placeholder="Contoh: Sidoarjo" autocomplete="kota"
+                                placeholder="kota">
                             <span class="focus-input100"></span>
                             <span class="symbol-input100">
                                 <i class="fa fa-building" aria-hidden="true"></i>
@@ -106,16 +111,17 @@
                         </div>
 
                         @error('kota')
-                            <span class="invalid-feedback d-block" role="alert">
+                            <span class="invalid-feedback d-block col-lg-12" role="alert">
                                 {{ $message }}
                             </span>
                         @enderror
                     </div>
                     <div class="form-group">
-                    <label class="col-lg-2" style="margin-right:20px">Kecamatan</label>
-                        <div class="wrap-input100 validate-input col-lg-9" style="display: inline-block; padding:0" data-validate="Kecamatan tidak boleh kosong">
+                        <label class="col-lg-2" style="margin-right:20px">Kecamatan</label>
+                        <div class="wrap-input100 validate-input col-lg-9" style="display: inline-block; padding:0"
+                            data-validate="Kecamatan tidak boleh kosong">
                             <input class="input100 @error('Kecamatan') is-invalid @enderror" type="text"
-                                name="kecamatan" value="{{ old('kecamatan') }}" placeholder="Kecamatan"
+                                name="kecamatan" value="{{ old('kecamatan') }}" placeholder="Contoh: Sukodono"
                                 autocomplete="kecamatan">
                             <span class="focus-input100"></span>
                             <span class="symbol-input100">
@@ -124,7 +130,7 @@
                         </div>
 
                         @error('kecamatan')
-                            <span class="invalid-feedback d-block" role="alert">
+                            <span class="invalid-feedback d-block col-lg-12" role="alert">
                                 {{ $message }}
                             </span>
                         @enderror
@@ -132,10 +138,12 @@
 
 
                     <div class="form-group">
-                    <label class="col-lg-2" style="margin-right:20px">Desa</label>
-                        <div class="wrap-input100 validate-input col-lg-9" style="display: inline-block; padding:0" data-validate="Desa tidak boleh kosong">
+                        <label class="col-lg-2" style="margin-right:20px">Desa</label>
+                        <div class="wrap-input100 validate-input col-lg-9" style="display: inline-block; padding:0"
+                            data-validate="Desa tidak boleh kosong">
                             <input class="input100 @error('desa') is-invalid @enderror" type="text" name="desa"
-                                value="{{ old('desa') }}" placeholder="Desa" autocomplete="desa" placeholder="desa">
+                                value="{{ old('desa') }}" placeholder="Contoh: Anggaswangi" autocomplete="desa"
+                                placeholder="desa">
                             <span class="focus-input100"></span>
                             <span class="symbol-input100">
                                 <i class="fa fa-map" aria-hidden="true"></i>
@@ -143,16 +151,18 @@
                         </div>
 
                         @error('desa')
-                            <span class="invalid-feedback d-block" role="alert">
+                            <span class="invalid-feedback d-block col-lg-12" role="alert">
                                 {{ $message }}
                             </span>
                         @enderror
                     </div>
                     <div class="form-group">
-                    <label class="col-lg-2" style="margin-right:20px">Email</label>
-                        <div class="wrap-input100 validate-input col-lg-9" style="display: inline-block; padding:0" data-validate="Valid email is required: ex@abc.xyz">
+                        <label class="col-lg-2" style="margin-right:20px">Email</label>
+                        <div class="wrap-input100 validate-input col-lg-9" style="display: inline-block; padding:0"
+                            data-validate="Email harus valid. Contoh: ex@abc.xyz">
                             <input class="input100 @error('email') is-invalid @enderror" type="text" name="email"
-                                value="{{ old('email') }}" autocomplete="Email" placeholder="Email">
+                                value="{{ old('email') }}" autocomplete="Email"
+                                placeholder="Contoh: ujangbensin@gmail.com">
                             <span class="focus-input100"></span>
                             <span class="symbol-input100">
                                 <i class="fa fa-envelope" aria-hidden="true"></i>
@@ -160,15 +170,15 @@
                         </div>
 
                         @error('email')
-                            <span class="invalid-feedback d-block" role="alert">
+                            <span class="invalid-feedback d-block col-lg-12" role="alert">
                                 {{ $message }}
                             </span>
                         @enderror
                     </div>
                     <div class="form-group">
-                    <label class="col-lg-2" style="margin-right:20px">Jenis Kelamin</label>
+                        <label class="col-lg-2" style="margin-right:20px">Jenis Kelamin</label>
                         <div class="wrap-input100 col-lg-9 " style="display: inline-block; padding:0">
-                            <div class="radio-styled text-center" >
+                            <div class="radio-styled text-center">
                                 <label>
                                     <input type="radio" class="minimal" name="gender" value="Pria" checked>
                                     <i class="fa fa-male"></i> Pria
@@ -181,10 +191,11 @@
                         </div>
                     </div>
                     <div class="form-group">
-                    <label class="col-lg-2" style="margin-right:20px">Telepon</label>
-                        <div class="wrap-input100 validate-input col-lg-9" style="display: inline-block; padding:0" data-validate="Telepon tidak boleh kosong">
+                        <label class="col-lg-2" style="margin-right:20px">Telepon</label>
+                        <div class="wrap-input100 validate-input col-lg-9" style="display: inline-block; padding:0"
+                            data-validate="Telepon tidak boleh kosong">
                             <input class="input100 @error('telepon') is-invalid @enderror" type="text" name="telepon"
-                                value="{{ old('telepon') }}" placeholder="Telepon" autocomplete="telepon"
+                                value="{{ old('telepon') }}" placeholder="Nomor telepon aktif" autocomplete="telepon"
                                 onkeypress="return onlyNumber(event)">
                             <span class="focus-input100"></span>
                             <span class="symbol-input100">
@@ -193,13 +204,13 @@
                         </div>
 
                         @error('telepon')
-                            <span class="invalid-feedback d-block" role="alert">
+                            <span class="invalid-feedback d-block col-lg-12" role="alert">
                                 {{ $message }}
                             </span>
                         @enderror
                     </div>
                     <div class="form-group">
-                    <label class="col-lg-2" style="margin-right:20px">Pekerjaan</label>
+                        <label class="col-lg-2" style="margin-right:20px">Pekerjaan</label>
                         <div class="wrap-input100 col-lg-9" style="display: inline-block; padding:0">
                             <select class="input100" id="pekerjaan" name="pekerjaan">
                                 <option value="" style="color:#999999">Pilih Pekerjaan</option>
@@ -211,34 +222,40 @@
                                 <i class="fa fa-briefcase" aria-hidden="true"></i>
                             </span>
                         </div>
-                    </div>
-                    <div class="form-group">
-                    <label class="col-lg-2" style="margin-right:20px">Password</label>
-                        <div class="wrap-input100 validate-input col-lg-9" style="display: inline-block; padding:0" data-validate="Password tidak boleh kosong">
-                            <input class="input100 @error('password') is-invalid @enderror" type="password"
-                                name="password" placeholder="Password" autocomplete="new-password">
-                            <span class="focus-input100"></span>
-                            <span class="symbol-input100">
-                                <i class="fa fa-lock" aria-hidden="true"></i>
-                            </span>
-                        </div>
-
-                        @error('password')
-                            <span class="invalid-feedback d-block" role="alert">
+                        @error('pekerjaan')
+                            <span class="invalid-feedback d-block col-lg-12" role="alert">
                                 {{ $message }}
                             </span>
                         @enderror
                     </div>
                     <div class="form-group">
-                    <label class="col-lg-2" style="margin-right:20px"></label>
-                        <div class="wrap-input100 validate-input col-lg-9" style="display: inline-block; padding:0" data-validate="Password tidak boleh kosong">
-                            <input class="input100" type="password" name="password_confirmation"
-                                placeholder="Confirm Password" autocomplete="new-password">
+                        <label class="col-lg-2" style="margin-right:20px">Password</label>
+                        <div class="wrap-input100 validate-input col-lg-9" style="display: inline-block; padding:0"
+                            data-validate="Password tidak boleh kosong">
+                            <input class="input100 @error('password') is-invalid @enderror" type="password"
+                                name="password" placeholder="Minimal 8 karakter" autocomplete="new-password">
                             <span class="focus-input100"></span>
                             <span class="symbol-input100">
                                 <i class="fa fa-lock" aria-hidden="true"></i>
                             </span>
                         </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2" style="margin-right:20px"></label>
+                        <div class="wrap-input100 validate-input col-lg-9" style="display: inline-block; padding:0"
+                            data-validate="Password tidak boleh kosong">
+                            <input class="input100" type="password" name="password_confirmation"
+                                placeholder="Masukkan ulang password" autocomplete="new-password">
+                            <span class="focus-input100"></span>
+                            <span class="symbol-input100">
+                                <i class="fa fa-lock" aria-hidden="true"></i>
+                            </span>
+                        </div>
+                        @error('password')
+                            <span class="invalid-feedback d-block col-lg-12" role="alert">
+                                {{ $message }}
+                            </span>
+                        @enderror
                     </div>
                     <div class="container-login100-form-btn">
                         <button class="login100-form-btn" type="submit">

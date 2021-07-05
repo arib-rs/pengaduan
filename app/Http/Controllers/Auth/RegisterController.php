@@ -54,9 +54,17 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
+            'nik' => 'required|size:16',
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'pekerjaan' => 'required',
+            'alamat' => 'required',
+            'kecamatan' => 'required',
+            'kota' => 'required',
+            'desa' => 'required',
+            'telepon' => 'required'
+
         ]);
     }
 
@@ -97,7 +105,7 @@ class RegisterController extends Controller
 
         return $request->wantsJson()
             ? new JsonResponse([], 201)
-            : redirect($this->redirectPath());
+            : redirect($this->redirectPath())->with(['success' => 'Pembuatan akun berhasil']);
     }
     public function showRegistrationForm()
     {
