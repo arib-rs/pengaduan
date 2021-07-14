@@ -142,11 +142,11 @@
 
                 <ul class="sidebar-menu" data-widget="tree" data-accordion=0>
                     @if (in_array($userRole, [1]))
-                        {{-- <li class="">
-                            <a href="{{ '/home' }}">
-                                <i class="fa fa-home"></i> <span>Home</span>
+                        <li class="">
+                            <a href="{{ '/dashboard' }}">
+                                <i class="fa fa-home"></i> <span>Dashboard</span>
                             </a>
-                        </li> --}}
+                        </li>
                     @endif
                     <li class="treeview active menu-open" style="font-weight:normal">
                         <!-- active menu-open -->

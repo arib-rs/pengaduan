@@ -13,7 +13,6 @@ use App\Models\Scope;
 use App\Models\Unit;
 use App\Models\UnitMapping;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 
 class ComplaintsController extends Controller
@@ -73,18 +72,23 @@ class ComplaintsController extends Controller
         }
         return $status[$index];
     }
-    public function index()
+    public function index(Request $request)
     {
         $data['title'] = 'Daftar Pengaduan';
         $data['media'] = Media::orderBy('media', 'asc')->get();
         $data['jobs'] = Job::orderBy('pekerjaan', 'asc')->get();
         $data['bulan'] = $this->bulan;
+        $data['s'] = $request->s ? $request->s : '';
+        $data['y'] = $request->y ? $request->y : '';
         return view('pengaduan.index', $data);
     }
-    public function getPengaduansByMonth($tahun, $bulan)
+    public function getPengaduansByMonth($tahun, $bulan, $s = '', $y = '', Request $request)
     {
         $unitId = session()->get('user.unit_id');
+        $fpengaduan = $s;
+        $ypengaduan = $y;
         $complaintId = Mapping::where('unit_id', '=', $unitId)->select('complaint_id')->groupBy('complaint_id')->get();
+
         $c = [];
         foreach ($complaintId as $cid) {
             $c[] = $cid->complaint_id;
@@ -96,10 +100,23 @@ class ComplaintsController extends Controller
         // ->orderBy('created_at', 'desc')
         // ->get();
         // dd($data);
-
-        $query = Complaint::whereYear('created_at', '=', $tahun)
-            ->whereMonth('created_at', '=', $bulan)
-            ->orderBy('created_at', 'desc');
+        if ($fpengaduan == '') {
+            $query = Complaint::whereYear('created_at', '=', $tahun)
+                ->whereMonth('created_at', '=', $bulan)
+                ->orderBy('created_at', 'desc');
+        } else {
+            $query = Complaint::orderBy('created_at', 'desc');
+            if ($fpengaduan == 1) {
+                $query->where('status', '=', '1');
+            } else if ($fpengaduan == 2) {
+                $query->where('status', '=', '2');
+            } else if ($fpengaduan == 9) {
+                $query->where('status', '=', '9');
+            }
+            if ($ypengaduan != 'all') {
+                $query->whereYear('created_at', '=', $ypengaduan);
+            }
+        }
 
         if (session()->get('user.level_id') != 1) {
             if (session()->get('user.level_id') == 9) {
@@ -115,7 +132,6 @@ class ComplaintsController extends Controller
         }
 
         $data = $query->get();
-
         return \DataTables::of($data)
             ->setRowClass(function ($data) {
                 $interval = "";

@@ -26,7 +26,7 @@
     });
 
     Route::middleware(['auth'])->group(function () {
-        Route::get('/home', 'HomeController@index')->name('home');
+        Route::get('/dashboard', 'HomeController@index')->name('home');
 
         Route::resources([
             'bidang' => 'ScopesController',
@@ -44,7 +44,7 @@
         Route::get('get-tingkats-opds', 'UsersController@getTingkatsOpds')->name('get-tingkats-opds');
         Route::get('get-users', 'UsersController@getUsers')->name('get-users');
         Route::put('resetPassword/{id?}', 'UsersController@resetPassword')->name('resetPassword');
-        Route::get('get-pengaduans-bymonth/{tahun?}/{bulan?}', 'ComplaintsController@getPengaduansByMonth')->name('get-pengaduans-bymonth');
+        Route::get('get-pengaduans-bymonth/{tahun?}/{bulan?}/{s?}/{y?}', 'ComplaintsController@getPengaduansByMonth')->name('get-pengaduans-bymonth');
         Route::get('get-progresses/{id?}', 'ComplaintsController@getProgresses')->name('get-progresses');
         Route::get('get-responses/{id?}', 'ComplaintsController@getResponses')->name('get-responses');
         Route::get('get-list-opds-by-scope/{id?}', 'ScopesController@getListOPD')->name('get-listopdbyscope');

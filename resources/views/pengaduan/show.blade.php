@@ -9,66 +9,12 @@
                 <div class="col-md-12">
                     <div class="white-box">
                         <div class="header-title">
-                            <div style="float:right;">
-                                @if (session()->get('user.level_id') != 9)
-                                    @if (in_array(session()->get('user.level_id'), [1, 2]))
-                                        @if ($aduan->status == 0)
-                                            <span id="validasi-operation">
-                                                <form method="POST" action="{{ url('validasi') }}"
-                                                    style="display: inline-block">
-                                                    @csrf
-                                                    <input type="hidden" id="id" name="id" value={{ $aduan->id }}>
-                                                    <button onclick="return confirm('Apakah anda yakin ?')"
-                                                        id="btn-validasi" class="btn btn-success">
-                                                        <i class="fa fa-check"></i>
-                                                        Layak
-                                                    </button>
-                                                </form>
-                                                <a id="btn-kembalikan" class="btn btn-danger">
-                                                    <i class="fa fa-times"></i>
-                                                    Tidak Layak
-                                                </a>
-                                            </span>
-                                        @endif
-                                    @endif
-                                    @if (in_array(session()->get('user.level_id'), [1, 2]))
-                                        @if ($aduan->status == 1)
-                                            <span id="klasifikasi-operation">
-                                                <a id="btn-klasifikasi" class="btn btn-primary">
-                                                    <i class="fa fa-justify"></i>
-                                                    Klasifikasi
-                                                </a>
-                                            </span>
-                                        @endif
-                                    @endif
-                                    @if (in_array(session()->get('user.level_id'), [1, 6]))
-                                        @if ($aduan->status == 3 && $statusRespon != null)
-                                            <span id="respon">
-                                                <a id="btn-tindaklanjut" class="btn btn-success">
-                                                    <i class="fa fa-justify"></i>
-                                                    Tindak Lanjut
-                                                </a>
-                                            </span>
-                                        @elseif (($aduan->status == 2) || ($aduan->status == 3 && $statusRespon ==
-                                            null))
-                                            <span id="respon">
-                                                <a id="btn-respon" class="btn btn-success">
-                                                    <i class="fa fa-justify"></i>
-                                                    Respon
-                                                </a>
-                                            </span>
-                                        @endif
-                                    @endif
-                                @endif
-
-                                <a class="btn btn-default" href="{{ url()->previous() }}">Kembali</a>
-                            </div>
                             <h2>{{ $title }}</h2>
                             <hr>
                         </div>
 
                         <div class="row">
-                            <div style="line-height:1.7" class="col-lg-4">
+                            <div style="line-height:1.7; margin-bottom:30px" class="col-lg-4">
                                 <div style="margin-bottom:5px;font-size:16px">Informasi Aduan</div>
                                 <div class="col-lg-12">
                                     <input type="hidden" id="id" value="{{ $aduan->id }}">
@@ -88,11 +34,66 @@
                                     <div><strong>Uraian :</strong> <br>
                                         <p style="padding-left:10px"> {!! nl2br($aduan->uraian) !!}</p>
                                     </div>
+                                    <div id="btn-operation">
+                                        @if (session()->get('user.level_id') != 9)
+                                            @if (in_array(session()->get('user.level_id'), [1, 2]))
+                                                @if ($aduan->status == 0)
+                                                    <span id="validasi-operation">
+                                                        <form method="POST" action="{{ url('validasi') }}"
+                                                            style="display: inline-block">
+                                                            @csrf
+                                                            <input type="hidden" id="id" name="id"
+                                                                value={{ $aduan->id }}>
+                                                            <button onclick="return confirm('Apakah anda yakin ?')"
+                                                                id="btn-validasi" class="btn btn-success">
+                                                                <i class="fa fa-check"></i>
+                                                                Layak
+                                                            </button>
+                                                        </form>
+                                                        <a id="btn-kembalikan" class="btn btn-danger">
+                                                            <i class="fa fa-times"></i>
+                                                            Tidak Layak
+                                                        </a>
+                                                    </span>
+                                                @endif
+                                            @endif
+                                            @if (in_array(session()->get('user.level_id'), [1, 2]))
+                                                @if ($aduan->status == 1)
+                                                    <span id="klasifikasi-operation">
+                                                        <a id="btn-klasifikasi" class="btn btn-primary">
+                                                            <i class="fa fa-justify"></i>
+                                                            Klasifikasi
+                                                        </a>
+                                                    </span>
+                                                @endif
+                                            @endif
+                                            @if (in_array(session()->get('user.level_id'), [1, 6]))
+                                                @if ($aduan->status == 3 && $statusRespon != null)
+                                                    <span id="respon">
+                                                        <a id="btn-tindaklanjut" class="btn btn-success">
+                                                            <i class="fa fa-justify"></i>
+                                                            Tindak Lanjut
+                                                        </a>
+                                                    </span>
+                                                @elseif (($aduan->status == 2) || ($aduan->status == 3 && $statusRespon
+                                                    ==
+                                                    null))
+                                                    <span id="respon">
+                                                        <a id="btn-respon" class="btn btn-success">
+                                                            <i class="fa fa-justify"></i>
+                                                            Respon
+                                                        </a>
+                                                    </span>
+                                                @endif
+                                            @endif
+                                        @endif
 
+                                        <a class="btn btn-default" href="{{ url()->previous() }}">Kembali</a>
+                                    </div>
 
                                 </div>
                             </div>
-                            <div style="line-height:1.7" class="col-lg-4">
+                            <div style="line-height:1.7; margin-bottom:30px" class="col-lg-4">
                                 <div style="margin-bottom:5px;font-size:16px">Informasi Pelapor</div>
                                 <div class="col-lg-12">
                                     <div><strong>{{ $aduan->name }}</strong></div>
@@ -111,7 +112,7 @@
                                     @endif
                                 </div>
                             </div>
-                            <div style="line-height:1.7" class="col-lg-4">
+                            <div style="line-height:1.7; margin-bottom:30px" class="col-lg-4">
                                 <div style="margin-bottom:5px;font-size:16px">Informasi Lain</div>
                                 <div class="col-lg-12">
                                     <div>
@@ -137,7 +138,7 @@
                         </div>
                         <hr>
                         <div class="row">
-                            <div class="col-lg-4">
+                            <div class="col-lg-4" style="margin-bottom:30px">
                                 <div style="margin-bottom:5px;font-size:16px">Detail Gambar</div>
                                 <div class="col-lg-12">
                                     @if ($aduan->pict_1)
@@ -169,7 +170,7 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="col-lg-4">
+                            <div class="col-lg-4" style="margin-bottom:30px">
                                 <div style="margin-bottom:15px;font-size:16px">Lokasi Obyek Aduan</div>
                                 <div class="col-lg-12">
                                     @if ($aduan->lokasi != '')
@@ -185,7 +186,7 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="col-lg-4">
+                            <div class="col-lg-4" style="margin-bottom:30px">
                                 <div style="margin-bottom:5px;font-size:16px">Detail Progress</div>
                                 <div class="col-lg-12">
                                     <table class="table table-bordered table-hover datatable">
@@ -667,9 +668,9 @@
                 mymap = L.map('mapid').setView([lat, lng], 13),
                 marker = '';
 
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-}).addTo(mymap);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(mymap);
             // L.tileLayer(
             //     'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYXJpYnJzIiwiYSI6ImNrb3V6ODhyYTAyeGwycHB0Z2RqZXZ2dTgifQ.0OhJv5NM-IiX9GE9E00CWw', {
             //         attribution: '',
@@ -691,9 +692,9 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             var mymap2 = L.map('mapid2').setView([lat, lng], 13),
                 // var mymap2 = L.map('mapid2').setView([-7.445999016651402, 112.71844103230215], 11);
                 marker2 = '';
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-}).addTo(mymap2);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(mymap2);
 
             // L.tileLayer(
             //     'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYXJpYnJzIiwiYSI6ImNrb3V6ODhyYTAyeGwycHB0Z2RqZXZ2dTgifQ.0OhJv5NM-IiX9GE9E00CWw', {
@@ -1027,10 +1028,10 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                     mymap3 = L.map('mapid-respon').setView([lat3, lng3], 13),
                     marker3 = '';
                 // console.log('input.lng1'+i);
-  
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-}).addTo(mymap3);
+
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                }).addTo(mymap3);
                 // L.tileLayer(
                 //     'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYXJpYnJzIiwiYSI6ImNrb3V6ODhyYTAyeGwycHB0Z2RqZXZ2dTgifQ.0OhJv5NM-IiX9GE9E00CWw', {
                 //         attribution: '',

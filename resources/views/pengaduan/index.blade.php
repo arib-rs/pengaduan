@@ -16,6 +16,8 @@
                             <div class="box-body">
                                 <div class="row">
                                     <div class="col-md-8">
+                                        <input type="hidden" id="s" value="{{ $s }}">
+                                        <input type="hidden" id="y" value="{{ $y }}">
                                         <form id="form-bulan" class="form-horizontal">
                                             <label for="bulan" class="col-md-1 control-label">Bulan</label>
                                             <div class="col-md-3">
@@ -72,7 +74,9 @@
     <script>
         $(function() {
 
-            var tahun = $('#tahun').val(),
+            var s = $('#s').val(),
+                y = $('#y').val(),
+                tahun = $('#tahun').val(),
                 bulan = $('#bulan').val();
             var dataTable = $('.datatable').DataTable({
                 processing: true,
@@ -87,7 +91,7 @@
                 "order": [
                     [0, "desc"]
                 ],
-                ajax: "get-pengaduans-bymonth/" + tahun + "/" + bulan,
+                ajax: "get-pengaduans-bymonth/" + tahun + "/" + bulan + "/" + s + "/" + y,
                 columns: [{
                         data: 'DT_RowIndex'
                     },
