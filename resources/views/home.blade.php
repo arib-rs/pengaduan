@@ -28,7 +28,7 @@
                                     </select>
                                 </div>
                                 <div class="col-lg-3">
-                                    <a href="/pengaduan?s=all&y={{ $y }}">
+                                    <a class="filter-pengaduan" href="{{ url('/pengaduan?s=all&y=' . $y) }}">
                                         <div class="callout col-lg-12"
                                             style="border-left:5px solid #36b9cc;background:#ecf0f5;overflow:hidden">
                                             <div class="col-lg-10">
@@ -45,7 +45,7 @@
                                     </a>
                                 </div>
                                 <div class="col-lg-3">
-                                    <a href="/pengaduan?s=1&y={{ $y }}">
+                                    <a class="filter-pengaduan" href="{{ url('/pengaduan?s=1&y=' . $y) }}">
                                         <div class="callout col-lg-12"
                                             style="border-left:5px solid #f6c23e;background:#ecf0f5;overflow:hidden">
                                             <div class="col-lg-9">
@@ -59,7 +59,7 @@
                                     </a>
                                 </div>
                                 <div class="col-lg-3">
-                                    <a href="/pengaduan?s=2&y={{ $y }}">
+                                    <a class="filter-pengaduan" href="{{ url('/pengaduan?s=2&y=' . $y) }}">
                                         <div class="callout col-lg-12"
                                             style="border-left:5px solid #e74a3b;background:#ecf0f5;overflow:hidden">
                                             <div class="col-lg-9">
@@ -73,7 +73,7 @@
                                     </a>
                                 </div>
                                 <div class="col-lg-3">
-                                    <a href="/pengaduan?s=9&y={{ $y }}">
+                                    <a class="filter-pengaduan" href="{{ url('/pengaduan?s=9&y=' . $y) }}">
                                         <div class="callout col-lg-12"
                                             style="border-left:5px solid #00a65a;background:#ecf0f5;overflow:hidden">
                                             <div class="col-lg-10">
@@ -102,7 +102,7 @@
             $("#tahun").on('change', function() {
                 var tahun = $(this).val();
                 window.open("dashboard?y=" + tahun, "_self");
-                $('a[href^="/pengaduan?s="]').each(function() {
+                $('a.filter-pengaduan').each(function() {
                     var oldUrl = $(this).attr("href"); // Get current url
                     var newUrl = oldUrl.split('y=')[0]; // Create new url
                     newUrl = newUrl + 'y=' + tahun;

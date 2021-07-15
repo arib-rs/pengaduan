@@ -264,7 +264,7 @@
                     </div>
 
                     <div class="text-center mt-5">
-                        <a class="txt2" href="{{ '/login' }}">
+                        <a class="txt2" href="{{ url('/login') }}">
                             Sudah Punya Akun
                             <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
                         </a>

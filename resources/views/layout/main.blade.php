@@ -143,7 +143,7 @@
                 <ul class="sidebar-menu" data-widget="tree" data-accordion=0>
                     @if (in_array($userRole, [1]))
                         <li class="">
-                            <a href="{{ '/dashboard' }}">
+                            <a href="{{ url('/dashboard') }}">
                                 <i class="fa fa-home"></i> <span>Dashboard</span>
                             </a>
                         </li>
@@ -157,9 +157,9 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="{{ '/pengaduan/create' }}"><i class="fa fa-edit"></i>Form Pengaduan</a>
+                            <li><a href="{{ url('/pengaduan/create') }}"><i class="fa fa-edit"></i>Form Pengaduan</a>
                             </li>
-                            <li><a href="{{ '/pengaduan' }}"><i class="fa fa-list"></i>Daftar Pengaduan</a>
+                            <li><a href="{{ url('/pengaduan') }}"><i class="fa fa-list"></i>Daftar Pengaduan</a>
                             </li>
                             {{-- <li><a href="{{ '/distribusi' }}"><i class="fa fa-chain"></i> Distribusi</a></li> --}}
                         </ul>
@@ -181,11 +181,12 @@
                                 </span>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="{{ '/user' }}"><i class="fa fa-user"></i> User</a></li>
-                                <li><a href="{{ '/opd' }}"><i class="fa fa-building"></i> OPD</a></li>
-                                <li><a href="{{ '/bidang' }}"><i class="fa fa-archive"></i> Bidang</a></li>
-                                <li><a href="{{ '/media' }}"><i class="fa fa-map"></i> Media</a></li>
-                                <li><a href="{{ '/pekerjaan' }}"><i class="fa fa-briefcase"></i> Pekerjaan</a></li>
+                                <li><a href="{{ url('/user') }}"><i class="fa fa-user"></i> User</a></li>
+                                <li><a href="{{ url('/opd') }}"><i class="fa fa-building"></i> OPD</a></li>
+                                <li><a href="{{ url('/bidang') }}"><i class="fa fa-archive"></i> Bidang</a></li>
+                                <li><a href="{{ url('/media') }}"><i class="fa fa-map"></i> Media</a></li>
+                                <li><a href="{{ url('/pekerjaan') }}"><i class="fa fa-briefcase"></i> Pekerjaan</a>
+                                </li>
                             </ul>
                         </li>
                     @endif

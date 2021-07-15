@@ -170,7 +170,7 @@ class ComplaintsController extends Controller
             })
             ->addColumn('Aksi', function ($data) {
                 return '
-                <a href="pengaduan/' . $data->id . '" id="btn-view" class="btn btn-xs btn-primary" data-id="' .
+                <a href="' . url("pengaduan/" . $data->id) .  '" id="btn-view" class="btn btn-xs btn-primary" data-id="' .
                     $data->id .
                     '" title="Lihat Detail">
                 <i class="fa fa-eye"></i>

@@ -88,13 +88,13 @@
                         <span class="txt1">
                             Lupa
                         </span>
-                        <a class="txt2" href="{{ '/password/reset' }}">
+                        <a class="txt2" href="{{ url('/password/reset') }}">
                             Password?
                         </a>
                     </div>
 
                     <div class="text-center p-t-136">
-                        <a class="txt2" href="{{ '/register' }}">
+                        <a class="txt2" href="{{ url('/register') }}">
                             Belum memiliki akun? Buat sekarang
                             <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
                         </a>
